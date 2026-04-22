@@ -1,13 +1,25 @@
 \section{Introduction}
 
-This file is the writing entry point for the paper introduction. A practical structure is:
+Multispectral UAV imaging is widely used for field phenotyping, crop-health monitoring, and spectral index analysis, but the reconstruction problem is not equivalent to standard RGB novel-view synthesis. A usable multispectral representation must satisfy two requirements simultaneously. First, it must preserve geometry and cross-band correspondence well enough to keep spectral products stable. Second, it must still reproduce each band with adequate fidelity. These goals are in tension: low-texture bands such as RE and NIR are weak geometry cues, yet downstream products such as NDVI, GNDVI, and NDRE become unreliable when each band drifts to its own geometry.
 
+Recent Gaussian splatting methods provide strong rendering quality and real-time performance for RGB scenes~\cite{kerbl2023gaussiansplatting}, and multispectral Gaussian baselines have started to appear~\cite{meyerls2025mssplatting}. However, our local evidence consistently showed that directly optimizing per-band geometry is unstable for UAV multispectral data. In raw captures, the problem appears even earlier: band alignment itself is not guaranteed, and a naive initialization can incorrectly reject usable rectifications or accept poor ones. In aligned scenes, from-scratch or geometry-unfrozen band training can improve some image metrics while still breaking the shared support required by multispectral product synthesis.
+
+This paper therefore adopts a narrower but more defensible target: rather than searching for a universally best per-band renderer, we optimize for a \emph{shared-support multispectral representation}. Our method uses RGB to establish a stable Gaussian support and then learns multispectral appearance on top of this fixed support. This design treats geometry consistency as a first-class constraint instead of a side effect. For raw UAV scenes, we pair the representation with a baseline-aware rectification quality-audit protocol that distinguishes weak-baseline warning cases from outright failures.
+
+The resulting pipeline is simple to state:
+\begin{enumerate}
+    \item estimate or validate a cross-band alignment for raw UAV data;
+    \item train an RGB Gaussian model to establish the shared support;
+    \item transfer G/R/RE/NIR appearance while keeping geometry locked;
+    \item synthesize multispectral products and indices on top of the preserved support.
+\end{enumerate}
+
+Our experiments are organized around two complementary tracks. The raw UAV track establishes that the full pipeline is executable on realistic captures and that the rectification QA logic behaves selectively rather than permissively. The official aligned track provides a cleaner comparison setting without rectification confound, enabling both controlled ablations and an external baseline comparison against MS-Splatting~\cite{meyerls2025mssplatting}. Across these experiments, the strongest recurring pattern is not universal scene-wise dominance, but that geometry-locked multispectral modeling is the only configuration that consistently preserves valid multispectral products.
+
+In this paper, we make the following contributions:
 \begin{itemize}
-    \item problem setting and motivation;
-    \item why current methods are insufficient;
-    \item the core technical idea;
-    \item the main empirical findings;
-    \item concise contributions.
+    \item We formulate UAV multispectral Gaussian reconstruction as a geometry-locked shared-support problem, rather than a collection of independent per-band renderers.
+    \item We present an RGB-anchored multispectral pipeline that separates stable geometry acquisition from band-specific appearance transfer and supports downstream multispectral product synthesis.
+    \item We introduce a baseline-aware rectification QA protocol for raw UAV scenes, including a warning path for weak-baseline, high-modality-gap cases.
+    \item We provide a six-scene evaluation with raw UAV and official aligned tracks, plus official-scene ablations and an external comparison block against MS-Splatting, showing that our method is competitive while being more reliable for shared-support multispectral synthesis.
 \end{itemize}
-
-The bibliography is already wired, so citations such as 3D Gaussian Splatting~\cite{kerbl2023gaussiansplatting} and multispectral Gaussian splatting baselines~\cite{meyerls2025mssplatting} can be added immediately.

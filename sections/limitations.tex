@@ -1,3 +1,5 @@
 \section{Limitations}
 
-Document known scope limits, assumptions, and failure modes directly. For SIGGRAPH-family submissions, this section is often short but useful when the method relies on a specific capture setup, initialization path, or evaluation protocol.
+Our current paper cycle has three clear limitations. First, the aligned-scene external comparison is mixed across scenes. This is scientifically useful, but it means the paper should be framed around robustness and shared-support validity rather than universal superiority over every external baseline. Second, the current mainline still relies on RGB as the geometry anchor. This is the right choice for our data, but it also means the method is not yet a fully symmetric multispectral representation. Third, our geometry evidence is strongest in terms of support preservation and product validity; a dedicated repeatability evaluator would strengthen the paper further, especially for appendix or rebuttal use.
+
+On the raw UAV side, the rectification protocol has been stabilized for the current paper cycle, but it remains a protocol component rather than a learned alignment module. This is acceptable for the present scope, yet it leaves room for future work on stronger joint optimization or more explicit geometric evaluation.

@@ -1,10 +1,37 @@
 \section{Method}
 
-Split this section into the minimum set of subsections needed to explain the method clearly:
+\subsection{Problem Setting}
 
+We assume a multispectral capture consisting of RGB and four aligned or alignable spectral bands: G, R, RE, and NIR. The goal is not only to reconstruct each band, but to preserve a \emph{shared Gaussian support} so that multispectral products can be computed from mutually corresponding renderings. In our formulation, the key state variables are therefore split into:
 \begin{itemize}
-    \item problem definition;
-    \item representation;
-    \item training or optimization pipeline;
-    \item implementation details that materially affect the experiments.
+    \item \textbf{shared geometry}: Gaussian positions, scales, rotations, opacities, and support identity;
+    \item \textbf{band-specific appearance}: the parameters that reproduce each spectral band while keeping the support fixed.
 \end{itemize}
+
+\subsection{RGB-Anchored Geometry-Locked Pipeline}
+
+Our pipeline contains two stages.
+
+\paragraph{Stage 1: RGB anchor.}
+We first train an RGB Gaussian model and treat the resulting support as the geometry anchor. The reason is empirical and task-driven: RGB provides the strongest and most stable geometry cue in our UAV captures, while low-texture spectral bands often underconstrain geometry. This stage defines the authoritative Gaussian support used by all subsequent band transfers.
+
+\paragraph{Stage 2: Multispectral appearance transfer.}
+Starting from the RGB checkpoint, we optimize G/R/RE/NIR appearance independently while freezing the shared support. In practice, this means that geometry, opacity, and topology identity are not allowed to drift during band transfer. The effect is conservative but deliberate: we give up some freedom to chase single-band metrics in exchange for maintaining valid cross-band correspondence.
+
+\subsection{Why Geometry Locking Matters}
+
+The multispectral target differs from standard novel-view rendering because the downstream task consumes relationships between bands rather than bands in isolation. Once Gaussian support diverges across bands, spectral products such as NDVI or NDRE are no longer computed from corresponding scene elements. A model that improves one-band PSNR while changing geometry can therefore be worse for the actual application. This motivates our central design choice: geometry preservation is part of the representation, not merely a training convenience.
+
+\subsection{Raw UAV Rectification and Quality Audit}
+
+For raw UAV scenes, the pipeline adds a rectification stage before RGB anchoring. Our current protocol keeps an initialization baseline but does not treat it as a universal hard gate. Instead, the QA logic is baseline-aware:
+\begin{itemize}
+    \item strict pass remains available when alignment clearly improves over the baseline;
+    \item pass-with-warning is allowed for weak-baseline, high-modality-gap cases when match quality, stability, and gradient-based diagnostics are strong enough;
+    \item failure is retained for cases with poor matching, unstable homographies, or strong outlier behavior.
+\end{itemize}
+This matters because a naive scaling baseline can be particularly misleading for NIR-to-RGB alignment under view and modality mismatch. The raw-scene protocol therefore separates ``weak baseline'' from ``bad geometry'' rather than collapsing both into the same rejection rule.
+
+\subsection{Products and Indices}
+
+After band transfer, we render multispectral outputs on the preserved support and compute index products such as NDVI, GNDVI, and NDRE. Because all bands share the same Gaussian support, these products are synthesized from corresponding renderings by construction. This is the primary advantage we optimize for, and it is exactly the property that breaks in our geometry-unfrozen and from-scratch ablations.

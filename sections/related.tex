@@ -1,9 +1,10 @@
 \section{Related Work}
 
-Organize this section around the actual comparison axes used in the paper, for example:
+\paragraph{Gaussian splatting and radiance fields.}
+3D Gaussian Splatting established a strong practical baseline for real-time radiance-field rendering by representing scenes as anisotropic Gaussians optimized directly in image space~\cite{kerbl2023gaussiansplatting}. Since then, many follow-up works have improved geometry, anti-aliasing, regularization, or large-scene scalability. The main lesson relevant to our work is that Gaussian splatting provides a strong rendering substrate, but it does not by itself solve cross-modal or multispectral correspondence.
 
-\begin{itemize}
-    \item Gaussian splatting and radiance-field rendering;
-    \item multispectral or cross-modal reconstruction;
-    \item geometry-consistent reconstruction and evaluation.
-\end{itemize}
+\paragraph{Multispectral Gaussian reconstruction.}
+MS-Splatting~\cite{meyerls2025mssplatting} demonstrates that multispectral Gaussian rendering is feasible and provides a natural external baseline for our aligned-scene comparison. Our work differs in emphasis. We focus on UAV multispectral capture where the geometry source is uneven across bands and where downstream products require stable shared support. This makes geometry locking and protocol design central, rather than treating multispectral channels as a straightforward extension of RGB rendering.
+
+\paragraph{Geometry consistency under cross-band reconstruction.}
+For our setting, the critical failure mode is not only poor image quality, but geometry or topology drift across bands. A method may improve one-band PSNR while making multispectral products invalid because the Gaussian support no longer matches. This motivates our use of RGB as a geometry anchor and our decision to frame the problem as geometry-locked multispectral synthesis. It also motivates our ablations: we explicitly test both per-band from-scratch training and geometry-unfrozen transfer to show why image quality alone is not the right optimization target.
