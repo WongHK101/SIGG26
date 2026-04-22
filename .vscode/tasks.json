@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "LaTeX: build",
+      "type": "shell",
+      "command": "latexmk",
+      "args": [
+        "-pdf",
+        "main.tex"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "LaTeX: clean",
+      "type": "shell",
+      "command": "latexmk",
+      "args": [
+        "-C",
+        "main.tex"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
