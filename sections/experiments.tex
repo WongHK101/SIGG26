@@ -3,10 +3,10 @@
 \subsection{Setup}
 
 \paragraph{Scenes.}
-We evaluate the main paper on a 10-scene UAV-focused benchmark: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 3 aligned aerial multispectral scenes (\texttt{ms\_golf}, \texttt{ms\_lake}, \texttt{ms\_solar}). Raw scenes test rectification, QA, reconstruction, products, and geometry diagnostics. Aligned scenes remove rectification confounds and are used for external common-mask comparison. Four additional non-UAV official aligned scenes are reported only in the supplement and are not part of the main 10-scene suite.
+We evaluate the main paper on a 10-scene UAV-focused benchmark: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 3 aligned aerial multispectral scenes (\texttt{ms\_golf}, \texttt{ms\_lake}, \texttt{ms\_solar}). Raw scenes test rectification, QA, reconstruction, products, and geometry diagnostics. Aligned scenes remove rectification confounds and are used for external common-mask comparison.
 
 \paragraph{Methods.}
-We report two UMGS variants: UMGS-I, the primary independent per-band transfer realization, and UMGS-J, a close joint band-bank counterpart. MS-Splatting is the external baseline on aligned aerial scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
+We report two UMGS variants: UMGS-I, with independent per-band transfer, and UMGS-J, with joint band-bank transfer. MS-Splatting is the external baseline on aligned aerial scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
 
 \paragraph{Metrics.}
 Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; $^\dagger$ marks UMGS renders resized to the external adapter resolution for comparison only, not distinct trained variants.
