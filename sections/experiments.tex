@@ -6,34 +6,44 @@
 We evaluate on 14 scenes: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 7 official aligned scenes (\texttt{ms\_bud}, \texttt{ms\_fruit}, \texttt{ms\_garden}, \texttt{ms\_golf}, \texttt{ms\_lake}, \texttt{ms\_solar}, \texttt{ms\_tree}). Raw scenes test rectification, QA, reconstruction, products, and geometry diagnostics. Official scenes remove rectification confounds and are used for external common-mask comparison.
 
 \paragraph{Methods.}
-We report E3 and E4b-zero as geometry-locked pipelines, MS-Splatting as external baseline on official aligned scenes, and two representative ablations: from-scratch and geometry-unfrozen.
+We report two UMGS variants: UMGS-I, an independent per-band transfer pipeline, and UMGS-J, a joint band-bank pipeline with one authoritative multispectral checkpoint. MS-Splatting is the external baseline on official aligned scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not promoted as product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
 
 \paragraph{Metrics.}
-Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Official external comparison uses a common-mask protocol; E3/E4 shims are resolution-aligned comparison views only.
-
-\input{sections/generated_results}
-\clearpage
+Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Official external comparison uses a common-mask protocol; UMGS shims are resolution-aligned comparison views only.
 
 \subsection{Main Results on 14 Scenes}
 
-Table~\ref{tab:main14} shows that E3 and E4b-zero remain near-identical on aggregate quality and geometry. On all 14 scenes, both reach 0.820 spectral SSIM and 0.806 index SSIM; E3 has a small edge on index RMSE (0.084 vs.\ 0.085). Depth aggregates are identical because both variants share the same locked support.
+Table~\ref{tab:main14} shows that UMGS-I and UMGS-J remain near-identical on aggregate quality and geometry. On all 14 scenes, both reach 0.820 spectral SSIM and 0.806 index SSIM; UMGS-I has a small edge on index RMSE (0.084 vs.\ 0.085). Depth aggregates are identical because both variants share the same locked support.
 
-This result supports a stable interpretation: E3 remains the conservative primary line, while E4b-zero is a valid joint-checkpoint branch with numerically comparable performance.
+This result supports a stable interpretation: UMGS-I remains the conservative primary line, while UMGS-J is a valid joint-checkpoint branch with numerically comparable performance.
+
+\input{sections/tables/main14}
 
 \subsection{Index-Focused Analysis}
 
-Table~\ref{tab:index-detail} reports NDVI/GNDVI/NDRE separately. Differences between E3 and E4b-zero are small on NDVI and GNDVI, with a slightly larger NDRE gap favoring E3 in RMSE/PSNR. The joint-bank design is therefore viable but not consistently superior.
+Table~\ref{tab:index-detail} reports NDVI/GNDVI/NDRE separately. Differences between UMGS-I and UMGS-J are small on NDVI and GNDVI, with a slightly larger NDRE gap favoring UMGS-I in RMSE/PSNR. The joint-bank design is therefore viable but not consistently superior.
+
+\input{sections/tables/index_detail}
 
 \subsection{Official-Aligned External Comparison}
 
-Table~\ref{tab:mms-official7} summarizes the 7-scene common-mask comparison against MS-Splatting. On the 7-scene average, E3shim/E4shim are higher in SSIM and lower in LPIPS, spectral RMSE, and SAM. Scene-level behavior in Table~\ref{tab:mms-scenes} is mixed: \texttt{ms\_lake} and \texttt{ms\_golf} favor MS-Splatting on selected entries, while other scenes favor our geometry-locked shims. We report this block as competitive and scene dependent rather than universally dominant.
+Table~\ref{tab:mms-official7} summarizes the 7-scene common-mask comparison against MS-Splatting. On the 7-scene average, UMGS-I-shim and UMGS-J-shim are higher in SSIM and lower in LPIPS, spectral RMSE, and SAM. Scene-level behavior in Table~\ref{tab:mms-scenes} is mixed: \texttt{ms\_lake} and \texttt{ms\_golf} favor MS-Splatting on selected entries, while other scenes favor our geometry-locked shims. We report this block as competitive and scene dependent rather than universally dominant.
 
-For raw unaligned data, Table~\ref{tab:retained-self} is an applicability diagnostic under the external retained-subset path. It is not the main raw benchmark because it does not represent the full raw protocol used by E3/E4.
+\input{sections/tables/mms_official7}
+\input{sections/tables/mms_scenes}
+
+For raw unaligned data, Table~\ref{tab:retained-self} is an applicability diagnostic under the external retained-subset path. It is not the main raw benchmark because it does not represent the full raw protocol used by UMGS-I/UMGS-J.
+
+\input{sections/tables/retained_self}
 
 \subsection{Representative Ablations}
 
-Table~\ref{tab:ablations3} compares E3/E4b-zero against from-scratch and geometry-unfrozen on \texttt{raw\_self}, \texttt{raw002}, and \texttt{ms\_lake}. Geometry-unfrozen improves selected image metrics but weakens the strict shared-support guarantee. From-scratch can increase PSNR on some bands but degrades LPIPS and depth agreement. These results match the method rationale: per-band quality gains alone are insufficient if support consistency is lost.
+Table~\ref{tab:ablations3} compares the locked UMGS variants with two upper-bound ablations on \texttt{raw\_self}, \texttt{raw002}, and \texttt{ms\_lake}. The unfrozen branch improves selected image metrics, but it is not a valid product model: on \texttt{ms\_lake}, product construction fails the shared-support audit with an xyz mismatch of $6.84\times10^{-2}$. Scratch-MS diverges more strongly, including Gaussian-count mismatch across bands. These failures occur at the exact stage where multispectral products are assembled, showing that per-band quality gains alone are insufficient if support consistency is lost.
+
+\input{sections/tables/ablations3}
 
 \subsection{Cost}
 
-Table~\ref{tab:cost} reports coarse but traceable cost indicators. E4b-zero uses higher recorded peak VRAM but lower average recorded VRAM in the aggregated traces; both E3 and E4 retain identical Gaussian counts. The external baseline has much smaller recorded VRAM on official adapter runs, but that value should not be interpreted as full-pipeline raw-scene cost.
+Table~\ref{tab:cost} reports coarse but traceable cost indicators. UMGS-J uses higher recorded peak VRAM but lower average recorded VRAM in the aggregated traces; both UMGS variants retain identical Gaussian counts. The external baseline has much smaller recorded VRAM on official adapter runs, but that value should not be interpreted as full-pipeline raw-scene cost.
+
+\input{sections/tables/cost}

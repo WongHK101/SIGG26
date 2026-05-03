@@ -10,20 +10,20 @@ We first train an RGB Gaussian model with the standard 3DGS optimization pipelin
 
 \subsection{Stage 2: Geometry-Locked Spectral Transfer}
 
-\paragraph{E3 (independent transfer).}
+\paragraph{UMGS-I (independent transfer).}
 For each band $b \in \{G,R,RE,NIR\}$, we initialize from $\mathcal{G}^\star$, freeze all support parameters, and optimize only $\mathcal{A}_b$. This yields four render-compatible spectral models sharing identical Gaussian topology by construction.
 
-\paragraph{E4b-zero (joint band-bank transfer).}
+\paragraph{UMGS-J (joint band-bank transfer).}
 We keep the same frozen $\mathcal{G}^\star$ but optimize four appearance banks in one joint training state. Training alternates active bands in a deterministic round-robin schedule, updates only the active bank, and writes one authoritative multispectral checkpoint. Per-band models are exported only for compatibility with existing render/metric scripts.
 
 \paragraph{Representation invariants.}
-For both E3 and E4b-zero we enforce and audit:
+For both UMGS-I and UMGS-J we enforce and audit:
 \begin{itemize}
     \item fixed Gaussian count and identity;
     \item fixed xyz/scale/rotation/opacity;
     \item appearance-only parameter updates in stage 2.
 \end{itemize}
-These invariants are the basis for index-stable shared support.
+These invariants are the basis for index-stable shared support. A variant that optimizes per-band xyz, scale, rotation, or opacity is therefore not treated as a valid multispectral product model in our protocol, even if it improves single-band rendering. Such a model can still render each band independently, but the $i$-th Gaussian no longer denotes the same physical support across G/R/RE/NIR, so model-level ratios such as NDVI are no longer defined on a consistent 3D support.
 
 \subsection{Raw-Scene Rectification and Baseline-Aware QA}
 

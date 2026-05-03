@@ -4,21 +4,21 @@ UAV multispectral imaging is increasingly used in precision agriculture and envi
 
 Recent radiance-field and Gaussian methods greatly improved training speed and view quality~\cite{mildenhall2020nerf,barron2022mipnerf360,mueller2022instantngp,kerbl2023gaussiansplatting,yu2024mipsplatting,huang20242dgs}. However, most work optimizes RGB appearance and does not enforce multispectral shared support as a first-class representation constraint. Emerging multispectral and thermal Gaussian lines~\cite{meyerls2025mssplatting,thirgood2025hypergs,lu2024thermalgaussian,chen2024thermal3dgs} show strong progress, but in our UAV regime we repeatedly observe a practical failure mode: methods can improve selected image metrics while producing band-specific support drift that degrades index stability.
 
-This paper addresses that failure mode directly. We formulate multispectral reconstruction as \emph{RGB-anchored geometry locking}: geometry, opacity, and Gaussian identity are learned once from RGB and then frozen during G/R/RE/NIR transfer. We evaluate two implementations of the same constraint:
+This paper addresses that failure mode directly. We introduce \textbf{UMGS}, a UAV multispectral Gaussian splatting framework for spectral-index synthesis. UMGS formulates multispectral reconstruction as \emph{RGB-anchored geometry locking}: geometry, opacity, and Gaussian identity are learned once from RGB and then frozen during G/R/RE/NIR transfer. We evaluate two implementations of the same constraint:
 \begin{itemize}
-    \item \textbf{E3}: independent per-band transfer from a shared RGB anchor.
-    \item \textbf{E4b-zero}: joint multispectral training with band-specific appearance banks in one unified checkpoint.
+    \item \textbf{UMGS-I}: independent per-band transfer from a shared RGB anchor.
+    \item \textbf{UMGS-J}: joint multispectral training with band-specific appearance banks in one unified checkpoint.
 \end{itemize}
 Both preserve identical support by construction; they differ only in how spectral appearance parameters are organized and optimized.
 
 For raw UAV captures, alignment quality is another bottleneck. Cross-band FOV and resolution mismatch can make naive baselines unreliable, especially for NIR. We therefore use a baseline-aware rectification QA protocol that separates strict pass, pass-with-warning, and fail, and logs per-frame matching/stability diagnostics rather than relying on a single opaque gate.
 
-Our evaluation covers 14 scenes (7 raw UAV and 7 official aligned). The raw track validates end-to-end applicability (alignment, QA, reconstruction, products, and geometry diagnostics). The official-aligned track removes rectification confounds and supports fair common-mask comparison with MS-Splatting. Across this suite, E3 and E4b-zero are near-tied and consistently preserve shared support; geometry-unfrozen and from-scratch variants may win local image metrics but are less reliable for index-stable multispectral reconstruction.
+Our evaluation covers 14 scenes (7 raw UAV and 7 official aligned). The raw track validates end-to-end applicability (alignment, QA, reconstruction, products, and geometry diagnostics). The official-aligned track removes rectification confounds and supports fair common-mask comparison with MS-Splatting. Across this suite, UMGS-I and UMGS-J are near-tied and consistently preserve shared support. Scratch-MS and Unfrozen-support are useful upper-bound ablations for single-band fitting, but they do not satisfy the shared-support contract required for model-level spectral products.
 
 The contributions are:
 \begin{itemize}
     \item A geometry-locked multispectral Gaussian formulation that treats shared support as a representation constraint, not a post-hoc check.
-    \item Two concrete pipelines (E3 and E4b-zero) implementing the same lock with independent and joint spectral parameterizations.
+    \item Two concrete UMGS pipelines implementing the same lock with independent (UMGS-I) and joint (UMGS-J) spectral parameterizations.
     \item A baseline-aware raw-scene rectification QA protocol with explicit diagnostic states and decision inputs.
     \item A 14-scene benchmark with image, index, depth-reference, cost, and external common-mask comparisons under unified reporting.
 \end{itemize}

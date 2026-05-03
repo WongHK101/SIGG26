@@ -1,13 +1,13 @@
 % Auto-generated supplementary tables
 \begin{table*}[t]
-    \caption{Official 7-scene scene-level common-mask comparison between E4shim and MS-Splatting. PSNR/SSIM/LPIPS average G/R/RE/NIR; RMSE and SAM are spectral 4-band metrics.}
-    \label{tab:supp-e4-mms-scenes}
+    \caption{Official 7-scene scene-level common-mask comparison between UMGS-J-shim and MS-Splatting. PSNR/SSIM/LPIPS average G/R/RE/NIR; RMSE and SAM are spectral 4-band metrics.}
+    \label{tab:supp-umgsj-mms-scenes}
     \centering
     \scriptsize
     \setlength{\tabcolsep}{3pt}
     \begin{tabular}{lcccccccccc}
         \toprule
-        Scene & E4 PSNR & MMS PSNR & E4 SSIM & MMS SSIM & E4 LPIPS & MMS LPIPS & E4 RMSE & MMS RMSE & E4 SAM & MMS SAM \\
+        Scene & UMGS-J PSNR & MMS PSNR & UMGS-J SSIM & MMS SSIM & UMGS-J LPIPS & MMS LPIPS & UMGS-J RMSE & MMS RMSE & UMGS-J SAM & MMS SAM \\
         \midrule
         \texttt{ms\_bud} & 24.77 & 25.09 & 0.797 & 0.781 & 0.225 & 0.257 & 0.0630 & 0.0601 & 6.46 & 7.34 \\
         \texttt{ms\_fruit} & 24.18 & 23.81 & 0.698 & 0.701 & 0.318 & 0.306 & 0.0642 & 0.0670 & 8.12 & 8.66 \\
@@ -29,10 +29,10 @@
         \toprule
         Method & 0.5\% & 1\% & 2.5\% & 5\% & 10\% & 20\% \\
         \midrule
-        E3 & 0.288 & 0.395 & 0.607 & 0.893 & 0.991 & 0.997 \\
-        E4b-zero & 0.288 & 0.395 & 0.607 & 0.893 & 0.991 & 0.997 \\
-        From scratch & 0.189 & 0.304 & 0.469 & 0.601 & 0.635 & 0.638 \\
-        Geom-unfrozen & 0.277 & 0.388 & 0.599 & 0.889 & 0.991 & 0.997 \\
+        UMGS-I & 0.288 & 0.395 & 0.607 & 0.893 & 0.991 & 0.997 \\
+        UMGS-J & 0.288 & 0.395 & 0.607 & 0.893 & 0.991 & 0.997 \\
+        Scratch-MS & 0.189 & 0.304 & 0.469 & 0.601 & 0.635 & 0.638 \\
+        Unfrozen-support & 0.277 & 0.388 & 0.599 & 0.889 & 0.991 & 0.997 \\
         \bottomrule
     \end{tabular}
 \end{table}

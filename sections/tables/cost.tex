@@ -1,0 +1,15 @@
+\begin{table}[!t]
+    \caption{Coarse recorded cost indicators. Values are aggregated from non-invasive GPU traces and exported PLY vertex counts; they are intended as a first cost table, not a microbenchmark.}
+    \label{tab:cost}
+    \centering
+    \scriptsize
+    \begin{tabular}{lcccc}
+        \toprule
+        Method & Peak VRAM GB & Avg. VRAM GB & Peak util. \% & Gaussians M \\
+        \midrule
+        UMGS-I & 27.45 & 4.89 & 99.0 & 4.53 \\
+        UMGS-J & 35.04 & 3.02 & 99.0 & 4.53 \\
+        MS-Splatting & 4.88 & 0.92 & 68.0 & -- \\
+        \bottomrule
+    \end{tabular}
+\end{table}

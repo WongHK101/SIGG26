@@ -1,0 +1,17 @@
+\begin{table*}[!t]
+    \caption{Representative 3-scene ablation summary on \texttt{raw\_self}, \texttt{raw002}, and \texttt{ms\_lake}. Spectral metrics average G/R/RE/NIR; index metrics average NDVI/GNDVI/NDRE. Scratch-MS and Unfrozen-support are single-band upper-bound ablations, not valid product models, because their shared-support audits fail.}
+    \label{tab:ablations3}
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{lcccccccc}
+        \toprule
+        Method & MS PSNR & MS SSIM & MS LPIPS & Idx. RMSE & AbsRel & Ag@5\% & Shared & Products \\
+        \midrule
+        UMGS-I & 25.35 & 0.786 & 0.228 & 0.100 & 0.045 & 0.833 & yes & yes \\
+        UMGS-J & 25.33 & 0.786 & 0.228 & 0.100 & 0.045 & 0.833 & yes & yes \\
+        Scratch-MS & 25.88 & 0.780 & 0.289 & 0.116 & 0.035 & 0.560 & no & invalid \\
+        Unfrozen-support & 26.27 & 0.794 & 0.218 & 0.105 & 0.046 & 0.830 & no & invalid \\
+        \bottomrule
+    \end{tabular}
+\end{table*}

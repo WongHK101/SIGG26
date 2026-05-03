@@ -1,0 +1,20 @@
+\begin{table*}[!t]
+    \caption{Main UMGS results over 14 scenes. RGB metrics for UMGS-J use the shared UMGS-I RGB anchor. Spectral metrics average G/R/RE/NIR. Index metrics average NDVI/GNDVI/NDRE. Depth uses the relative reference-depth protocol and averages G/R/RE/NIR.}
+    \label{tab:main14}
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{llcccccccccc}
+        \toprule
+        Method & Split & RGB PSNR & RGB SSIM & MS PSNR & MS SSIM & MS LPIPS & Idx. RMSE & Idx. SSIM & AbsRel & Ag@5\% & Ag@10\% \\
+        \midrule
+        UMGS-I & Raw 7 & 24.39 & 0.840 & 27.40 & 0.850 & 0.136 & 0.065 & 0.869 & 0.019 & 0.916 & 0.988 \\
+        UMGS-I & Official 7 & 23.30 & 0.741 & 26.07 & 0.791 & 0.248 & 0.103 & 0.743 & 0.117 & 0.697 & 0.750 \\
+        UMGS-I & All 14 & 23.85 & 0.791 & 26.74 & 0.820 & 0.192 & 0.084 & 0.806 & 0.068 & 0.807 & 0.869 \\
+        \midrule
+        UMGS-J & Raw 7 & 24.39 & 0.840 & 27.38 & 0.850 & 0.136 & 0.067 & 0.869 & 0.019 & 0.916 & 0.988 \\
+        UMGS-J & Official 7 & 23.30 & 0.741 & 26.07 & 0.791 & 0.249 & 0.103 & 0.743 & 0.117 & 0.697 & 0.750 \\
+        UMGS-J & All 14 & 23.85 & 0.791 & 26.72 & 0.820 & 0.192 & 0.085 & 0.806 & 0.068 & 0.807 & 0.869 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
