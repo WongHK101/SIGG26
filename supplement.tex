@@ -25,13 +25,13 @@
 
 This supplement aligns with the current main-paper draft and records additional tables that are useful for reproducibility and reviewer inspection.
 
-The current evaluation includes 14 scenes (7 raw UAV + 7 official aligned). The external baseline comparison uses common-mask evaluation on official aligned scenes. For raw unaligned input, the retained-subset diagnostic is reported as an applicability check and should not be interpreted as the main raw full-scene comparison protocol.
+The main paper focuses on 10 UAV/UAV-style scenes. This supplement separately reports four additional official aligned scenes whose viewpoints are not part of the UAV-focused main scope. The retained-subset diagnostic for raw unaligned input is reported as an applicability check and should not be interpreted as the main raw full-scene comparison protocol.
 
 Depth diagnostics follow the relative reference-depth protocol. Since raw UAV reconstructions are not in a globally calibrated metric coordinate system, all thresholds are relative-depth ratios rather than metric distances.
 
-\section{Additional Official Scene-Wise External Comparison}
+\section{Additional Non-UAV Official Scene-Wise External Comparison}
 
-Table~\ref{tab:supp-umgsj-mms-scenes} provides scene-wise official common-mask comparison between UMGS-J-shim and MS-Splatting. This table expands the average values in the main text and makes the mixed scene-level behavior explicit.
+Table~\ref{tab:supp-nonuav-main} reports the four additional official aligned scenes that are intentionally kept out of the main UAV-focused tables. Table~\ref{tab:supp-umgsj-mms-scenes} provides their scene-wise common-mask comparison between UMGS-J-shim and MS-Splatting. We also include the full seven-scene official aligned average for reproducibility.
 
 \section{Additional Relative-Depth Threshold Sweep}
 
@@ -105,6 +105,6 @@ Table~\ref{tab:umgsj-depth} reports the formal reference-depth geometry block on
 
 \section{Takeaway}
 
-The supplementary tables support three practical points used by the draft: (1) official external comparison is competitive but scene-dependent, (2) relative-depth trends are stable under threshold sweeps when support is preserved, and (3) UMGS-JR is an initialization ablation rather than a promoted branch.
+The supplementary tables support three practical points used by the draft: (1) additional official aligned scenes remain available for reproducibility but are outside the main UAV-focused scope, (2) relative-depth trends are stable under threshold sweeps when support is preserved, and (3) UMGS-JR is an initialization ablation rather than a promoted branch.
 
 \end{document}

@@ -2,6 +2,6 @@
 
 We presented UMGS, a geometry-locked multispectral Gaussian reconstruction framework for UAV spectral-index synthesis. The method anchors geometry in RGB, then learns spectral appearance with fixed support, so cross-band products are built on consistent Gaussian topology instead of loosely coupled per-band reconstructions.
 
-Across 14 scenes, UMGS-I and UMGS-J achieve near-identical quality and geometry behavior, showing that the geometry-lock principle is stable under both independent and joint spectral parameterizations. On official aligned scenes, comparison with MS-Splatting is competitive and scene-dependent, while on raw scenes the full pipeline demonstrates practical applicability with rectification QA, product synthesis, and depth-reference diagnostics.
+Across the UAV-focused evaluation, UMGS-I and UMGS-J achieve near-identical quality and geometry behavior, showing that the geometry-lock principle is stable under both independent and joint spectral parameterizations. On aligned UAV-style scenes, comparison with MS-Splatting is competitive and scene-dependent, while on raw scenes the full pipeline demonstrates practical applicability with rectification QA, product synthesis, and depth-reference diagnostics.
 
 The main takeaway is methodological: for multispectral UAV reconstruction, preserving shared support is a first-order constraint, not a secondary check after optimizing single-band image metrics.

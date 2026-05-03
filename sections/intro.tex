@@ -13,12 +13,12 @@ Both preserve identical support by construction; they differ only in how spectra
 
 For raw UAV captures, alignment quality is another bottleneck. Cross-band FOV and resolution mismatch can make naive baselines unreliable, especially for NIR. We therefore use a baseline-aware rectification QA protocol that separates strict pass, pass-with-warning, and fail, and logs per-frame matching/stability diagnostics rather than relying on a single opaque gate.
 
-Our evaluation covers 14 scenes (7 raw UAV and 7 official aligned). The raw track validates end-to-end applicability (alignment, QA, reconstruction, products, and geometry diagnostics). The official-aligned track removes rectification confounds and supports fair common-mask comparison with MS-Splatting. Across this suite, UMGS-I and UMGS-J are near-tied and consistently preserve shared support. Scratch-MS and Unfrozen-support are useful upper-bound ablations for single-band fitting, but they do not satisfy the shared-support contract required for model-level spectral products.
+Our main evaluation covers 10 UAV/UAV-style scenes: 7 raw UAV captures and 3 aligned multispectral scenes with UAV-like outdoor viewpoints. The raw track validates end-to-end applicability (alignment, QA, reconstruction, products, and geometry diagnostics). The aligned track removes rectification confounds and supports fair common-mask comparison with MS-Splatting. Across this suite, UMGS-I and UMGS-J are near-tied and consistently preserve shared support. Scratch-MS and Unfrozen-support are useful upper-bound ablations for single-band fitting, but they do not satisfy the shared-support contract required for model-level spectral products.
 
 The contributions are:
 \begin{itemize}
     \item A geometry-locked multispectral Gaussian formulation that treats shared support as a representation constraint, not a post-hoc check.
     \item Two concrete UMGS pipelines implementing the same lock with independent (UMGS-I) and joint (UMGS-J) spectral parameterizations.
     \item A baseline-aware raw-scene rectification QA protocol with explicit diagnostic states and decision inputs.
-    \item A 14-scene benchmark with image, index, depth-reference, cost, and external common-mask comparisons under unified reporting.
+    \item A UAV-focused benchmark with image, index, depth-reference, cost, and external common-mask comparisons under unified reporting.
 \end{itemize}

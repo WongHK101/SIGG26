@@ -3,17 +3,17 @@
 \subsection{Setup}
 
 \paragraph{Scenes.}
-We evaluate on 14 scenes: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 7 official aligned scenes (\texttt{ms\_bud}, \texttt{ms\_fruit}, \texttt{ms\_garden}, \texttt{ms\_golf}, \texttt{ms\_lake}, \texttt{ms\_solar}, \texttt{ms\_tree}). Raw scenes test rectification, QA, reconstruction, products, and geometry diagnostics. Official scenes remove rectification confounds and are used for external common-mask comparison.
+We evaluate the main paper on 10 UAV/UAV-style scenes: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 3 aligned UAV-style multispectral scenes. Raw scenes test rectification, QA, reconstruction, products, and geometry diagnostics. Aligned scenes remove rectification confounds and are used for external common-mask comparison.
 
 \paragraph{Methods.}
-We report two UMGS variants: UMGS-I, an independent per-band transfer pipeline, and UMGS-J, a joint band-bank pipeline with one authoritative multispectral checkpoint. MS-Splatting is the external baseline on official aligned scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not promoted as product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
+We report two UMGS variants: UMGS-I, an independent per-band transfer pipeline, and UMGS-J, a joint band-bank pipeline with one authoritative multispectral checkpoint. MS-Splatting is the external baseline on aligned UAV-style scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not promoted as product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
 
 \paragraph{Metrics.}
-Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Official external comparison uses a common-mask protocol; UMGS shims are resolution-aligned comparison views only.
+Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; UMGS shims are resolution-aligned comparison views only.
 
-\subsection{Main Results on 14 Scenes}
+\subsection{Main Results on UAV Scenes}
 
-Table~\ref{tab:main14} shows that UMGS-I and UMGS-J remain near-identical on aggregate quality and geometry. On all 14 scenes, both reach 0.820 spectral SSIM and 0.806 index SSIM; UMGS-I has a small edge on index RMSE (0.084 vs.\ 0.085). Depth aggregates are identical because both variants share the same locked support.
+Table~\ref{tab:main-uav10} shows that UMGS-I and UMGS-J remain near-identical on aggregate quality and geometry. On the 10-scene UAV-focused suite, both reach 0.843 spectral SSIM and 0.844 index SSIM; UMGS-I has a small edge on index RMSE (0.075 vs.\ 0.077). Depth aggregates are identical because both variants share the same locked support.
 
 This result supports a stable interpretation: UMGS-I remains the conservative primary line, while UMGS-J is a valid joint-checkpoint branch with numerically comparable performance.
 
@@ -25,9 +25,9 @@ Table~\ref{tab:index-detail} reports NDVI/GNDVI/NDRE separately. Differences bet
 
 \input{sections/tables/index_detail}
 
-\subsection{Official-Aligned External Comparison}
+\subsection{Aligned External Comparison}
 
-Table~\ref{tab:mms-official7} summarizes the 7-scene common-mask comparison against MS-Splatting. On the 7-scene average, UMGS-I-shim and UMGS-J-shim are higher in SSIM and lower in LPIPS, spectral RMSE, and SAM. Scene-level behavior in Table~\ref{tab:mms-scenes} is mixed: \texttt{ms\_lake} and \texttt{ms\_golf} favor MS-Splatting on selected entries, while other scenes favor our geometry-locked shims. We report this block as competitive and scene dependent rather than universally dominant.
+Table~\ref{tab:mms-official-uav3} summarizes the aligned UAV-style common-mask comparison against MS-Splatting. The average is deliberately reported as scene-dependent: UMGS-J-shim is lower in LPIPS and has the same mean SSIM/SAM, while MS-Splatting is slightly higher in PSNR and slightly lower in spectral RMSE. Scene-level behavior in Table~\ref{tab:mms-scenes} is mixed, so we do not claim universal dominance over the external baseline.
 
 \input{sections/tables/mms_official7}
 \input{sections/tables/mms_scenes}
@@ -44,6 +44,6 @@ Table~\ref{tab:ablations3} compares the locked UMGS variants with two upper-boun
 
 \subsection{Cost}
 
-Table~\ref{tab:cost} reports coarse but traceable cost indicators. UMGS-J uses higher recorded peak VRAM but lower average recorded VRAM in the aggregated traces; both UMGS variants retain identical Gaussian counts. The external baseline has much smaller recorded VRAM on official adapter runs, but that value should not be interpreted as full-pipeline raw-scene cost.
+Table~\ref{tab:cost} reports coarse but traceable cost indicators on the UAV-focused runs. UMGS-J uses higher recorded peak VRAM but lower average recorded VRAM in the aggregated traces; both UMGS variants retain identical Gaussian counts.
 
 \input{sections/tables/cost}

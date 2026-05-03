@@ -1,6 +1,22 @@
 % Auto-generated supplementary tables
 \begin{table*}[t]
-    \caption{Official 7-scene scene-level common-mask comparison between UMGS-J-shim and MS-Splatting. PSNR/SSIM/LPIPS average G/R/RE/NIR; RMSE and SAM are spectral 4-band metrics.}
+    \caption{Additional official aligned non-UAV scenes, reported separately from the UAV-focused main-paper suite. RGB metrics for UMGS-J use the shared UMGS-I RGB anchor. Spectral metrics average G/R/RE/NIR.}
+    \label{tab:supp-nonuav-main}
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{lcccccccccc}
+        \toprule
+        Method & RGB PSNR & RGB SSIM & MS PSNR & MS SSIM & MS LPIPS & Idx. RMSE & Idx. SSIM & AbsRel & Ag@5\% & Ag@10\% \\
+        \midrule
+        UMGS-I & 21.67 & 0.690 & 25.75 & 0.763 & 0.262 & 0.108 & 0.710 & 0.164 & 0.616 & 0.688 \\
+        UMGS-J & 21.67 & 0.690 & 25.75 & 0.763 & 0.262 & 0.108 & 0.710 & 0.164 & 0.616 & 0.688 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+\begin{table*}[t]
+    \caption{Additional non-UAV official aligned scene-level common-mask comparison between UMGS-J-shim and MS-Splatting. PSNR/SSIM/LPIPS average G/R/RE/NIR; RMSE and SAM are spectral 4-band metrics.}
     \label{tab:supp-umgsj-mms-scenes}
     \centering
     \scriptsize
@@ -12,13 +28,25 @@
         \texttt{ms\_bud} & 24.77 & 25.09 & 0.797 & 0.781 & 0.225 & 0.257 & 0.0630 & 0.0601 & 6.46 & 7.34 \\
         \texttt{ms\_fruit} & 24.18 & 23.81 & 0.698 & 0.701 & 0.318 & 0.306 & 0.0642 & 0.0670 & 8.12 & 8.66 \\
         \texttt{ms\_garden} & 29.44 & 27.36 & 0.874 & 0.820 & 0.179 & 0.283 & 0.0378 & 0.0460 & 3.60 & 4.40 \\
-        \texttt{ms\_golf} & 31.33 & 32.12 & 0.928 & 0.935 & 0.176 & 0.234 & 0.0300 & 0.0273 & 2.77 & 3.11 \\
-        \texttt{ms\_lake} & 22.02 & 22.79 & 0.740 & 0.731 & 0.350 & 0.374 & 0.0887 & 0.0817 & 8.83 & 7.88 \\
-        \texttt{ms\_solar} & 27.69 & 26.21 & 0.892 & 0.893 & 0.117 & 0.123 & 0.0449 & 0.0532 & 4.53 & 5.16 \\
         \texttt{ms\_tree} & 26.45 & 24.83 & 0.812 & 0.757 & 0.251 & 0.325 & 0.0525 & 0.0644 & 5.90 & 7.07 \\
         \bottomrule
     \end{tabular}
 \end{table*}
+
+\begin{table}[t]
+    \caption{Full seven-scene official aligned common-mask average, included only for reproducibility. Lower is better for LPIPS, 4-band RMSE, and SAM.}
+    \label{tab:supp-official7-mms-summary}
+    \centering
+    \scriptsize
+    \begin{tabular}{lccccc}
+        \toprule
+        Method & PSNR & SSIM & LPIPS & 4-band RMSE & SAM$^\circ$ \\
+        \midrule
+        UMGS-J-shim & 26.55 & 0.820 & 0.231 & 0.0544 & 5.75 \\
+        MS-Splatting & 26.03 & 0.803 & 0.272 & 0.0571 & 6.23 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 \begin{table}[t]
     \caption{Clean raw-self relative-depth agreement sweep (mean over G/R/RE/NIR). Thresholds are relative-depth ratios.}
