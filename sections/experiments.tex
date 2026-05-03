@@ -3,13 +3,13 @@
 \subsection{Setup}
 
 \paragraph{Scenes.}
-We evaluate the main paper on 10 UAV/UAV-style scenes: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 3 aligned UAV-style multispectral scenes. Raw scenes test rectification, QA, reconstruction, products, and geometry diagnostics. Aligned scenes remove rectification confounds and are used for external common-mask comparison.
+We evaluate the main paper on a 10-scene UAV-focused benchmark: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 3 aligned aerial multispectral scenes (\texttt{ms\_golf}, \texttt{ms\_lake}, \texttt{ms\_solar}). Raw scenes test rectification, QA, reconstruction, products, and geometry diagnostics. Aligned scenes remove rectification confounds and are used for external common-mask comparison.
 
 \paragraph{Methods.}
 We report two UMGS variants: UMGS-I, an independent per-band transfer pipeline, and UMGS-J, a joint band-bank pipeline with one authoritative multispectral checkpoint. MS-Splatting is the external baseline on aligned UAV-style scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not promoted as product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
 
 \paragraph{Metrics.}
-Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; UMGS shims are resolution-aligned comparison views only.
+Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; UMGS-I-shim and UMGS-J-shim are resolution-aligned comparison views only, not distinct trained variants.
 
 \subsection{Main Results on UAV Scenes}
 
