@@ -1,39 +1,39 @@
 \section{Method}
 
-\subsection{Task Definition}
+\subsection{Problem Formulation}
 
-Given RGB and multispectral captures (G/R/RE/NIR), we seek a representation that supports both novel-view rendering and stable spectral product synthesis. Let $\mathcal{G}$ denote Gaussian support parameters (position, scale, rotation, opacity, identity) and $\mathcal{A}_b$ denote appearance parameters for band $b$. The key design choice in this work is to optimize $\mathcal{G}$ once from RGB, then hold $\mathcal{G}$ fixed while learning $\mathcal{A}_b$.
+Given RGB and multispectral UAV captures, our goal is to synthesize spectral novel views and spectral indices on a common 3D support. Let $\mathcal{G}$ denote Gaussian support parameters, including position, scale, rotation, opacity, and identity, and let $\mathcal{A}_b$ denote appearance parameters for band $b$. UMGS separates support estimation from spectral appearance learning: it estimates $\mathcal{G}$ once from RGB, then keeps $\mathcal{G}$ fixed while learning $\mathcal{A}_b$ for each multispectral band.
 
 \subsection{Stage 1: RGB Geometry Anchor}
 
-We first train an RGB Gaussian model with the standard 3DGS optimization pipeline~\cite{kerbl2023gaussiansplatting}. RGB is used as the anchor because it provides the highest texture and most stable feature matching in our UAV captures. The resulting checkpoint defines the shared support $\mathcal{G}^\star$ used by all spectral bands.
+We first train an RGB Gaussian model with the 3DGS optimization pipeline~\cite{kerbl2023gaussiansplatting}. RGB is used as the anchor because it provides stronger texture and more stable feature matching than the spectral bands in our UAV captures. The optimized support $\mathcal{G}^{\star}$ becomes the geometric carrier for all subsequent spectral rendering.
 
-\subsection{Stage 2: Geometry-Locked Spectral Transfer}
+\subsection{Stage 2: Geometry-Locked Spectral Appearance}
 
 \paragraph{UMGS-I (independent transfer).}
-For each band $b \in \{G,R,RE,NIR\}$, we initialize from $\mathcal{G}^\star$, freeze all support parameters, and optimize only $\mathcal{A}_b$. This yields four render-compatible spectral models sharing identical Gaussian topology by construction.
+For each multispectral band $b$, we initialize from $\mathcal{G}^{\star}$, freeze all support parameters, and optimize only $\mathcal{A}_b$. This produces independent spectral appearance models whose Gaussians remain in one-to-one correspondence.
 
 \paragraph{UMGS-J (joint band-bank transfer).}
-We keep the same frozen $\mathcal{G}^\star$ but optimize four appearance banks in one joint training state. Training alternates active bands in a deterministic round-robin schedule, updates only the active bank, and writes one authoritative multispectral checkpoint. Per-band models are exported only for compatibility with existing render/metric scripts.
+We keep the same frozen $\mathcal{G}^{\star}$ but optimize band-specific appearance banks in one joint multispectral representation. Only the active bank is updated at each step, so all bands share the same support while retaining separate appearance capacity.
 
-\paragraph{Representation invariants.}
-For both UMGS-I and UMGS-J we enforce and audit:
+\paragraph{Geometry lock.}
+Both variants enforce:
 \begin{itemize}
     \item fixed Gaussian count and identity;
     \item fixed xyz/scale/rotation/opacity;
     \item appearance-only parameter updates in stage 2.
 \end{itemize}
-These invariants are the basis for index-stable shared support. A variant that optimizes per-band xyz, scale, rotation, or opacity is therefore not treated as a valid multispectral product model in our protocol, even if it improves single-band rendering. Such a model can still render each band independently, but the $i$-th Gaussian no longer denotes the same physical support across G/R/RE/NIR, so model-level ratios such as NDVI are no longer defined on a consistent 3D support.
+These constraints define the shared support used by spectral indices. A variant that optimizes per-band xyz, scale, rotation, or opacity can still render each band independently, but its $i$-th Gaussian no longer denotes the same physical support across bands. Model-level ratios such as NDVI are then no longer defined on a consistent 3D support.
 
 \subsection{Raw-Scene Rectification and Baseline-Aware QA}
 
-Raw UAV scenes require spectral-to-RGB rectification before Stage 1. We estimate per-band homographies using deterministic candidate sampling and robust aggregation from feature matches. QA is baseline-aware:
+Raw UAV scenes require spectral-to-RGB rectification before reconstruction. We estimate per-band homographies using deterministic candidate sampling and robust aggregation from feature matches. Because naive scaling baselines can be unreliable under cross-FOV and modality gaps, we use a baseline-aware QA protocol:
 \begin{itemize}
     \item \textbf{strict pass}: legacy edge+gradient improvement and geometry checks;
     \item \textbf{pass-with-warning}: allowed only for weak-baseline/high-modality-gap cases that satisfy match quality, stability, gradient gain, edge floor, and outlier-ratio constraints;
     \item \textbf{fail}: unstable geometry or insufficient matching evidence.
 \end{itemize}
-Estimator QA is an online gate; final standalone QA on exported rectified outputs is the authoritative decision.
+This protocol supports raw scenes only; aligned inputs use the same geometry-locked representation.
 
 \subsection{Products and Geometry Diagnostics}
 
