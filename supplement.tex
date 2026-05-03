@@ -7,7 +7,7 @@
 
 \begin{document}
 
-\title{UMGS: UAV Multispectral Gaussian Splatting for Spectral-Index Synthesis -- Supplementary Material}
+\title{UMGS: UAV Multispectral 3D Gaussian Splatting for Spectral-Index Synthesis -- Supplementary Material}
 
 \author{Anonymous Author(s)}
 \affiliation{%
@@ -25,22 +25,22 @@
 
 This supplement aligns with the current main-paper draft and records additional tables that are useful for reproducibility and reviewer inspection.
 
-The main paper focuses on 10 UAV/UAV-style scenes. This supplement separately reports four additional official aligned scenes whose viewpoints are not part of the UAV-focused main scope. The retained-subset diagnostic for raw unaligned input is reported as an applicability check and should not be interpreted as the main raw full-scene comparison protocol.
+The main paper focuses on a 10-scene UAV-focused benchmark: 7 raw UAV captures and 3 aligned aerial multispectral scenes. This supplement separately reports four additional official aligned scenes whose viewpoints are not part of the UAV-focused main scope. The retained-subset diagnostic for raw unaligned input is reported as an applicability check and should not be interpreted as the main raw full-scene comparison protocol.
 
 Depth diagnostics follow the relative reference-depth protocol. Since raw UAV reconstructions are not in a globally calibrated metric coordinate system, all thresholds are relative-depth ratios rather than metric distances.
 
-\paragraph{Comparison shims.}
-UMGS-I-shim and UMGS-J-shim denote UMGS renders bilinearly resized to the external adapter resolution solely for common-mask comparison. They are not distinct training variants and are not used to define the UMGS method.
+\paragraph{Resolution-aligned comparison views.}
+The dagger marker ($^\dagger$) denotes UMGS renders bilinearly resized to the external adapter resolution solely for common-mask comparison. These rows are comparison views, not distinct training variants, and are not used to define the UMGS method.
 
 \paragraph{Grouped split sanitization.}
 For official aligned scenes with inconsistent split and transform metadata, we sanitize splits at the capture-group level against the available transforms. A D/G/R/RE/NIR group is removed only when one or more required members are absent from the transform file, making it unusable as a complete multispectral comparison unit. This is a protocol repair for data completeness, not a performance-based selection.
 
-\paragraph{Depth-reference status.}
-Official aligned depth diagnostics use sparse point-splat references derived from available transforms and point support. They are secondary reference-depth evidence, not dense MVS or LiDAR ground truth. The main geometry claims therefore use relative-depth consistency and do not claim absolute dense geometry accuracy.
+\paragraph{Depth reference.}
+Aligned depth diagnostics use sparse point-splat references from available transforms and point support. They are secondary reference-depth evidence, not dense MVS or LiDAR ground truth. The geometry claims therefore use relative-depth consistency and do not claim absolute dense geometry accuracy.
 
 \section{Additional Non-UAV Official Scene-Wise External Comparison}
 
-Table~\ref{tab:supp-nonuav-main} reports the four additional official aligned scenes that are intentionally kept out of the main UAV-focused tables. Table~\ref{tab:supp-umgsj-mms-scenes} provides their scene-wise common-mask comparison between UMGS-J-shim and MS-Splatting. We also include the full seven-scene official aligned average for reproducibility.
+Table~\ref{tab:supp-nonuav-main} reports the four additional official aligned scenes that are intentionally kept out of the main UAV-focused tables. Table~\ref{tab:supp-umgsj-mms-scenes} provides their scene-wise common-mask comparison between UMGS-J$^\dagger$ and MS-Splatting. We also include the full seven-scene official aligned average for reproducibility.
 
 \section{Additional Relative-Depth Threshold Sweep}
 
@@ -114,6 +114,6 @@ Table~\ref{tab:umgsj-depth} reports the formal reference-depth geometry block on
 
 \section{Takeaway}
 
-The supplementary tables support three practical points used by the draft: (1) additional official aligned scenes remain available for reproducibility but are outside the main UAV-focused scope, (2) relative-depth trends are stable under threshold sweeps when support is preserved, and (3) UMGS-JR is an initialization ablation rather than a promoted branch.
+The supplementary tables support three practical points used by the paper: (1) additional official aligned scenes remain available for reproducibility but are outside the main UAV-focused scope, (2) relative-depth trends are stable under threshold sweeps when support is preserved, and (3) UMGS-JR is an initialization ablation rather than a promoted branch.
 
 \end{document}

@@ -6,10 +6,10 @@
 We evaluate the main paper on a 10-scene UAV-focused benchmark: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 3 aligned aerial multispectral scenes (\texttt{ms\_golf}, \texttt{ms\_lake}, \texttt{ms\_solar}). Raw scenes test rectification, QA, reconstruction, products, and geometry diagnostics. Aligned scenes remove rectification confounds and are used for external common-mask comparison.
 
 \paragraph{Methods.}
-We report two UMGS variants: UMGS-I, with independent per-band transfer, and UMGS-J, with joint band-bank transfer. MS-Splatting is the external baseline on aligned UAV-style scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
+We report two UMGS variants: UMGS-I, with independent per-band transfer, and UMGS-J, with joint band-bank transfer. MS-Splatting is the external baseline on aligned aerial scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
 
 \paragraph{Metrics.}
-Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; UMGS-I-shim and UMGS-J-shim are resolution-aligned comparison views only, not distinct trained variants.
+Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; $^\dagger$ marks UMGS renders resized to the external adapter resolution for comparison only, not distinct trained variants.
 
 \subsection{Main Results on UAV Scenes}
 
@@ -25,7 +25,7 @@ Spectral-index synthesis is the downstream use case that motivates shared suppor
 
 \subsection{Aligned External Comparison}
 
-Aligned scenes remove the raw-rectification factor and isolate the reconstruction model. Under this common-mask setting, Table~\ref{tab:mms-official-uav3} shows a scene-dependent comparison with MS-Splatting: UMGS-J-shim is lower in LPIPS and has the same mean SSIM/SAM, while MS-Splatting is slightly higher in PSNR and slightly lower in spectral RMSE. Scene-level behavior in Table~\ref{tab:mms-scenes} is mixed, so the conclusion is not universal dominance but complementary behavior under a fair aligned protocol.
+Aligned scenes remove the raw-rectification factor and isolate the reconstruction model. Under this common-mask setting, Table~\ref{tab:mms-official-uav3} shows scene-dependent behavior: the UMGS comparison views are lower in LPIPS and match mean SSIM/SAM, while MS-Splatting is slightly higher in PSNR and slightly lower in spectral RMSE. Scene-level results in Table~\ref{tab:mms-scenes} are mixed, so the conclusion is complementary behavior under a fair aligned protocol rather than universal dominance.
 
 \input{sections/tables/mms_official7}
 \input{sections/tables/mms_scenes}

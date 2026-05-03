@@ -1,5 +1,5 @@
 \begin{table}[!t]
-    \caption{Aligned UAV-style common-mask comparison against MS-Splatting. Lower is better for LPIPS, 4-band RMSE, and SAM. UMGS shims are resolution-aligned comparison views, not separate training variants.}
+    \caption{Aligned aerial common-mask comparison against MS-Splatting. Lower is better for LPIPS, 4-band RMSE, and SAM. Daggered UMGS rows are resolution-aligned comparison views, not separate training variants.}
     \label{tab:mms-official-uav3}
     \centering
     \small
@@ -7,8 +7,8 @@
         \toprule
         Method & PSNR & SSIM & LPIPS & 4-band RMSE & SAM$^\circ$ \\
         \midrule
-        UMGS-I-shim & 27.01 & 0.853 & 0.215 & 0.0545 & 5.38 \\
-        UMGS-J-shim & 27.01 & 0.853 & 0.215 & 0.0545 & 5.38 \\
+        UMGS-I$^\dagger$ & 27.01 & 0.853 & 0.215 & 0.0545 & 5.38 \\
+        UMGS-J$^\dagger$ & 27.01 & 0.853 & 0.215 & 0.0545 & 5.38 \\
         MS-Splatting & 27.04 & 0.853 & 0.244 & 0.0541 & 5.38 \\
         \bottomrule
     \end{tabular}
