@@ -6,44 +6,42 @@
 We evaluate the main paper on a 10-scene UAV-focused benchmark: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 3 aligned aerial multispectral scenes (\texttt{ms\_golf}, \texttt{ms\_lake}, \texttt{ms\_solar}). Raw scenes test rectification, QA, reconstruction, products, and geometry diagnostics. Aligned scenes remove rectification confounds and are used for external common-mask comparison.
 
 \paragraph{Methods.}
-We report two UMGS variants: UMGS-I, an independent per-band transfer pipeline, and UMGS-J, a joint band-bank pipeline with one authoritative multispectral checkpoint. MS-Splatting is the external baseline on aligned UAV-style scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not promoted as product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
+We report two UMGS variants: UMGS-I, with independent per-band transfer, and UMGS-J, with joint band-bank transfer. MS-Splatting is the external baseline on aligned UAV-style scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
 
 \paragraph{Metrics.}
 Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; UMGS-I-shim and UMGS-J-shim are resolution-aligned comparison views only, not distinct trained variants.
 
 \subsection{Main Results on UAV Scenes}
 
-Table~\ref{tab:main-uav10} shows that UMGS-I and UMGS-J remain near-identical on aggregate quality and geometry. On the 10-scene UAV-focused suite, both reach 0.843 spectral SSIM and 0.844 index SSIM; UMGS-I has a small edge on index RMSE (0.075 vs.\ 0.077). Depth aggregates are identical because both variants share the same locked support.
-
-This result supports a stable interpretation: UMGS-I remains the conservative primary line, while UMGS-J is a valid joint-checkpoint branch with numerically comparable performance.
+The main question is whether locking RGB geometry sacrifices spectral rendering quality. Table~\ref{tab:main-uav10} shows that it does not: UMGS-I and UMGS-J remain near-identical on aggregate quality and geometry. On the 10-scene UAV-focused suite, both reach 0.843 spectral SSIM and 0.844 index SSIM; UMGS-I has a small edge on index RMSE (0.075 vs.\ 0.077). Depth aggregates are identical because both variants share the same locked support. We therefore use UMGS-I as the conservative primary line and treat UMGS-J as a joint-parameterization branch with comparable performance.
 
 \input{sections/tables/main14}
 
 \subsection{Index-Focused Analysis}
 
-Table~\ref{tab:index-detail} reports NDVI/GNDVI/NDRE separately. Differences between UMGS-I and UMGS-J are small on NDVI and GNDVI, with a slightly larger NDRE gap favoring UMGS-I in RMSE/PSNR. The joint-bank design is therefore viable but not consistently superior.
+Spectral-index synthesis is the downstream use case that motivates shared support. Table~\ref{tab:index-detail} breaks out NDVI, GNDVI, and NDRE. UMGS-I and UMGS-J are close on NDVI and GNDVI, while NDRE shows a larger RMSE/PSNR gap favoring UMGS-I. The joint-bank design is therefore viable but not consistently superior.
 
 \input{sections/tables/index_detail}
 
 \subsection{Aligned External Comparison}
 
-Table~\ref{tab:mms-official-uav3} summarizes the aligned UAV-style common-mask comparison against MS-Splatting. The average is deliberately reported as scene-dependent: UMGS-J-shim is lower in LPIPS and has the same mean SSIM/SAM, while MS-Splatting is slightly higher in PSNR and slightly lower in spectral RMSE. Scene-level behavior in Table~\ref{tab:mms-scenes} is mixed, so we do not claim universal dominance over the external baseline.
+Aligned scenes remove the raw-rectification factor and isolate the reconstruction model. Under this common-mask setting, Table~\ref{tab:mms-official-uav3} shows a scene-dependent comparison with MS-Splatting: UMGS-J-shim is lower in LPIPS and has the same mean SSIM/SAM, while MS-Splatting is slightly higher in PSNR and slightly lower in spectral RMSE. Scene-level behavior in Table~\ref{tab:mms-scenes} is mixed, so the conclusion is not universal dominance but complementary behavior under a fair aligned protocol.
 
 \input{sections/tables/mms_official7}
 \input{sections/tables/mms_scenes}
 
-For raw unaligned data, Table~\ref{tab:retained-self} is an applicability diagnostic under the external retained-subset path. It is not the main raw benchmark because it does not represent the full raw protocol used by UMGS-I/UMGS-J.
+Raw unaligned data test a different question: whether an external method can be applied under its retained-subset path. Table~\ref{tab:retained-self} is therefore an applicability diagnostic rather than the main raw benchmark, because it does not represent the full raw protocol used by UMGS-I/UMGS-J.
 
 \input{sections/tables/retained_self}
 
 \subsection{Representative Ablations}
 
-Table~\ref{tab:ablations3} compares the locked UMGS variants with two upper-bound ablations on \texttt{raw\_self}, \texttt{raw002}, and \texttt{ms\_lake}. The unfrozen branch improves selected image metrics, but it is not a valid product model: on \texttt{ms\_lake}, product construction fails the shared-support audit with an xyz mismatch of $6.84\times10^{-2}$. Scratch-MS diverges more strongly, including Gaussian-count mismatch across bands. These failures occur at the exact stage where multispectral products are assembled, showing that per-band quality gains alone are insufficient if support consistency is lost.
+The ablations test whether geometry locking is merely conservative or actually necessary. Table~\ref{tab:ablations3} compares the locked UMGS variants with two upper-bound ablations on \texttt{raw\_self}, \texttt{raw002}, and \texttt{ms\_lake}. The unfrozen branch improves selected image metrics, but it is not a valid product model: on \texttt{ms\_lake}, product construction fails the shared-support audit with an xyz mismatch of $6.84\times10^{-2}$. Scratch-MS diverges more strongly, including Gaussian-count mismatch across bands. These failures occur when multispectral products are assembled, showing that per-band quality gains alone are insufficient if support consistency is lost.
 
 \input{sections/tables/ablations3}
 
 \subsection{Cost}
 
-Table~\ref{tab:cost} reports coarse but traceable cost indicators on the UAV-focused runs. UMGS-J uses higher recorded peak VRAM but lower average recorded VRAM in the aggregated traces; both UMGS variants retain identical Gaussian counts.
+Finally, Table~\ref{tab:cost} reports coarse but traceable cost indicators on the UAV-focused runs. UMGS-J uses higher recorded peak VRAM but lower average recorded VRAM in the aggregated traces; both UMGS variants retain identical Gaussian counts.
 
 \input{sections/tables/cost}
