@@ -1,0 +1,100 @@
+﻿\documentclass[acmtog,anonymous,review]{acmart}
+
+\acmSubmissionID{TBD}
+
+\settopmatter{printfolios=true}
+\renewcommand\shortauthors{Anonymous Submission}
+
+\begin{document}
+
+\title{Geometry-Locked Multispectral Gaussian Splatting for UAV Imaging: Supplementary Material}
+
+\author{Anonymous Author(s)}
+\affiliation{%
+  \institution{Anonymous Institution}
+  \country{Anonymous}
+}
+
+\ccsdesc[500]{Computing methodologies~Image-based rendering}
+\ccsdesc[300]{Computing methodologies~Reconstruction}
+\keywords{multispectral imaging, gaussian splatting, 3D reconstruction, UAV}
+
+\maketitle
+
+\section{Protocol Notes and Scope}
+
+This supplement aligns with the current main-paper draft and records additional tables that are useful for reproducibility and reviewer inspection.
+
+The current evaluation includes 14 scenes (7 raw UAV + 7 official aligned). The external baseline comparison uses common-mask evaluation on official aligned scenes. For raw unaligned input, the retained-subset diagnostic is reported as an applicability check and should not be interpreted as the main raw full-scene comparison protocol.
+
+Depth diagnostics follow the relative reference-depth protocol. Since raw UAV reconstructions are not in a globally calibrated metric coordinate system, all thresholds are relative-depth ratios rather than metric distances.
+
+\section{Additional Official Scene-Wise External Comparison}
+
+Table~\ref{tab:supp-e4-mms-scenes} provides scene-wise official common-mask comparison between E4shim and MS-Splatting. This table expands the average values in the main text and makes the mixed scene-level behavior explicit.
+
+\section{Additional Relative-Depth Threshold Sweep}
+
+The clean raw-self depth-agreement sweep across six thresholds is reported in the next table block. It complements the main paper's compact geometry indicators and makes the trend from strict to relaxed thresholds explicit.
+
+\input{sections/generated_supplement_tables}
+
+\section{E4b Initialization Ablation (E4b-zero vs E4b-rgb)}
+
+The main paper keeps E4b-rgb out of the main tables and reports E4b-zero as the representative E4 branch. This section records the initialization ablation that motivated that decision. Both variants use the same geometry-locked joint multispectral training design and export per-band evaluation views from a unified checkpoint. They differ only in appearance-bank initialization.
+
+E4b-zero initializes each spectral bank from the reset-appearance state. E4b-rgb initializes each spectral bank from the RGB-tied carrier.
+
+Table~\ref{tab:e4b-quality-cost} compares these variants on the two E4 pilot scenes used during method screening. E4b-rgb does not improve the branch: it degrades image/index quality on both pilot scenes.
+
+\begin{table*}[t]
+    \caption{E4b-zero and E4b-rgb quality/cost comparison from pilot runs. Band metrics are G/R/RE/NIR means. Index metrics are NDVI/GNDVI/NDRE means.}
+    \label{tab:e4b-quality-cost}
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{@{}llcccccccc@{}}
+        \toprule
+        Scene & Variant & Band SSIM $\uparrow$ & Band PSNR $\uparrow$ & Band LPIPS $\downarrow$ & Index MAE $\downarrow$ & Index RMSE $\downarrow$ & Index PSNR $\uparrow$ & Index SSIM $\uparrow$ & Time (s) $\downarrow$ \\
+        \midrule
+        \texttt{self\_m3m} & E4b-zero & 0.7657 & 25.330 & 0.2113 & 0.0607 & 0.0863 & 27.701 & 0.7943 & 8129 \\
+        \texttt{self\_m3m} & E4b-rgb  & 0.7434 & 24.966 & 0.2061 & 0.0623 & 0.0880 & 27.519 & 0.7854 & 7339 \\
+        \midrule
+        Vineyard A & E4b-zero & 0.8804 & 28.690 & 0.1092 & 0.0339 & 0.0513 & 32.169 & 0.8948 & 5805 \\
+        Vineyard A & E4b-rgb  & 0.8590 & 27.847 & 0.1266 & 0.0375 & 0.0574 & 31.326 & 0.8800 & 6730 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+Table~\ref{tab:e4b-depth} reports the formal reference-depth geometry block on \texttt{self\_m3m}. Identical geometry numbers are expected because both E4b variants share the same frozen RGB support.
+
+\begin{table*}[t]
+    \caption{E4b-zero and E4b-rgb reference-depth geometry on \texttt{self\_m3m}. Values are averaged over G/R/RE/NIR. Abs., Med., and Missing are threshold-independent.}
+    \label{tab:e4b-depth}
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}lccccccc@{}}
+        \toprule
+        Variant & $\tau$ & Abs. $\downarrow$ & Med. $\downarrow$ & Missing $\downarrow$ & Agree $\uparrow$ & Front $\downarrow$ & Too-deep $\downarrow$ \\
+        \midrule
+        E4b-zero & 0.05 & 0.0925 & 0.0419 & 0.0002 & 0.5490 & 0.2560 & 0.1949 \\
+        & 0.10 & 0.0925 & 0.0419 & 0.0002 & 0.7255 & 0.1697 & 0.1047 \\
+        & 0.25 & 0.0925 & 0.0419 & 0.0002 & 0.9150 & 0.0472 & 0.0377 \\
+        & 0.50 & 0.0925 & 0.0419 & 0.0002 & 0.9805 & 0.0050 & 0.0143 \\
+        & 1.00 & 0.0925 & 0.0419 & 0.0002 & 0.9957 & 0.0003 & 0.0038 \\
+        \midrule
+        E4b-rgb & 0.05 & 0.0925 & 0.0419 & 0.0002 & 0.5490 & 0.2560 & 0.1949 \\
+        & 0.10 & 0.0925 & 0.0419 & 0.0002 & 0.7255 & 0.1697 & 0.1047 \\
+        & 0.25 & 0.0925 & 0.0419 & 0.0002 & 0.9150 & 0.0472 & 0.0377 \\
+        & 0.50 & 0.0925 & 0.0419 & 0.0002 & 0.9805 & 0.0050 & 0.0143 \\
+        & 1.00 & 0.0925 & 0.0419 & 0.0002 & 0.9957 & 0.0003 & 0.0038 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+\section{Takeaway}
+
+The supplementary tables support three practical points used by the draft: (1) official external comparison is competitive but scene-dependent, (2) relative-depth trends are stable under threshold sweeps when support is preserved, and (3) E4b-rgb is an initialization ablation rather than a promoted branch.
+
+\end{document}

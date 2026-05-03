@@ -1,75 +1,39 @@
 \section{Experiments}
 
-\subsection{Evaluation Tracks}
+\subsection{Setup}
 
-We use two complementary evaluation tracks.
+\paragraph{Scenes.}
+We evaluate on 14 scenes: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 7 official aligned scenes (\texttt{ms\_bud}, \texttt{ms\_fruit}, \texttt{ms\_garden}, \texttt{ms\_golf}, \texttt{ms\_lake}, \texttt{ms\_solar}, \texttt{ms\_tree}). Raw scenes test rectification, QA, reconstruction, products, and geometry diagnostics. Official scenes remove rectification confounds and are used for external common-mask comparison.
 
-\paragraph{Raw UAV track.}
-This track contains three real raw UAV multispectral scenes: \texttt{self\_m3m}, \texttt{external\_vineyard\_A}, and \texttt{external\_vineyard\_B}. It evaluates the full pipeline, including cross-band rectification, QA, RGB anchoring, spectral transfer, product synthesis, and downstream metrics. This track exists primarily to show that the complete pipeline is executable on realistic raw captures.
+\paragraph{Methods.}
+We report E3 and E4b-zero as geometry-locked pipelines, MS-Splatting as external baseline on official aligned scenes, and two representative ablations: from-scratch and geometry-unfrozen.
 
-\paragraph{Official aligned track.}
-This track contains three aligned benchmark scenes: \texttt{ms\_lake}, \texttt{ms\_golf}, and \texttt{ms\_solar}. Because alignment is provided, this track removes rectification confound and is the preferred stage for controlled ablations and external baseline comparison.
+\paragraph{Metrics.}
+Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Official external comparison uses a common-mask protocol; E3/E4 shims are resolution-aligned comparison views only.
 
-\subsection{Metrics}
+\input{sections/generated_results}
+\clearpage
 
-For per-band rendering quality we report SSIM, PSNR, and LPIPS. For multispectral products we report MAE, RMSE, PSNR, and SSIM on NDVI, GNDVI, and NDRE. In the official external comparison, we additionally report common-mask 4-band metrics and paired confidence intervals. The current paper scope emphasizes multispectral product stability and shared-support validity rather than universal dominance on every image metric.
+\subsection{Main Results on 14 Scenes}
 
-\subsection{Official-Aligned Main Results}
+Table~\ref{tab:main14} shows that E3 and E4b-zero remain near-identical on aggregate quality and geometry. On all 14 scenes, both reach 0.820 spectral SSIM and 0.806 index SSIM; E3 has a small edge on index RMSE (0.084 vs.\ 0.085). Depth aggregates are identical because both variants share the same locked support.
 
-Table~\ref{tab:official-main} summarizes the aligned-scene index results of our main method. The complete scene-wise and per-band results are available in the appendix, but these mean values already show that the geometry-locked pipeline produces stable multispectral products across a diverse three-scene aligned benchmark.
+This result supports a stable interpretation: E3 remains the conservative primary line, while E4b-zero is a valid joint-checkpoint branch with numerically comparable performance.
 
-\begin{table}[t]
-    \caption{Official-aligned three-scene mean index metrics of the main method.}
-    \label{tab:official-main}
-    \centering
-    \begin{tabular}{lcccc}
-        \toprule
-        Index & MAE $\downarrow$ & RMSE $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ \\
-        \midrule
-        NDVI  & 0.0768 & 0.1001 & 27.5250 & 0.7982 \\
-        GNDVI & 0.0820 & 0.1072 & 27.1412 & 0.7791 \\
-        NDRE  & 0.0643 & 0.0878 & 28.4126 & 0.7861 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
+\subsection{Index-Focused Analysis}
 
-At the scene level, \texttt{ms\_golf} and \texttt{ms\_solar} are comparatively easy aligned scenes, while \texttt{ms\_lake} is substantially harder. This spread is useful: the aligned benchmark is not saturated, yet the same geometry-locked formulation remains valid across all three scenes.
+Table~\ref{tab:index-detail} reports NDVI/GNDVI/NDRE separately. Differences between E3 and E4b-zero are small on NDVI and GNDVI, with a slightly larger NDRE gap favoring E3 in RMSE/PSNR. The joint-bank design is therefore viable but not consistently superior.
 
-\subsection{External Comparison on Official-Aligned Scenes}
+\subsection{Official-Aligned External Comparison}
 
-We compare our aligned-scene results against MS-Splatting using a frozen common-mask protocol. For compatibility with the external adapter resolution, we compare against \emph{E3shim}, which bilinearly resizes the render/ground-truth pair of our method to the external adapter resolution. E3shim is a compare shim only, not an additional trained variant.
+Table~\ref{tab:mms-official7} summarizes the 7-scene common-mask comparison against MS-Splatting. On the 7-scene average, E3shim/E4shim are higher in SSIM and lower in LPIPS, spectral RMSE, and SAM. Scene-level behavior in Table~\ref{tab:mms-scenes} is mixed: \texttt{ms\_lake} and \texttt{ms\_golf} favor MS-Splatting on selected entries, while other scenes favor our geometry-locked shims. We report this block as competitive and scene dependent rather than universally dominant.
 
-Two aligned scenes required a protocol repair before external comparison. Their original \texttt{train\_split.json} files were not fully consistent with \texttt{transforms.json}, so we applied grouped split sanitization at the multispectral capture-group level and removed incomplete groups before external training and evaluation.
+For raw unaligned data, Table~\ref{tab:retained-self} is an applicability diagnostic under the external retained-subset path. It is not the main raw benchmark because it does not represent the full raw protocol used by E3/E4.
 
-\begin{table}[t]
-    \caption{Scene-level outcome of the official-aligned external comparison.}
-    \label{tab:external-summary}
-    \centering
-    \begin{tabular}{lll}
-        \toprule
-        Scene & Favored method & Summary \\
-        \midrule
-        \texttt{ms\_solar} & E3shim & stronger per-band and 4-band metrics \\
-        \texttt{ms\_lake}  & MS-Splatting & strongest scene in favor of the external baseline \\
-        \texttt{ms\_golf}  & mixed / E3shim on 4-band & per-band mixed, joint metrics favor E3shim \\
-        \bottomrule
-    \end{tabular}
-\end{table}
+\subsection{Representative Ablations}
 
-The external comparison is therefore mixed across scenes rather than uniformly one-sided. This is an important result for how we position the paper. We do not claim universal scene-wise dominance over the external baseline. Instead, we use the official aligned track to show that the proposed pipeline remains competitive under a cleaner protocol while preserving the shared-support structure needed for multispectral synthesis.
+Table~\ref{tab:ablations3} compares E3/E4b-zero against from-scratch and geometry-unfrozen on \texttt{raw\_self}, \texttt{raw002}, and \texttt{ms\_lake}. Geometry-unfrozen improves selected image metrics but weakens the strict shared-support guarantee. From-scratch can increase PSNR on some bands but degrades LPIPS and depth agreement. These results match the method rationale: per-band quality gains alone are insufficient if support consistency is lost.
 
-\subsection{Ablations}
+\subsection{Cost}
 
-Our primary official-scene ablations are performed on \texttt{ms\_lake}, which is also the most demanding aligned scene in the external comparison. We test two alternatives:
-\begin{itemize}
-    \item \textbf{geometry unfrozen}: start from the RGB checkpoint but allow geometry and opacity to move during band transfer;
-    \item \textbf{from scratch}: train each spectral band independently without RGB-anchored transfer.
-\end{itemize}
-
-Both ablations improve some single-band metrics. For example, geometry-unfrozen transfer improves PSNR over the main method by up to $+1.62$ dB on RE and $+1.54$ dB on NIR. The from-scratch variant also improves several individual bands. However, both variants fail at the point that matters most for multispectral reconstruction: they break shared Gaussian support strongly enough that stable products cannot be formed. In our runs, geometry-unfrozen transfer fails with explicit cross-band coordinate mismatch, while from-scratch training fails with large Gaussian-count divergence across bands.
-
-This is the central experimental message of the paper. Image quality alone is insufficient to justify a multispectral method if the representation ceases to support valid cross-band synthesis. The geometry-locked main method is the only variant in our study that simultaneously maintains shared support and completes the full product/index pipeline.
-
-\subsection{Current Scope and Non-Claims}
-
-We intentionally freeze the current paper cycle around the main method and do not continue expansion of alternative multispectral representations. In particular, our exploratory joint multispectral representation variant did not show stable gains over the main method and is therefore not promoted to the main line. We also treat geometry repeatability as a possible appendix-strengthening direction rather than a blocker for the current paper cycle.
+Table~\ref{tab:cost} reports coarse but traceable cost indicators. E4b-zero uses higher recorded peak VRAM but lower average recorded VRAM in the aggregated traces; both E3 and E4 retain identical Gaussian counts. The external baseline has much smaller recorded VRAM on official adapter runs, but that value should not be interpreted as full-pipeline raw-scene cost.

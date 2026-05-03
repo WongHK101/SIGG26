@@ -1,5 +1,9 @@
 \section{Limitations}
 
-Our current paper cycle has three clear limitations. First, the aligned-scene external comparison is mixed across scenes. This is scientifically useful, but it means the paper should be framed around robustness and shared-support validity rather than universal superiority over every external baseline. Second, the current mainline still relies on RGB as the geometry anchor. This is the right choice for our data, but it also means the method is not yet a fully symmetric multispectral representation. Third, our geometry evidence is strongest in terms of support preservation and product validity; a dedicated repeatability evaluator would strengthen the paper further, especially for appendix or rebuttal use.
+First, official aligned external comparison is scene-dependent rather than one-sided. While 7-scene means favor our geometry-locked shims on several metrics, some scenes still favor MS-Splatting on selected entries. Our claim is therefore reliability and protocol applicability, not universal metric dominance.
 
-On the raw UAV side, the rectification protocol has been stabilized for the current paper cycle, but it remains a protocol component rather than a learned alignment module. This is acceptable for the present scope, yet it leaves room for future work on stronger joint optimization or more explicit geometric evaluation.
+Second, E3 and E4b-zero are very close numerically. This validates that the geometry-lock principle is robust to independent and joint implementations. In the current paper, E4b-zero is best interpreted as a strong alternative branch rather than a strict replacement for E3.
+
+Third, our geometry evaluation is a reference-depth consistency protocol, not dense metric ground truth. This is appropriate for cross-band support analysis under missing global scale, but it does not replace LiDAR-grade absolute geometry benchmarks.
+
+Fourth, cost reporting is intentionally non-invasive and currently coarse. The reported VRAM/utilization/size statistics are traceable and reproducible, but a dedicated runtime microbenchmark (e.g., standardized per-view FPS across methods and resolutions) is still future work.
