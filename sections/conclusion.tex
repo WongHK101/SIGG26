@@ -1,7 +1,7 @@
 \section{Conclusion}
 
-We presented UMGS, a geometry-locked multispectral 3D Gaussian Splatting framework for UAV spectral-index synthesis. The method anchors geometry in RGB, then learns spectral appearance with fixed support, so cross-band products are built on consistent Gaussian topology instead of loosely coupled per-band reconstructions.
+We presented UMGS, a geometry-locked multispectral 3D Gaussian Splatting framework for UAV spectral-index synthesis. UMGS anchors geometry in RGB and learns spectral appearance on fixed support, so cross-band products are formed on consistent Gaussian topology rather than loosely coupled per-band reconstructions.
 
-Across the UAV-focused evaluation, UMGS-I and UMGS-J achieve near-identical quality and geometry behavior, showing that the geometry-lock principle is stable under both independent and joint spectral parameterizations. On aligned UAV-style scenes, comparison with MS-Splatting is competitive and scene-dependent, while on raw scenes the full pipeline demonstrates practical applicability with rectification QA, product synthesis, and depth-reference diagnostics.
+The experiments support two conclusions. First, RGB-anchored geometry locking is the central design choice: it preserves support consistency even when weaker spectral bands or unfrozen per-band optimization can improve isolated image metrics. Second, the same principle remains stable under two parameterizations. UMGS-I is the conservative primary line, while UMGS-J provides a viable joint branch with comparable behavior.
 
-The main takeaway is methodological: for multispectral UAV reconstruction, preserving shared support is a first-order constraint, not a secondary check after optimizing single-band image metrics.
+The broader implication is that UAV multispectral reconstruction should treat shared 3D support as a first-order constraint for spectral-index synthesis, not as a secondary check after single-band rendering optimization.
