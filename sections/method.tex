@@ -37,8 +37,8 @@ This protocol supports raw scenes only; aligned inputs use the same geometry-loc
 
 \subsection{Products and Geometry Diagnostics}
 
-We render G/R/RE/NIR and compute NDVI, GNDVI, and NDRE under a common valid mask. Geometry is evaluated by relative depth agreement on held-out probe views:
+We render G/R/RE/NIR and compute NDVI, GNDVI, and NDRE under a common valid mask. When a held-out reference source passes validation, geometry can be diagnosed by relative depth agreement on probe views:
 \[
 \delta_{rel} = \frac{D_{model} - D_{ref}}{D_{ref}} .
 \]
-Because global metric scale is not guaranteed in raw UAV reconstructions, we report relative-depth AbsRel and threshold agreements (1\%, 5\%, 10\%) instead of meter-based absolute accuracy.
+Because global metric scale is not guaranteed in raw UAV reconstructions, this diagnostic uses relative-depth ratios rather than meter-based absolute accuracy. Failed reference sources are excluded rather than forced into the quantitative tables.

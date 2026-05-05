@@ -1,20 +1,20 @@
 \begin{table*}[!t]
-    \caption{Main UMGS results over the 10-scene UAV-focused suite. RGB metrics for UMGS-J use the shared UMGS-I RGB anchor. Spectral metrics average G/R/RE/NIR. Index metrics average NDVI/GNDVI/NDRE. Depth uses the relative reference-depth protocol and averages G/R/RE/NIR.}
+    \caption{Main UMGS results over the 10-scene UAV-focused suite. RGB metrics for UMGS-J use the shared UMGS-I RGB anchor. Spectral metrics average G/R/RE/NIR. Index metrics average NDVI/GNDVI/NDRE. Geometry diagnostics require validated reference sources and are therefore kept separate from this main quality table.}
     \label{tab:main-uav10}
     \centering
     \scriptsize
     \setlength{\tabcolsep}{3pt}
-    \begin{tabular}{llcccccccccc}
+    \begin{tabular}{llccccccc}
         \toprule
-        Method & Split & RGB PSNR & RGB SSIM & MS PSNR & MS SSIM & MS LPIPS & Idx. RMSE & Idx. SSIM & AbsRel & Ag@5\% & Ag@10\% \\
+        Method & Split & RGB PSNR & RGB SSIM & MS PSNR & MS SSIM & MS LPIPS & Idx. RMSE & Idx. SSIM \\
         \midrule
-        UMGS-I & Raw 7 & 24.39 & 0.840 & 27.40 & 0.850 & 0.136 & 0.065 & 0.869 & 0.019 & 0.916 & 0.988 \\
-        UMGS-I & Aligned 3 & 25.48 & 0.810 & 26.50 & 0.828 & 0.230 & 0.098 & 0.787 & 0.053 & 0.804 & 0.833 \\
-        UMGS-I & UAV 10 & 24.72 & 0.831 & 27.13 & 0.843 & 0.164 & 0.075 & 0.844 & 0.029 & 0.883 & 0.942 \\
+        UMGS-I & Raw 7 & 24.39 & 0.840 & 27.40 & 0.850 & 0.136 & 0.065 & 0.869 \\
+        UMGS-I & Aligned 3 & 25.48 & 0.810 & 26.50 & 0.828 & 0.230 & 0.098 & 0.787 \\
+        UMGS-I & UAV 10 & 24.72 & 0.831 & 27.13 & 0.843 & 0.164 & 0.075 & 0.844 \\
         \midrule
-        UMGS-J & Raw 7 & 24.39 & 0.840 & 27.37 & 0.850 & 0.136 & 0.067 & 0.869 & 0.019 & 0.916 & 0.988 \\
-        UMGS-J & Aligned 3 & 25.48 & 0.810 & 26.50 & 0.828 & 0.230 & 0.098 & 0.787 & 0.053 & 0.804 & 0.833 \\
-        UMGS-J & UAV 10 & 24.72 & 0.831 & 27.11 & 0.843 & 0.164 & 0.077 & 0.844 & 0.029 & 0.883 & 0.942 \\
+        UMGS-J & Raw 7 & 24.39 & 0.840 & 27.37 & 0.850 & 0.136 & 0.067 & 0.869 \\
+        UMGS-J & Aligned 3 & 25.48 & 0.810 & 26.50 & 0.828 & 0.230 & 0.098 & 0.787 \\
+        UMGS-J & UAV 10 & 24.72 & 0.831 & 27.11 & 0.843 & 0.164 & 0.077 & 0.844 \\
         \bottomrule
     \end{tabular}
 \end{table*}

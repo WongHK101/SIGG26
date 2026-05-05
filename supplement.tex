@@ -27,7 +27,7 @@ This supplement aligns with the current main-paper draft and records additional 
 
 The main paper focuses on a 10-scene UAV-focused benchmark: 7 raw UAV captures and 3 aligned aerial multispectral scenes. This supplement separately reports four additional official aligned scenes whose viewpoints are not part of the UAV-focused main scope. The retained-subset diagnostic for raw unaligned input is reported as an applicability check and should not be interpreted as the main raw full-scene comparison protocol.
 
-Depth diagnostics follow the relative reference-depth protocol. Since raw UAV reconstructions are not in a globally calibrated metric coordinate system, all thresholds are relative-depth ratios rather than metric distances.
+Depth diagnostics follow the relative reference-depth protocol when the reference source passes validation. Since raw UAV reconstructions are not in a globally calibrated metric coordinate system, all thresholds are relative-depth ratios rather than metric distances. We exclude failed dense-reference attempts from quantitative tables.
 
 \paragraph{Resolution-aligned comparison views.}
 The dagger marker ($^\dagger$) denotes UMGS renders bilinearly resized to the external adapter resolution solely for common-mask comparison. These rows are comparison views, not distinct training variants, and are not used to define the UMGS method.
@@ -36,15 +36,15 @@ The dagger marker ($^\dagger$) denotes UMGS renders bilinearly resized to the ex
 For official aligned scenes with inconsistent split and transform metadata, we sanitize splits at the capture-group level against the available transforms. A D/G/R/RE/NIR group is removed only when one or more required members are absent from the transform file, making it unusable as a complete multispectral comparison unit. This is a protocol repair for data completeness, not a performance-based selection.
 
 \paragraph{Depth reference.}
-Aligned depth diagnostics use sparse point-splat references from available transforms and point support. They are secondary reference-depth evidence, not dense MVS or LiDAR ground truth. The geometry claims therefore use relative-depth consistency and do not claim absolute dense geometry accuracy.
+Aligned depth diagnostics use sparse point-splat references from available transforms and point support. They are secondary reference-depth evidence, not dense MVS or LiDAR ground truth. The raw \texttt{self\_m3m} dense MVS mesh-reference attempt failed validation: COLMAP geometric depth maps were empty, normal maps were zero, stereo fusion produced zero fused points, and a manual photometric-depth fallback produced collapsed geometry under CloudCompare inspection. We therefore exclude that dense mesh-reference block from the paper. The geometry claims use only validated support diagnostics and do not claim absolute dense geometry accuracy.
 
 \section{Additional Non-UAV Official Scene-Wise External Comparison}
 
 Table~\ref{tab:supp-nonuav-main} reports the four additional official aligned scenes that are intentionally kept out of the main UAV-focused tables. Table~\ref{tab:supp-umgsj-mms-scenes} provides their scene-wise common-mask comparison between UMGS-J$^\dagger$ and MS-Splatting. We also include the full seven-scene official aligned average for reproducibility.
 
-\section{Additional Relative-Depth Threshold Sweep}
+\section{Depth-Reference Status}
 
-The clean raw-self depth-agreement sweep across six thresholds is reported in the next table block. It complements the main paper's compact geometry indicators and makes the trend from strict to relaxed thresholds explicit.
+We keep the relative-depth evaluator and validation scripts in the released code, but the current paper does not use the failed raw \texttt{self\_m3m} mesh-reference numbers as evidence. The invalidated artifacts are useful only as an engineering note: sparse COLMAP points were well-formed, but dense MVS did not produce a validated mesh or fused point cloud for that scene. Future dense-reference evaluation should start from a scene whose COLMAP geometric depth, normal maps, stereo fusion, and mesh pass validation before any method comparison is reported.
 
 \input{sections/generated_supplement_tables}
 
@@ -85,35 +85,8 @@ Table~\ref{tab:umgsj-quality-cost} compares these variants on the two joint-bran
     \end{tabular}
 \end{table*}
 
-Table~\ref{tab:umgsj-depth} reports the formal reference-depth geometry block on \texttt{self\_m3m}. Identical geometry numbers are expected because both joint variants share the same frozen RGB support.
-
-\begin{table*}[t]
-    \caption{UMGS-J and UMGS-JR reference-depth geometry on \texttt{self\_m3m}. Values are averaged over G/R/RE/NIR. Abs., Med., and Missing are threshold-independent.}
-    \label{tab:umgsj-depth}
-    \centering
-    \scriptsize
-    \setlength{\tabcolsep}{4pt}
-    \begin{tabular}{@{}lccccccc@{}}
-        \toprule
-        Variant & $\tau$ & Abs. $\downarrow$ & Med. $\downarrow$ & Missing $\downarrow$ & Agree $\uparrow$ & Front $\downarrow$ & Too-deep $\downarrow$ \\
-        \midrule
-        UMGS-J & 0.05 & 0.0925 & 0.0419 & 0.0002 & 0.5490 & 0.2560 & 0.1949 \\
-        & 0.10 & 0.0925 & 0.0419 & 0.0002 & 0.7255 & 0.1697 & 0.1047 \\
-        & 0.25 & 0.0925 & 0.0419 & 0.0002 & 0.9150 & 0.0472 & 0.0377 \\
-        & 0.50 & 0.0925 & 0.0419 & 0.0002 & 0.9805 & 0.0050 & 0.0143 \\
-        & 1.00 & 0.0925 & 0.0419 & 0.0002 & 0.9957 & 0.0003 & 0.0038 \\
-        \midrule
-        UMGS-JR & 0.05 & 0.0925 & 0.0419 & 0.0002 & 0.5490 & 0.2560 & 0.1949 \\
-        & 0.10 & 0.0925 & 0.0419 & 0.0002 & 0.7255 & 0.1697 & 0.1047 \\
-        & 0.25 & 0.0925 & 0.0419 & 0.0002 & 0.9150 & 0.0472 & 0.0377 \\
-        & 0.50 & 0.0925 & 0.0419 & 0.0002 & 0.9805 & 0.0050 & 0.0143 \\
-        & 1.00 & 0.0925 & 0.0419 & 0.0002 & 0.9957 & 0.0003 & 0.0038 \\
-        \bottomrule
-    \end{tabular}
-\end{table*}
-
 \section{Takeaway}
 
-The supplementary tables support three practical points used by the paper: (1) additional official aligned scenes remain available for reproducibility but are outside the main UAV-focused scope, (2) relative-depth trends are stable under threshold sweeps when support is preserved, and (3) UMGS-JR is an initialization ablation rather than a promoted branch.
+The supplementary tables support three practical points used by the paper: (1) additional official aligned scenes remain available for reproducibility but are outside the main UAV-focused scope, (2) depth-reference evidence is reported only when the reference source passes validation, and (3) UMGS-JR is an initialization ablation rather than a promoted branch.
 
 \end{document}

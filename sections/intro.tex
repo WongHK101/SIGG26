@@ -15,12 +15,12 @@ UMGS-I is our conservative default realization, while UMGS-J tests whether the s
 
 For raw UAV captures, alignment quality is another bottleneck. Cross-band FOV and resolution mismatch can make naive baselines unreliable, especially for NIR. We therefore use a baseline-aware rectification QA protocol as supporting infrastructure: it separates strict pass, pass-with-warning, and fail, and logs per-frame matching/stability diagnostics rather than relying on a single opaque gate.
 
-Our main evaluation covers a 10-scene UAV-focused benchmark: 7 raw UAV captures and 3 aligned aerial multispectral scenes. The raw track validates end-to-end applicability (alignment, QA, reconstruction, products, and geometry diagnostics). The aligned track removes rectification confounds and supports fair common-mask comparison with MS-Splatting. Across this suite, UMGS-I and UMGS-J are near-tied and consistently preserve shared support. Scratch-MS and Unfrozen-support are useful upper-bound ablations for single-band fitting, but they do not satisfy the shared-support requirement for stable multispectral index synthesis.
+Our main evaluation covers a 10-scene UAV-focused benchmark: 7 raw UAV captures and 3 aligned aerial multispectral scenes. The raw track validates end-to-end applicability (alignment, QA, reconstruction, and products). The aligned track removes rectification confounds and supports fair common-mask comparison with MS-Splatting. Across this suite, UMGS-I and UMGS-J are near-tied and consistently preserve shared support. Scratch-MS and Unfrozen-support are useful upper-bound ablations for single-band fitting, but they do not satisfy the shared-support requirement for stable multispectral index synthesis.
 
 The contributions are:
 \begin{itemize}
     \item A geometry-locked multispectral Gaussian formulation that uses RGB as the geometric carrier for stable spectral-index synthesis.
     \item Two concrete UMGS realizations implementing the same lock with independent (UMGS-I) and joint (UMGS-J) spectral parameterizations.
-    \item Unified image, index, reference-depth, cost, and common-mask reporting on a UAV-focused benchmark.
+    \item Unified image, index, cost, and common-mask reporting on a UAV-focused benchmark, with reference-depth diagnostics reported only when the reference source passes validation.
     \item Supporting raw-scene infrastructure for baseline-aware rectification QA with explicit diagnostic states and decision inputs.
 \end{itemize}

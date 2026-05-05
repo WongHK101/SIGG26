@@ -5,12 +5,12 @@
     \centering
     \scriptsize
     \setlength{\tabcolsep}{3pt}
-    \begin{tabular}{lcccccccccc}
+    \begin{tabular}{lccccccc}
         \toprule
-        Method & RGB PSNR & RGB SSIM & MS PSNR & MS SSIM & MS LPIPS & Idx. RMSE & Idx. SSIM & AbsRel & Ag@5\% & Ag@10\% \\
+        Method & RGB PSNR & RGB SSIM & MS PSNR & MS SSIM & MS LPIPS & Idx. RMSE & Idx. SSIM \\
         \midrule
-        UMGS-I & 21.67 & 0.690 & 25.75 & 0.763 & 0.262 & 0.108 & 0.710 & 0.164 & 0.616 & 0.688 \\
-        UMGS-J & 21.67 & 0.690 & 25.75 & 0.763 & 0.262 & 0.108 & 0.710 & 0.164 & 0.616 & 0.688 \\
+        UMGS-I & 21.67 & 0.690 & 25.75 & 0.763 & 0.262 & 0.108 & 0.710 \\
+        UMGS-J & 21.67 & 0.690 & 25.75 & 0.763 & 0.262 & 0.108 & 0.710 \\
         \bottomrule
     \end{tabular}
 \end{table*}
@@ -44,23 +44,6 @@
         \midrule
         UMGS-J$^\dagger$ & 26.55 & 0.820 & 0.231 & 0.0544 & 5.75 \\
         MS-Splatting & 26.03 & 0.803 & 0.272 & 0.0571 & 6.23 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\begin{table}[t]
-    \caption{Clean raw-self relative-depth agreement sweep (mean over G/R/RE/NIR). Thresholds are relative-depth ratios.}
-    \label{tab:supp-depth-sweep}
-    \centering
-    \scriptsize
-    \begin{tabular}{lcccccc}
-        \toprule
-        Method & 0.5\% & 1\% & 2.5\% & 5\% & 10\% & 20\% \\
-        \midrule
-        UMGS-I & 0.288 & 0.395 & 0.607 & 0.893 & 0.991 & 0.997 \\
-        UMGS-J & 0.288 & 0.395 & 0.607 & 0.893 & 0.991 & 0.997 \\
-        Scratch-MS & 0.189 & 0.304 & 0.469 & 0.601 & 0.635 & 0.638 \\
-        Unfrozen-support & 0.277 & 0.388 & 0.599 & 0.889 & 0.991 & 0.997 \\
         \bottomrule
     \end{tabular}
 \end{table}

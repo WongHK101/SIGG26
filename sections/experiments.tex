@@ -3,17 +3,17 @@
 \subsection{Setup}
 
 \paragraph{Scenes.}
-We evaluate the main paper on a 10-scene UAV-focused benchmark: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 3 aligned aerial multispectral scenes (\texttt{ms\_golf}, \texttt{ms\_lake}, \texttt{ms\_solar}). Raw scenes test rectification, QA, reconstruction, products, and geometry diagnostics. Aligned scenes remove rectification confounds and are used for external common-mask comparison. Four additional non-UAV official aligned scenes are reported only in the supplement and are not part of the main 10-scene suite.
+We evaluate the main paper on a 10-scene UAV-focused benchmark: 7 raw UAV scenes (\texttt{raw\_self}, \texttt{raw001}--\texttt{raw006}) and 3 aligned aerial multispectral scenes (\texttt{ms\_golf}, \texttt{ms\_lake}, \texttt{ms\_solar}). Raw scenes test rectification, QA, reconstruction, and products. Aligned scenes remove rectification confounds and are used for external common-mask comparison. Four additional non-UAV official aligned scenes are reported only in the supplement and are not part of the main 10-scene suite.
 
 \paragraph{Methods.}
 We report two UMGS variants: UMGS-I, with independent per-band transfer, and UMGS-J, with joint band-bank transfer. MS-Splatting is the external baseline on aligned aerial scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
 
 \paragraph{Metrics.}
-Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Geometry: relative-depth AbsRel and agreement at 1\%, 5\%, 10\%. Cost: non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; $^\dagger$ marks UMGS renders resized to the external adapter resolution for comparison only, not distinct trained variants.
+Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Cost uses non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; $^\dagger$ marks UMGS renders resized to the external adapter resolution for comparison only, not distinct trained variants. We report geometry only as a validated diagnostic: the raw self-scene dense MVS mesh-reference attempt failed validation and is excluded from all main quantitative claims.
 
 \subsection{Main Results on UAV Scenes}
 
-The main question is whether locking RGB geometry sacrifices spectral rendering quality. Table~\ref{tab:main-uav10} shows that it does not: UMGS-I and UMGS-J remain near-identical on aggregate quality and geometry. On the 10-scene UAV-focused suite, both reach 0.843 spectral SSIM and 0.844 index SSIM; UMGS-I has a small edge on index RMSE (0.075 vs.\ 0.077). Depth aggregates are identical because both variants share the same locked support. We therefore use UMGS-I as the conservative primary line and treat UMGS-J as a joint-parameterization branch with comparable performance.
+The main question is whether locking RGB geometry sacrifices spectral rendering quality. Table~\ref{tab:main-uav10} shows that it does not: UMGS-I and UMGS-J remain near-identical on aggregate image and index quality. On the 10-scene UAV-focused suite, both reach 0.843 spectral SSIM and 0.844 index SSIM; UMGS-I has a small edge on index RMSE (0.075 vs.\ 0.077). We therefore use UMGS-I as the conservative primary line and treat UMGS-J as a joint-parameterization branch with comparable performance.
 
 \input{sections/tables/main14}
 

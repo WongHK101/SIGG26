@@ -4,6 +4,6 @@ First, aligned external comparison is scene-dependent. Some entries favor UMGS a
 
 Second, UMGS-I and UMGS-J are very close numerically. This suggests that the geometry-lock principle matters more than the specific independent or joint spectral parameterization. In the current paper, UMGS-J is best interpreted as a strong alternative branch rather than a strict replacement for UMGS-I.
 
-Third, our geometry evaluation is a reference-depth consistency protocol, not dense metric ground truth. This is appropriate for cross-band support analysis under missing global scale, but it does not replace LiDAR-grade absolute geometry benchmarks.
+Third, our geometry diagnostics are validation-gated reference-depth checks, not dense metric ground truth. In particular, the raw \texttt{self\_m3m} dense MVS mesh-reference attempt failed validation and is not used as quantitative evidence. This conservative policy avoids reporting collapsed reference geometry, but it also means the current paper does not replace LiDAR-grade absolute geometry benchmarks.
 
 Fourth, cost reporting is intentionally non-invasive and currently coarse. The reported VRAM/utilization/size statistics are traceable and reproducible, but a dedicated runtime microbenchmark (e.g., standardized per-view FPS across methods and resolutions) is still future work.
