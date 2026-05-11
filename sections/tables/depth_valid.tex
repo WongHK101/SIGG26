@@ -1,0 +1,17 @@
+\begin{table}[!t]
+    \caption{Validation-gated reference-depth consistency. UMGS rows average the four validated reference scenes (\texttt{self\_m3m}, \texttt{raw001}, \texttt{raw003}, and \texttt{ms\_golf}). MS-Splatting is reported only on the available retained-\texttt{self\_m3m} adapter; the other representative scenes only produced adapter-failure manifests.}
+    \label{tab:validated-depth}
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{lccccc}
+        \toprule
+        Method / scope & Valid $\uparrow$ & AbsRel $\downarrow$ & Ag@1\% $\uparrow$ & Ag@5\% $\uparrow$ & Ag@10\% $\uparrow$ \\
+        \midrule
+        UMGS-I / 4 scenes & 0.952 & 0.035 & 0.291 & 0.725 & 0.902 \\
+        UMGS-J / 4 scenes & 0.952 & 0.035 & 0.291 & 0.725 & 0.902 \\
+        \midrule
+        MS-Splatting / retained self only & 0.977 & 0.113 & 0.516 & 0.854 & 0.914 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

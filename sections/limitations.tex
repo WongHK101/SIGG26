@@ -1,9 +1,9 @@
 \section{Limitations}
 
-First, aligned external comparison is scene-dependent. Some entries favor UMGS and others favor MS-Splatting, so we claim reliability and protocol applicability rather than universal metric dominance.
+First, aligned external comparison is scene-dependent in per-scene image metrics. UMGS improves the full official aligned average and is lower in LPIPS on the UAV aligned subset, but individual scenes can favor MS-Splatting in PSNR or spectral RMSE. We therefore emphasize protocol reliability, product readiness, and reference-depth behavior rather than claiming that every scalar metric wins on every scene.
 
 Second, UMGS-I and UMGS-J are very close numerically. This suggests that the geometry-lock principle matters more than the specific independent or joint spectral parameterization. In the current paper, UMGS-J is best interpreted as a strong alternative branch rather than a strict replacement for UMGS-I.
 
-Third, our geometry diagnostics are validation-gated reference-depth checks, not dense metric ground truth. In particular, the raw \texttt{self\_m3m} dense MVS mesh-reference attempt failed validation and is not used as quantitative evidence. This conservative policy avoids reporting collapsed reference geometry, but it also means the current paper does not replace LiDAR-grade absolute geometry benchmarks.
+Third, our geometry diagnostics are validation-gated reference-depth checks, not dense metric ground truth. We report only scenes whose reference mesh and camera frame pass validation, and we exclude collapsed dense-MVS or misaligned reference attempts from quantitative tables. This conservative policy avoids reporting invalid reference geometry, but it also means the current paper does not replace LiDAR-grade absolute geometry benchmarks.
 
-Fourth, cost reporting is intentionally non-invasive and currently coarse. The reported VRAM/utilization/size statistics are traceable and reproducible, but a dedicated runtime microbenchmark (e.g., standardized per-view FPS across methods and resolutions) is still future work.
+Fourth, cost reporting is intentionally non-invasive. The reported VRAM/utilization/power/size statistics are traceable AutoDL run records, but a dedicated runtime microbenchmark (e.g., standardized per-view FPS across methods and resolutions) is still future work.

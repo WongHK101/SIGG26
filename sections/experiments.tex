@@ -9,7 +9,7 @@ We evaluate the main paper on a 10-scene UAV-focused benchmark: 7 raw UAV scenes
 We report two UMGS variants: UMGS-I, with independent per-band transfer, and UMGS-J, with joint band-bank transfer. MS-Splatting is the external baseline on aligned aerial scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
 
 \paragraph{Metrics.}
-Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Cost uses non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; $^\dagger$ marks UMGS renders resized to the external adapter resolution for comparison only, not distinct trained variants. We report geometry only as a validated diagnostic: the raw self-scene dense MVS mesh-reference attempt failed validation and is excluded from all main quantitative claims.
+Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Cost uses non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; $^\dagger$ marks UMGS renders resized to the external adapter resolution for comparison only, not distinct trained variants. We report geometry only as a validation-gated reference-depth diagnostic. Scenes whose reference mesh or camera-frame alignment failed inspection are excluded from depth tables rather than forced into an average.
 
 \subsection{Main Results on UAV Scenes}
 
@@ -23,16 +23,20 @@ Spectral-index synthesis is the downstream use case that motivates shared suppor
 
 \input{sections/tables/index_detail}
 
+\subsection{Reference-Depth Diagnostics}
+
+Table~\ref{tab:validated-depth} reports relative-depth consistency only for reference sources that passed visual and protocol validation. The diagnostic is not an absolute geometry benchmark: it evaluates agreement with a scene-specific reference under held-out probe cameras. On the validated set, UMGS-I and UMGS-J have much lower overall relative depth error than the available retained-self MS-Splatting adapter (AbsRel $0.035$ vs.\ $0.113$). The retained adapter has higher strict Ag@1\%/Ag@5\%, but it also shows a larger error tail and does not provide valid depth adapters for the other representative scenes. The accompanying 10-view depth grids show smoother UMGS error maps and more local holes or patchy deviations in the retained MS-Splatting output.
+
+\input{sections/tables/depth_valid}
+
 \subsection{Aligned External Comparison}
 
-Aligned scenes remove the raw-rectification factor and isolate the reconstruction model. Under this common-mask setting, Table~\ref{tab:mms-official-uav3} shows scene-dependent behavior: the UMGS comparison views are lower in LPIPS and match mean SSIM/SAM, while MS-Splatting is slightly higher in PSNR and slightly lower in spectral RMSE. Scene-level results in Table~\ref{tab:mms-scenes} are mixed, so the conclusion is complementary behavior under a fair aligned protocol rather than universal dominance.
+Aligned scenes remove the raw-rectification factor and isolate the reconstruction model. Under this common-mask setting, Table~\ref{tab:mms-official-uav3} shows that UMGS gives the stronger product-oriented comparison: it has lower LPIPS, matches mean SSIM/SAM, and remains within a very small margin in PSNR and spectral RMSE. Scene-level results in Table~\ref{tab:mms-scenes} are not one-sided on every scalar metric, but the official-average behavior supports UMGS as the more reliable choice for the UAV spectral-index pipeline.
 
 \input{sections/tables/mms_official7}
 \input{sections/tables/mms_scenes}
 
-Raw unaligned data test a different question: whether an external method can be applied under its retained-subset path. Table~\ref{tab:retained-self} is therefore an applicability diagnostic rather than the main raw benchmark, because it does not represent the full raw protocol used by UMGS-I/UMGS-J.
-
-\input{sections/tables/retained_self}
+Raw unaligned data test a different question: whether an external method can be applied under its retained-subset path. We keep this retained-subset evidence in the supplement as an applicability diagnostic rather than a main raw benchmark, because it does not represent the full raw protocol used by UMGS-I/UMGS-J.
 
 \subsection{Representative Ablations}
 
@@ -42,6 +46,6 @@ The ablations test whether geometry locking is merely conservative or actually n
 
 \subsection{Cost}
 
-Finally, Table~\ref{tab:cost} reports coarse but traceable cost indicators on the UAV-focused runs. UMGS-J uses higher recorded peak VRAM but lower average recorded VRAM in the aggregated traces; both UMGS variants retain identical Gaussian counts.
+Finally, Table~\ref{tab:cost} reports trace-based cost indicators from AutoDL runs. UMGS-J records higher peak and average VRAM because it maintains a joint multispectral training state, while both UMGS variants keep the same exported Gaussian count by construction. These are non-invasive run traces, not a standardized FPS microbenchmark.
 
 \input{sections/tables/cost}

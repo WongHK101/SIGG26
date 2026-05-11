@@ -1,14 +1,15 @@
 \begin{table}[!t]
-    \caption{Coarse recorded cost indicators on the UAV-focused suite. Values are aggregated from non-invasive GPU traces and exported PLY vertex counts; they are intended as a first cost table, not a microbenchmark.}
+    \caption{Trace-based cost indicators from AutoDL runs. VRAM, utilization, and power are sample-weighted over non-invasive GPU traces; Gaussian counts are exported PLY vertex counts for evaluation models.}
     \label{tab:cost}
     \centering
     \scriptsize
-    \begin{tabular}{lcccc}
+    \setlength{\tabcolsep}{2.4pt}
+    \begin{tabular}{lccccc}
         \toprule
-        Method & Peak VRAM GB & Avg. VRAM GB & Peak util. \% & Gaussians M \\
+        Method & Peak GB & Avg. GB & Util. \% & Power W & Gauss. M \\
         \midrule
-        UMGS-I & 27.45 & 3.99 & 99.0 & 4.31 \\
-        UMGS-J & 35.04 & 1.50 & 99.0 & 4.31 \\
+        UMGS-I & 27.45 & 12.09 & 61.4 & 226.4 & 4.63 \\
+        UMGS-J & 35.04 & 18.70 & 77.0 & 274.9 & 4.63 \\
         \bottomrule
     \end{tabular}
 \end{table}
