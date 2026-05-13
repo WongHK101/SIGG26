@@ -25,7 +25,15 @@ Spectral-index synthesis is the downstream use case that motivates shared suppor
 
 \subsection{Reference-Depth Diagnostics}
 
-Table~\ref{tab:validated-depth} reports relative-depth consistency only for reference sources that passed visual and protocol validation. The diagnostic is not an absolute geometry benchmark: it evaluates agreement with a scene-specific reference under held-out probe cameras. On the four validated scenes, UMGS-I and UMGS-J have lower relative depth error and higher agreement rates than the retained MS-Splatting adapter (AbsRel $0.023$ vs.\ $0.195$, Ag@5\% $0.867$ vs.\ $0.526$). Scratch-MS has a low mean AbsRel only on the small fraction where it yields valid depth (Valid $0.410$), so it should not be read as a better geometry model. Unfrozen-support can be close in depth consistency, but it fails the shared-support/product contract and is therefore not a valid spectral product model. Scene-level depth breakdowns and all-band visual grids are provided in the supplement.
+Table~\ref{tab:validated-depth} reports relative-depth consistency only for reference sources that passed visual and protocol validation. The diagnostic is not an absolute geometry benchmark: it evaluates agreement with a scene-specific reference under held-out probe cameras. On the four validated scenes, UMGS-I and UMGS-J have lower relative depth error and higher agreement rates than the retained MS-Splatting adapter (AbsRel $0.023$ vs.\ $0.195$, Ag@5\% $0.867$ vs.\ $0.526$). Scratch-MS has a low mean AbsRel only on the small fraction where it yields valid depth (Valid $0.410$), so it should not be read as a better geometry model. Unfrozen-support can be close in depth consistency, but it fails the shared-support/product contract and is therefore not a valid spectral product model. Figure~\ref{fig:depth-umgs-field} shows the same diagnostic on our project-owned UMGS-Field capture. Scene-level depth breakdowns and all-band visual grids are provided in the supplement.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/depth_umgs_field_rgb.png}
+    \caption{Reference-depth diagnostic on UMGS-Field, our project-owned UAV capture. Rows are held-out views. Columns show the input image, mesh reference depth, and depth/error pairs for Scratch-MS, Unfrozen-support, retained MS-Splatting, UMGS-J, and UMGS-I. UMGS-I and UMGS-J preserve broad valid support with low relative error, while the retained external adapter exhibits larger local deviations.}
+    \Description{A grid of ten held-out UAV views from UMGS-Field. The grid compares mesh reference depth with method depth and relative-error maps for Scratch-MS, Unfrozen-support, MS-Splatting, UMGS-J, and UMGS-I.}
+    \label{fig:depth-umgs-field}
+\end{figure*}
 
 \input{sections/tables/depth_valid}
 

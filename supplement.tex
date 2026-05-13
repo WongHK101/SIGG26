@@ -75,6 +75,17 @@ We keep the relative-depth evaluator and validation scripts in the released code
 
 The retained raw diagnostic is intentionally separate from the full raw protocol. It evaluates the subset that the external pipeline can retain, not the complete raw UAV reconstruction path.
 
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/depth_umgs_field_rgb.png}\hfill
+    \includegraphics[width=0.48\textwidth]{figures/depth_vineyard01_rgb.png}\\[0.4em]
+    \includegraphics[width=0.48\textwidth]{figures/depth_vineyard03_rgb.png}\hfill
+    \includegraphics[width=0.48\textwidth]{figures/depth_aerial_golf_rgb.png}
+    \caption{RGB-band reference-depth visual grids for the four validated scenes used in the depth diagnostic: UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf. Each grid follows the main-paper layout: input image, mesh reference depth, and method depth/error pairs for Scratch-MS, Unfrozen-support, retained MS-Splatting, UMGS-J, and UMGS-I. Full RGB/G/R/RE/NIR grids are included in the released data bundle.}
+    \Description{Four depth diagnostic grids arranged in a two-by-two layout, corresponding to UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf. Each grid shows reference depth, method depth, and relative-error maps.}
+    \label{fig:supp-depth-grids}
+\end{figure*}
+
 \input{sections/tables/depth_scene_breakdown}
 
 \input{sections/tables/retained_self}
