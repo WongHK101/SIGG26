@@ -1,4 +1,4 @@
-\section{Related Work}
+﻿\section{Related Work}
 
 \subsection{Radiance Fields and Gaussian Scene Representations}
 
@@ -20,4 +20,5 @@ Our raw-scene QA protocol follows this systems view: it reports match quality an
 
 \subsection{Depth and Geometry Diagnostics}
 
-Depth-based reconstruction metrics are widely used in multi-view stereo and neural reconstruction~\cite{yao2018mvsnet,gu2020casmvsnet,wang2021patchmatchnet}. However, raw UAV multispectral captures usually lack globally calibrated metric scale, and dense MVS references can fail under low texture or repeated agricultural structure. We therefore treat reference-depth as a validation-gated diagnostic rather than an unconditional benchmark: only references with valid geometric depth, normals, fusion, and support are eligible for quantitative reporting. This keeps our geometry discussion closer to repeatability/self-consistency under controlled probes than to absolute-meter accuracy claims.
+Depth-based reconstruction metrics are widely used in multi-view stereo and neural reconstruction~\cite{yao2018mvsnet,gu2020casmvsnet,wang2021patchmatchnet}. However, raw UAV multispectral captures usually lack globally calibrated metric scale, and dense MVS references can fail under low texture or repeated agricultural structure. We therefore treat reference-depth as a validation-gated diagnostic rather than an unconditional accuracy benchmark: only references with valid geometric depth, normals, fusion, and support are eligible for quantitative reporting. This keeps our geometry discussion closer to repeatability/self-consistency under controlled probes than to absolute-meter accuracy claims.
+

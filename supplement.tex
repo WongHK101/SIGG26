@@ -25,7 +25,7 @@
 
 This supplement aligns with the current main-paper draft and records additional tables that are useful for reproducibility and reviewer inspection.
 
-The main paper focuses on a 10-scene UAV-focused benchmark: 7 raw UAV captures and 3 aligned aerial multispectral scenes. This supplement separately reports four additional official aligned scenes whose viewpoints are not part of the UAV-focused main scope. The retained-subset diagnostic for raw unaligned input is reported as an applicability check and should not be interpreted as the main raw full-scene comparison protocol.
+The main paper focuses on a 10-scene UAV-focused evaluation suite: 7 raw UAV captures and 3 aligned aerial multispectral scenes. This supplement separately reports four additional official aligned scenes whose viewpoints are not part of the UAV-focused main scope. The retained-subset diagnostic for raw unaligned input is reported as an applicability check and should not be interpreted as the main raw full-scene comparison protocol.
 
 Depth diagnostics follow the relative reference-depth protocol when the reference source passes validation. Since raw UAV reconstructions are not in a globally calibrated metric coordinate system, all thresholds are relative-depth ratios rather than metric distances. We exclude failed dense-reference or frame-misaligned attempts from quantitative tables.
 
@@ -38,13 +38,40 @@ For official aligned scenes with inconsistent split and transform metadata, we s
 \paragraph{Depth reference.}
 Depth diagnostics are validation-gated reference-depth checks, not dense MVS or LiDAR ground truth. The current main evidence uses references that pass visual, support, and camera-frame checks. Attempts whose fused point clouds were empty, whose meshes collapsed, or whose rendered reference views were frame-misaligned are retained only as audit artifacts and are not averaged into the reported depth table. The geometry claims therefore concern relative reference-depth consistency under held-out probe views, not absolute dense geometry accuracy.
 
+
+\section{Scene Name Mapping}
+
+The main paper uses publication-facing scene names. Internal directory names are kept only for reproducibility scripts and data manifests.
+
+\begin{table}[h]
+    \caption{Publication-facing scene names and internal identifiers.}
+    \label{tab:supp-scene-mapping}
+    \centering
+    \scriptsize
+    \begin{tabular}{lll}
+        \toprule
+        Published name & Internal ID & Source \\
+        \midrule
+        UMGS-Field & \texttt{self\_m3m} & Project-owned UAV M3M capture \\
+        Vineyard-01 & \texttt{raw001} & Zenodo vineyard record \\
+        Vineyard-02 & \texttt{raw002} & Zenodo vineyard record \\
+        Vineyard-03 & \texttt{raw003} & Zenodo vineyard record \\
+        Vineyard-04 & \texttt{raw004} & Zenodo vineyard record \\
+        Vineyard-05 & \texttt{raw005} & Zenodo vineyard record \\
+        Vineyard-06 & \texttt{raw006} & Zenodo vineyard record \\
+        Aerial-Golf & \texttt{ms\_golf} & MS-Splatting dataset \\
+        Aerial-Lake & \texttt{ms\_lake} & MS-Splatting dataset \\
+        Aerial-Solar & \texttt{ms\_solar} & MS-Splatting dataset \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 \section{Additional Non-UAV Official Scene-Wise External Comparison}
 
 Table~\ref{tab:supp-nonuav-main} reports the four additional official aligned scenes that are intentionally kept out of the main UAV-focused tables. Table~\ref{tab:supp-umgsj-mms-scenes} provides their scene-wise common-mask comparison between UMGS-J$^\dagger$ and MS-Splatting. We also include the full seven-scene official aligned average for reproducibility.
 
 \section{Depth-Reference Status and Visualization}
 
-We keep the relative-depth evaluator and validation scripts in the released code, and report quantitative depth only for validated references. The main diagnostic table uses four validated scenes: \texttt{self\_m3m}, \texttt{raw001}, \texttt{raw003}, and \texttt{ms\_golf}. Other attempted references are retained as audit artifacts only. For \texttt{self\_m3m}, we additionally provide 10-held-out visual grids over RGB/G/R/RE/NIR. These grids show that UMGS-I and UMGS-J produce smoother low-tail relative-error maps, while the retained MS-Splatting adapter has more local holes and patchy deviations despite stronger strict-threshold agreement on some pixels.
+We keep the relative-depth evaluator and validation scripts in the released code, and report quantitative depth only for validated references. The main diagnostic table uses four validated scenes: UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf. Other attempted references are retained as audit artifacts only. For these representative scenes, we provide 10-held-out visual grids over RGB/G/R/RE/NIR where the relevant depth adapters are available. These grids show that UMGS-I and UMGS-J produce smoother relative-error maps, while the retained MS-Splatting adapter has lower support and larger local deviations even after coordinate-frame correction.
 
 The retained raw diagnostic is intentionally separate from the full raw protocol. It evaluates the subset that the external pipeline can retain, not the complete raw UAV reconstruction path.
 
@@ -56,7 +83,7 @@ The retained raw diagnostic is intentionally separate from the full raw protocol
 
 The Unfrozen-support branch is included as a single-band upper-bound ablation. It starts from the same RGB anchor as UMGS, but allows band-specific geometry and opacity updates in Stage 2. This can improve selected per-band render metrics, but it breaks the shared-support contract required by model-level spectral products.
 
-The failure is concrete in our audit logs. On \texttt{ms\_lake}, Unfrozen-support improves several band PSNR values, but product construction fails with an xyz mismatch between bands:
+The failure is concrete in our audit logs. On Aerial-Lake, Unfrozen-support improves several band PSNR values, but product construction fails with an xyz mismatch between bands:
 \[
 \max |\Delta xyz| = 6.84\times 10^{-2}.
 \]
@@ -80,11 +107,11 @@ Table~\ref{tab:umgsj-quality-cost} compares these variants on the two joint-bran
         \toprule
         Scene & Variant & Band SSIM $\uparrow$ & Band PSNR $\uparrow$ & Band LPIPS $\downarrow$ & Index MAE $\downarrow$ & Index RMSE $\downarrow$ & Index PSNR $\uparrow$ & Index SSIM $\uparrow$ & Time (s) $\downarrow$ \\
         \midrule
-        \texttt{self\_m3m} & UMGS-J & 0.7657 & 25.330 & 0.2113 & 0.0607 & 0.0863 & 27.701 & 0.7943 & 8129 \\
-        \texttt{self\_m3m} & UMGS-JR  & 0.7434 & 24.966 & 0.2061 & 0.0623 & 0.0880 & 27.519 & 0.7854 & 7339 \\
+        UMGS-Field & UMGS-J & 0.7657 & 25.330 & 0.2113 & 0.0607 & 0.0863 & 27.701 & 0.7943 & 8129 \\
+        UMGS-Field & UMGS-JR  & 0.7434 & 24.966 & 0.2061 & 0.0623 & 0.0880 & 27.519 & 0.7854 & 7339 \\
         \midrule
-        Vineyard A & UMGS-J & 0.8804 & 28.690 & 0.1092 & 0.0339 & 0.0513 & 32.169 & 0.8948 & 5805 \\
-        Vineyard A & UMGS-JR  & 0.8590 & 27.847 & 0.1266 & 0.0375 & 0.0574 & 31.326 & 0.8800 & 6730 \\
+        Vineyard-01 & UMGS-J & 0.8804 & 28.690 & 0.1092 & 0.0339 & 0.0513 & 32.169 & 0.8948 & 5805 \\
+        Vineyard-01 & UMGS-JR  & 0.8590 & 27.847 & 0.1266 & 0.0375 & 0.0574 & 31.326 & 0.8800 & 6730 \\
         \bottomrule
     \end{tabular}
 \end{table*}
@@ -94,3 +121,5 @@ Table~\ref{tab:umgsj-quality-cost} compares these variants on the two joint-bran
 The supplementary tables support three practical points used by the paper: (1) additional official aligned scenes remain available for reproducibility but are outside the main UAV-focused scope, (2) depth-reference evidence is reported only when the reference source passes validation, and (3) UMGS-JR is an initialization ablation rather than a promoted branch.
 
 \end{document}
+
+

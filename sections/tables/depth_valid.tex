@@ -1,5 +1,5 @@
-\begin{table}[!t]
-    \caption{Validation-gated reference-depth consistency. UMGS rows average the four validated reference scenes (\texttt{self\_m3m}, \texttt{raw001}, \texttt{raw003}, and \texttt{ms\_golf}). MS-Splatting is reported only on the available retained-\texttt{self\_m3m} adapter; the other representative scenes only produced adapter-failure manifests.}
+﻿\begin{table}[!t]
+    \caption{Validation-gated reference-depth consistency on four representative scenes (UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf). MS-Splatting is evaluated through its retained-subset adapter where learned Gaussian depth can be exported. Scratch-MS and Unfrozen-support are diagnostic ablations rather than product-ready multispectral models.}
     \label{tab:validated-depth}
     \centering
     \scriptsize
@@ -8,10 +8,13 @@
         \toprule
         Method / scope & Valid $\uparrow$ & AbsRel $\downarrow$ & Ag@1\% $\uparrow$ & Ag@5\% $\uparrow$ & Ag@10\% $\uparrow$ \\
         \midrule
-        UMGS-I / 4 scenes & 0.952 & 0.035 & 0.291 & 0.725 & 0.902 \\
-        UMGS-J / 4 scenes & 0.952 & 0.035 & 0.291 & 0.725 & 0.902 \\
+        UMGS-I & 0.951 & 0.023 & 0.465 & 0.867 & 0.922 \\
+        UMGS-J & 0.951 & 0.023 & 0.465 & 0.867 & 0.922 \\
         \midrule
-        MS-Splatting / retained self only & 0.977 & 0.113 & 0.516 & 0.854 & 0.914 \\
+        Scratch-MS & 0.410 & 0.020 & 0.211 & 0.377 & 0.399 \\
+        Unfrozen-support & 0.958 & 0.023 & 0.459 & 0.871 & 0.929 \\
+        MS-Splatting retained & 0.801 & 0.195 & 0.348 & 0.526 & 0.610 \\
         \bottomrule
     \end{tabular}
 \end{table}
+
