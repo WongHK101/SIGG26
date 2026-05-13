@@ -55,9 +55,11 @@ For every product-ready output we audit:
 \end{itemize}
 Scratch-MS and Unfrozen-support are therefore diagnostic ablations. They can render individual bands, but if their count or support parameters differ across bands, they are not valid model-level spectral product models.
 
-\subsection{Raw-Scene Rectification and QA}
+\subsection{Raw UAV Multispectral Conditioning}
 
-Raw UAV scenes require spectral-to-RGB rectification before reconstruction. We estimate per-band homographies using deterministic candidate sampling and robust aggregation from feature matches. Since naive scaling baselines can be unreliable under cross-FOV and modality gaps, we use a baseline-aware QA protocol with strict pass, pass-with-warning, and fail states. The warning path is restricted to weak-baseline/high-modality cases that satisfy match quality, homography stability, gradient gain, edge-floor, and outlier-ratio checks. This QA is supporting infrastructure for raw scenes; aligned inputs use the same geometry-locked representation without this rectification stage.
+Raw UAV scenes require spectral-to-RGB conditioning before reconstruction. We estimate per-band homographies using deterministic candidate sampling and robust aggregation from cross-modal feature matches. Each accepted homography defines both a rectified spectral image and a validity mask induced by the warp footprint. During spectral training, photometric supervision is evaluated only on valid pixels, so black borders, undefined warp regions, and non-overlapping cross-FOV areas do not bias the appearance model.
+
+Since naive scaling baselines can be unreliable under cross-FOV and modality gaps, we use a baseline-aware QA protocol with strict pass, pass-with-warning, and fail states. The warning path is restricted to weak-baseline/high-modality cases that satisfy match quality, homography stability, gradient gain, edge-floor, and outlier-ratio checks. This conditioning stage makes raw multi-camera UAV captures usable for the geometry-lock contract; aligned inputs use the same UMGS representation without this rectification stage.
 
 \subsection{Validation-Gated Reference Depth}
 

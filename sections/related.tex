@@ -16,7 +16,7 @@ Recent Gaussian-based spectral works include MS-Splatting for multi-camera multi
 
 Practical reconstruction still depends on robust SfM/MVS foundations~\cite{schoenberger2016sfm,schoenberger2016mvs,hartley2004multiple,fischler1981ransac}. Handcrafted and learned feature matching both remain relevant, from SIFT/SURF/ORB and ECC-style alignment to SuperPoint, SuperGlue, LoFTR, LightGlue, and RoMa~\cite{lowe2004sift,bay2008surf,rublee2011orb,evangelidis2008ecc,detone2018superpoint,sarlin2020superglue,sun2021loftr,lindenberger2023lightglue,edstedt2024roma}. Robust estimators (LO-RANSAC, USAC, MAGSAC) are essential under modality gaps and outlier-heavy correspondences~\cite{chum2003locally,raguram2013usac,barath2019magsac}.
 
-Our raw-scene QA protocol follows this systems view: it reports match quality and geometric stability separately, preserves legacy strict criteria for strong baselines, and uses a selective warning path only for weak-baseline/high-modality-gap cases. This is a protocol contribution rather than a new matcher.
+Our raw-scene conditioning follows this systems view: it reports match quality and geometric stability separately, preserves legacy strict criteria for strong baselines, uses a selective warning path only for weak-baseline/high-modality-gap cases, and carries rectification validity into masked spectral supervision. It is a practical raw-capture component rather than a new matcher.
 
 \subsection{Depth and Geometry Diagnostics}
 
