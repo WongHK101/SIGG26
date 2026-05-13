@@ -6,7 +6,7 @@
 We evaluate the main paper on a 10-scene UAV-focused evaluation suite: 7 raw UAV scenes (UMGS-Field, Vineyard-01--Vineyard-06) and 3 aligned aerial multispectral scenes (Aerial-Golf, Aerial-Lake, Aerial-Solar). Raw scenes test rectification, QA, reconstruction, and products. Aligned scenes remove rectification confounds and are used for external common-mask comparison. Four additional non-UAV official aligned scenes are reported only in the supplement and are not part of the main 10-scene evaluation suite.
 
 \paragraph{Methods.}
-We report two UMGS variants: UMGS-I, with independent per-band transfer, and UMGS-J, with joint band-bank transfer. MS-Splatting is the external baseline on aligned aerial scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
+We report UMGS-I as the default realization and UMGS-J as a joint band-bank branch of the same geometry-lock contract. MS-Splatting is the external baseline on aligned aerial scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
 
 \paragraph{Metrics.}
 Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Cost uses non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; $^\dagger$ marks UMGS renders resized to the external adapter resolution for comparison only, not distinct trained variants. We report geometry only as a validation-gated reference-depth diagnostic. Scenes whose reference mesh or camera-frame alignment failed inspection are excluded from depth tables rather than forced into an average.
@@ -25,22 +25,22 @@ Spectral-index synthesis is the downstream use case that motivates shared suppor
 
 \subsection{Reference-Depth Diagnostics}
 
-Table~\ref{tab:validated-depth} reports relative-depth consistency only for reference sources that passed visual and protocol validation. The diagnostic is not an absolute geometry diagnostic: it evaluates agreement with a scene-specific reference under held-out probe cameras. On the four validated scenes, UMGS-I and UMGS-J have lower relative depth error and higher agreement rates than the retained MS-Splatting adapter (AbsRel $0.023$ vs.\ $0.195$, Ag@5\% $0.867$ vs.\ $0.526$). The retained adapter uses learned Gaussian depth where it can be exported, but its raw coordinate path requires an adapter and still shows larger error tails. The accompanying 10-view depth grids visualize this behavior across representative raw and aligned scenes.
+Table~\ref{tab:validated-depth} reports relative-depth consistency only for reference sources that passed visual and protocol validation. The diagnostic is not an absolute geometry benchmark: it evaluates agreement with a scene-specific reference under held-out probe cameras. On the four validated scenes, UMGS-I and UMGS-J have lower relative depth error and higher agreement rates than the retained MS-Splatting adapter (AbsRel $0.023$ vs.\ $0.195$, Ag@5\% $0.867$ vs.\ $0.526$). Scratch-MS has a low mean AbsRel only on the small fraction where it yields valid depth (Valid $0.410$), so it should not be read as a better geometry model. Unfrozen-support can be close in depth consistency, but it fails the shared-support/product contract and is therefore not a valid spectral product model. Scene-level depth breakdowns and all-band visual grids are provided in the supplement.
 
 \input{sections/tables/depth_valid}
 
 \subsection{Aligned External Comparison}
 
-Aligned scenes remove the raw-rectification factor and isolate the reconstruction model. Under this common-mask setting, Table~\ref{tab:mms-official-uav3} shows that UMGS gives the stronger product-oriented comparison: it has lower LPIPS, matches mean SSIM/SAM, and remains within a very small margin in PSNR and spectral RMSE. Scene-level results in Table~\ref{tab:mms-scenes} are not one-sided on every scalar metric, but the official-average behavior supports UMGS as the more reliable choice for the UAV spectral-index pipeline.
+Aligned scenes remove the raw-rectification factor and isolate the reconstruction model. Under this common-mask setting, Table~\ref{tab:mms-official-uav3} shows competitive, scene-dependent image-space behavior rather than universal dominance: UMGS has lower LPIPS, matches mean SSIM/SAM, and remains within a small margin in PSNR and spectral RMSE. Scene-level results in Table~\ref{tab:mms-scenes} are also mixed. We therefore use this block to establish aligned competitiveness, while the stronger distinction appears in product readiness, shared-support validity, and validation-gated reference-depth consistency.
 
 \input{sections/tables/mms_official7}
 \input{sections/tables/mms_scenes}
 
 Raw unaligned data test a different question: whether an external method can be applied under its retained-subset path. We keep this retained-subset evidence in the supplement as an applicability diagnostic rather than a main raw comparison, because it does not represent the full raw protocol used by UMGS-I/UMGS-J.
 
-\subsection{Representative Ablations}
+\subsection{Shared-Support Contract Ablation}
 
-The ablations test whether geometry locking is merely conservative or actually necessary. Table~\ref{tab:ablations3} compares the locked UMGS variants with two upper-bound ablations on UMGS-Field, Vineyard-02, and Aerial-Lake. The unfrozen branch improves selected image metrics, but it is not a valid product model: on Aerial-Lake, product construction fails the shared-support audit with an xyz mismatch of $6.84\times10^{-2}$. Scratch-MS diverges more strongly, including Gaussian-count mismatch across bands. These failures occur when multispectral products are assembled, showing that per-band quality gains alone are insufficient if support consistency is lost.
+This ablation tests whether geometry locking is merely conservative or actually necessary. Table~\ref{tab:ablations3} compares the locked UMGS variants with two upper-bound ablations on UMGS-Field, Vineyard-02, and Aerial-Lake. This is a separate support-contract diagnostic subset and is not averaged with the four-scene reference-depth diagnostic. The unfrozen branch improves selected image metrics, but it is not a valid product model: on Aerial-Lake, product construction fails the shared-support audit with an xyz mismatch of $6.84\times10^{-2}$. Scratch-MS diverges more strongly, including Gaussian-count mismatch across bands. These failures occur when multispectral products are assembled, showing that per-band quality gains alone are insufficient if support consistency is lost.
 
 \input{sections/tables/ablations3}
 

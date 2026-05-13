@@ -1,44 +1,68 @@
 \section{Method}
 
-\subsection{Problem Formulation}
+\subsection{Geometry-Locked Multispectral 3DGS}
 
-Given RGB and multispectral UAV captures, our goal is to synthesize spectral novel views and spectral indices on a common 3D support. Let $\mathcal{G}$ denote Gaussian support parameters, including position, scale, rotation, opacity, and identity, and let $\mathcal{A}_b$ denote appearance parameters for band $b$. UMGS separates support estimation from spectral appearance learning: it estimates $\mathcal{G}$ once from RGB, then keeps $\mathcal{G}$ fixed while learning $\mathcal{A}_b$ for each multispectral band.
+Given RGB and multispectral UAV captures, our goal is to synthesize spectral novel views and spectral indices on one consistent 3D support. We write a Gaussian model as a support--appearance pair
+\[
+    M_b = (\mathcal{S}, \mathcal{A}_b),
+\]
+where $\mathcal{S}=\{N,\mathbf{x}_i,\mathbf{s}_i,\mathbf{q}_i,\alpha_i\}_{i=1}^{N}$ contains Gaussian count, identity, position, scale, rotation, and opacity, and $\mathcal{A}_b$ contains band-specific appearance for band $b$. A spectral index is a model-level product only if all participating bands are rendered from the same $\mathcal{S}$. Otherwise, an index becomes a post-hoc ratio between unrelated per-band reconstructions.
 
-\subsection{Stage 1: RGB Geometry Anchor}
+UMGS therefore separates support estimation from spectral appearance learning. Stage 1 estimates a single RGB support:
+\[
+    (\mathcal{S}^{\star}, \mathcal{A}_{RGB}^{\star})
+    =
+    \arg\min_{\mathcal{S},\mathcal{A}_{RGB}}
+    \sum_{v}\mathcal{L}\!\left(R(\mathcal{S},\mathcal{A}_{RGB};v), I_{RGB}^{v}\right),
+\]
+using the standard 3DGS photometric training pipeline~\cite{kerbl2023gaussiansplatting}. Stage 2 freezes $\mathcal{S}^{\star}$ and optimizes only spectral appearance:
+\[
+    \mathcal{A}_{b}^{\star}
+    =
+    \arg\min_{\mathcal{A}_{b}}
+    \sum_{v}\mathcal{L}\!\left(R(\mathcal{S}^{\star},\mathcal{A}_{b};v), I_{b}^{v}\right),
+    \quad b\in\{G,R,RE,NIR\}.
+\]
+This is the geometry-lock contract. It fixes Gaussian identity, position, covariance parameters, and opacity during spectral training, so the $i$-th Gaussian denotes the same support element for every band.
 
-We first train an RGB Gaussian model with the 3DGS optimization pipeline~\cite{kerbl2023gaussiansplatting}. RGB is used as the anchor because it provides stronger texture and more stable feature matching than the spectral bands in our UAV captures. The optimized support $\mathcal{G}^{\star}$ becomes the geometric carrier for all subsequent spectral rendering.
+\subsection{Spectral-Index Synthesis on Shared Support}
 
-\subsection{Stage 2: Geometry-Locked Spectral Appearance}
+With locked support, each rendered spectral image is a view of the same Gaussian topology. Index synthesis is then defined directly over consistent band predictions, for example:
+\[
+    NDVI(v,\mathbf{u}) =
+    \frac{R(\mathcal{S}^{\star},\mathcal{A}_{NIR};v,\mathbf{u}) -
+          R(\mathcal{S}^{\star},\mathcal{A}_{R};v,\mathbf{u})}
+         {R(\mathcal{S}^{\star},\mathcal{A}_{NIR};v,\mathbf{u}) +
+          R(\mathcal{S}^{\star},\mathcal{A}_{R};v,\mathbf{u}) + \epsilon}.
+\]
+The same support is used for GNDVI and NDRE. This is the core distinction from direct per-band reconstruction: per-band PSNR can improve while the support contract is broken, in which case model-level products are no longer valid in our protocol.
 
-\paragraph{UMGS-I (independent transfer).}
-For each multispectral band $b$, we initialize from $\mathcal{G}^{\star}$, freeze all support parameters, and optimize only $\mathcal{A}_b$. This produces independent spectral appearance models whose Gaussians remain in one-to-one correspondence.
+\subsection{UMGS-I and UMGS-J}
 
-\paragraph{UMGS-J (joint band-bank transfer).}
-We keep the same frozen $\mathcal{G}^{\star}$ but optimize band-specific appearance banks in one joint multispectral representation. Only the active bank is updated at each step, so all bands share the same support while retaining separate appearance capacity.
+\paragraph{UMGS-I (default independent transfer).}
+UMGS-I initializes each spectral band from the RGB anchor, freezes $\mathcal{S}^{\star}$, and trains one appearance model $\mathcal{A}_b$ per band. It is the conservative default because it exports standard 3DGS-compatible per-band artifacts and keeps the training path simple.
 
-\paragraph{Geometry lock.}
-Both variants enforce:
+\paragraph{UMGS-J (joint band-bank branch).}
+UMGS-J keeps the same frozen $\mathcal{S}^{\star}$ but stores band-specific appearance banks in one joint checkpoint. At each training step, one active bank is optimized while the shared support and inactive banks remain unchanged. UMGS-J tests whether the geometry-lock principle is tied to independent transfer or also holds under a joint multispectral parameterization.
+
+\paragraph{Support-contract audit.}
+For every product-ready output we audit:
 \begin{itemize}
-    \item fixed Gaussian count and identity;
-    \item fixed xyz/scale/rotation/opacity;
-    \item appearance-only parameter updates in stage 2.
+    \item identical Gaussian count and identity across bands;
+    \item identical xyz, scale, rotation, and opacity;
+    \item appearance-only updates in Stage 2;
+    \item successful model-level product construction.
 \end{itemize}
-These constraints define the shared support used by spectral indices. A variant that optimizes per-band xyz, scale, rotation, or opacity can still render each band independently, but its $i$-th Gaussian no longer denotes the same physical support across bands. Model-level ratios such as NDVI are then no longer defined on a consistent 3D support.
+Scratch-MS and Unfrozen-support are therefore diagnostic ablations. They can render individual bands, but if their count or support parameters differ across bands, they are not valid model-level spectral product models.
 
-\subsection{Raw-Scene Rectification and Baseline-Aware QA}
+\subsection{Raw-Scene Rectification and QA}
 
-Raw UAV scenes require spectral-to-RGB rectification before reconstruction. We estimate per-band homographies using deterministic candidate sampling and robust aggregation from feature matches. Because naive scaling baselines can be unreliable under cross-FOV and modality gaps, we use a baseline-aware QA protocol:
-\begin{itemize}
-    \item \textbf{strict pass}: legacy edge+gradient improvement and geometry checks;
-    \item \textbf{pass-with-warning}: allowed only for weak-baseline/high-modality-gap cases that satisfy match quality, stability, gradient gain, edge floor, and outlier-ratio constraints;
-    \item \textbf{fail}: unstable geometry or insufficient matching evidence.
-\end{itemize}
-This protocol supports raw scenes only; aligned inputs use the same geometry-locked representation.
+Raw UAV scenes require spectral-to-RGB rectification before reconstruction. We estimate per-band homographies using deterministic candidate sampling and robust aggregation from feature matches. Since naive scaling baselines can be unreliable under cross-FOV and modality gaps, we use a baseline-aware QA protocol with strict pass, pass-with-warning, and fail states. The warning path is restricted to weak-baseline/high-modality cases that satisfy match quality, homography stability, gradient gain, edge-floor, and outlier-ratio checks. This QA is supporting infrastructure for raw scenes; aligned inputs use the same geometry-locked representation without this rectification stage.
 
-\subsection{Products and Geometry Diagnostics}
+\subsection{Validation-Gated Reference Depth}
 
-We render G/R/RE/NIR and compute NDVI, GNDVI, and NDRE under a common valid mask. When a held-out reference source passes validation, geometry can be diagnosed by relative depth agreement on probe views:
+When a held-out reference source passes visual, support, and camera-frame validation, we diagnose relative depth agreement on probe views:
 \[
 \delta_{rel} = \frac{D_{model} - D_{ref}}{D_{ref}} .
 \]
-Because global metric scale is not guaranteed in raw UAV reconstructions, this diagnostic uses relative-depth ratios rather than meter-based absolute accuracy. Failed reference sources are excluded rather than forced into the quantitative tables.
+Because raw UAV reconstructions are not globally metric, we do not claim dense absolute geometry accuracy. Failed or frame-misaligned reference sources are excluded rather than forced into averages. The resulting depth table is a validation-gated consistency diagnostic, complementary to the shared-support audit.

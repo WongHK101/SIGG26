@@ -6,7 +6,7 @@ Raw UAV multispectral data make this difficult. Multispectral bands are weak geo
 
 Recent radiance-field and Gaussian methods greatly improved training speed and view quality~\cite{mildenhall2020nerf,barron2022mipnerf360,mueller2022instantngp,kerbl2023gaussiansplatting,yu2024mipsplatting,huang20242dgs}. Emerging multispectral, hyperspectral, and thermal Gaussian lines~\cite{meyerls2025mssplatting,thirgood2025hypergs,lu2024thermalgaussian,chen2024thermal3dgs} further show that spectral rendering and index synthesis are feasible. UMGS addresses the UAV-specific geometry problem: how to exploit RGB as a reliable geometric carrier while learning low-texture spectral appearance on the same 3D support.
 
-We introduce \textbf{UMGS}, a UAV multispectral 3D Gaussian Splatting framework for spectral-index synthesis. UMGS formulates multispectral reconstruction as \emph{RGB-anchored geometry locking}: geometry, opacity, and Gaussian identity are learned once from RGB and then frozen during G/R/RE/NIR transfer. This design turns RGB into a stable geometric carrier, while each spectral band only learns appearance on the same splat support. We evaluate two implementations of the same constraint:
+We introduce \textbf{UMGS}, a UAV multispectral 3D Gaussian Splatting framework for spectral-index synthesis. UMGS formulates multispectral reconstruction as \emph{RGB-anchored geometry locking}: geometry, opacity, and Gaussian identity are learned once from RGB and then frozen during spectral transfer. This design turns RGB into a stable geometric carrier, while each spectral band only learns appearance on the same splat support. We evaluate two implementations of the same constraint:
 \begin{itemize}
     \item \textbf{UMGS-I}: independent per-band transfer from a shared RGB anchor.
     \item \textbf{UMGS-J}: joint multispectral training with band-specific appearance banks in one unified checkpoint.
@@ -19,9 +19,9 @@ Our main evaluation covers a 10-scene UAV-focused evaluation suite: 7 raw UAV ca
 
 The contributions are:
 \begin{itemize}
-    \item A geometry-locked multispectral Gaussian formulation that uses RGB as the geometric carrier for stable spectral-index synthesis.
-    \item Two concrete UMGS realizations implementing the same lock with independent (UMGS-I) and joint (UMGS-J) spectral parameterizations.
-    \item Unified image, index, cost, and common-mask reporting on a UAV-focused evaluation suite, with reference-depth diagnostics reported only when the reference source passes validation.
-    \item Supporting raw-scene infrastructure for baseline-aware rectification QA with explicit diagnostic states and decision inputs.
+    \item A geometry-locked multispectral 3DGS formulation that makes model-level spectral-index synthesis well defined on a shared Gaussian support.
+    \item Two concrete realizations of the same support contract: UMGS-I as the default independent transfer line and UMGS-J as a joint band-bank branch.
+    \item A shared-support/product audit showing why Scratch-MS and Unfrozen-support can be useful single-band diagnostics but invalid product models.
+    \item Unified image, index, cost, common-mask, and validation-gated reference-depth reporting on a UAV-focused evaluation suite assembled from project-owned and external sources, with raw-scene rectification QA as supporting infrastructure.
 \end{itemize}
 

@@ -1,0 +1,32 @@
+\begin{table*}[t]
+    \caption{Scene-level validation-gated reference-depth consistency. Values average G/R/RE/NIR for each validated scene. These diagnostics use scene-specific reference meshes and held-out probe cameras; they are consistency checks, not absolute geometry accuracy.}
+    \label{tab:supp-depth-scene}
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{llccccc}
+        \toprule
+        Scene & Method & Valid $\uparrow$ & AbsRel $\downarrow$ & Ag@1\% $\uparrow$ & Ag@5\% $\uparrow$ & Ag@10\% $\uparrow$ \\
+        \midrule
+        UMGS-Field & UMGS-I/J & 1.000 & 0.047 & 0.273 & 0.728 & 0.904 \\
+        UMGS-Field & Scratch-MS & 0.792 & 0.022 & 0.335 & 0.713 & 0.783 \\
+        UMGS-Field & Unfrozen-support & 1.000 & 0.048 & 0.264 & 0.722 & 0.904 \\
+        UMGS-Field & MS-Splatting retained & 1.000 & 0.465 & 0.485 & 0.736 & 0.808 \\
+        \midrule
+        Vineyard-01 & UMGS-I/J & 0.917 & 0.013 & 0.546 & 0.901 & 0.912 \\
+        Vineyard-01 & Scratch-MS & 0.063 & 0.013 & 0.041 & 0.061 & 0.063 \\
+        Vineyard-01 & Unfrozen-support & 0.928 & 0.013 & 0.547 & 0.911 & 0.922 \\
+        Vineyard-01 & MS-Splatting retained & 0.644 & 0.178 & 0.383 & 0.480 & 0.494 \\
+        \midrule
+        Vineyard-03 & UMGS-I/J & 0.909 & 0.014 & 0.416 & 0.896 & 0.908 \\
+        Vineyard-03 & Scratch-MS & 0.074 & 0.016 & 0.028 & 0.071 & 0.074 \\
+        Vineyard-03 & Unfrozen-support & 0.921 & 0.014 & 0.419 & 0.907 & 0.920 \\
+        Vineyard-03 & MS-Splatting retained & 0.733 & 0.048 & 0.459 & 0.598 & 0.628 \\
+        \midrule
+        Aerial-Golf & UMGS-I/J & 0.979 & 0.017 & 0.624 & 0.941 & 0.966 \\
+        Aerial-Golf & Scratch-MS & 0.710 & 0.030 & 0.442 & 0.663 & 0.675 \\
+        Aerial-Golf & Unfrozen-support & 0.981 & 0.017 & 0.606 & 0.944 & 0.968 \\
+        Aerial-Golf & MS-Splatting retained & 0.826 & 0.089 & 0.065 & 0.290 & 0.510 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
