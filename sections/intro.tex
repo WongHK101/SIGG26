@@ -15,7 +15,7 @@ UMGS-I is our conservative default realization, while UMGS-J tests whether the s
 
 \begin{figure*}[t]
     \centering
-    \includegraphics[width=\textwidth]{figures/umgs_method_overview_placeholder.png}
+    \includegraphics[width=\textwidth]{figures/umgs_method_overview_chatgpt_20260513.png}
     \caption{Overview of UMGS. Raw UAV multispectral captures are challenging because non-RGB bands are weak geometry drivers and direct per-band reconstruction can drift across supports. UMGS first learns an RGB 3D Gaussian anchor, freezes Gaussian support, and then learns spectral appearance either with independent per-band transfer (UMGS-I) or a joint band-bank branch (UMGS-J). Spectral-index products are rendered from the same locked support, and validated diagnostics compare product readiness and reference-depth consistency.}
     \Description{A three-panel overview of UMGS showing the raw UAV multispectral reconstruction challenge, the RGB-anchored geometry-locking pipeline with UMGS-I and UMGS-J branches, and a summary of evaluation evidence including dataset scope and reference-depth consistency.}
     \label{fig:umgs-overview}

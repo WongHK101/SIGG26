@@ -1,0 +1,156 @@
+{
+  "band": "NIR",
+  "reference_manifest": "/root/autodl-tmp/umgs_runs/depth_reference/self_m3m_mesh_depth_visual_10heldout_core5_20260508/reference_original_holdout/reference_depth_manifest.json",
+  "rgb_image_dir": "/root/autodl-tmp/datasets/Multispectral/self_m3m",
+  "method_bundles": [
+    {
+      "method": "From-scratch",
+      "display": "Band-only",
+      "available": true,
+      "bundle_root": "/root/autodl-tmp/umgs_runs/depth_reference/self_m3m_mesh_depth_visual_10heldout_core5_allbands_20260508/bundles/From-scratch/Model_NIR",
+      "source_tag": "Model_NIR",
+      "missing_reason": ""
+    },
+    {
+      "method": "Geometry-unfrozen",
+      "display": "Unfrozen",
+      "available": true,
+      "bundle_root": "/root/autodl-tmp/umgs_runs/depth_reference/self_m3m_mesh_depth_visual_10heldout_core5_allbands_20260508/bundles/Geometry-unfrozen/Model_NIR",
+      "source_tag": "Model_NIR",
+      "missing_reason": ""
+    },
+    {
+      "method": "MMS_retained-self",
+      "display": "MS-Splatting",
+      "available": true,
+      "bundle_root": "/root/autodl-tmp/umgs_runs/depth_reference/self_m3m_mesh_depth_visual_10heldout_core5_complete5x5_20260508/bundles/MMS_retained-self/Model_NIR",
+      "source_tag": "Model_NIR",
+      "missing_reason": ""
+    },
+    {
+      "method": "UMGS-J",
+      "display": "UMGS-J",
+      "available": true,
+      "bundle_root": "/root/autodl-tmp/umgs_runs/depth_reference/self_m3m_mesh_depth_visual_10heldout_core5_allbands_20260508/bundles/UMGS-J/Model_NIR",
+      "source_tag": "Model_NIR",
+      "missing_reason": ""
+    },
+    {
+      "method": "UMGS-I",
+      "display": "UMGS-I",
+      "available": true,
+      "bundle_root": "/root/autodl-tmp/umgs_runs/depth_reference/self_m3m_mesh_depth_visual_10heldout_core5_allbands_20260508/bundles/UMGS-I/Model_NIR",
+      "source_tag": "Model_NIR",
+      "missing_reason": ""
+    }
+  ],
+  "mms_rgb_substitute_band": "",
+  "error_definition": "(D_method - D_mesh) / D_mesh",
+  "valid_mask": "mesh_valid & method_valid & D_mesh > relative_depth_min",
+  "depth_colormap": "viridis per-view 2-98 percentile over reference mesh depth",
+  "depth_range_source": "reference",
+  "shared_depth_ranges": {
+    "DJI_20251217164942_0001_D.JPG": {
+      "depth_vmin": 4.151808028175983,
+      "depth_vmax": 4.720137555684883,
+      "source": "reference_mesh_depth",
+      "percentile_low": 2.0,
+      "percentile_high": 98.0,
+      "valid_pixels": 65100
+    },
+    "DJI_20251217165032_0025_D.JPG": {
+      "depth_vmin": 4.088079583118814,
+      "depth_vmax": 4.601200225076643,
+      "source": "reference_mesh_depth",
+      "percentile_low": 2.0,
+      "percentile_high": 98.0,
+      "valid_pixels": 65100
+    },
+    "DJI_20251217165121_0049_D.JPG": {
+      "depth_vmin": 4.095782767982753,
+      "depth_vmax": 4.423753976105758,
+      "source": "reference_mesh_depth",
+      "percentile_low": 2.0,
+      "percentile_high": 98.0,
+      "valid_pixels": 65100
+    },
+    "DJI_20251217165211_0065_D.JPG": {
+      "depth_vmin": 4.0423266919268155,
+      "depth_vmax": 12.67740008018136,
+      "source": "reference_mesh_depth",
+      "percentile_low": 2.0,
+      "percentile_high": 98.0,
+      "valid_pixels": 64898
+    },
+    "DJI_20251217165301_0089_D.JPG": {
+      "depth_vmin": 3.960388177805668,
+      "depth_vmax": 14.00204988849515,
+      "source": "reference_mesh_depth",
+      "percentile_low": 2.0,
+      "percentile_high": 98.0,
+      "valid_pixels": 65081
+    },
+    "DJI_20251217165409_0113_D.JPG": {
+      "depth_vmin": 3.88253881127551,
+      "depth_vmax": 11.664804112758704,
+      "source": "reference_mesh_depth",
+      "percentile_low": 2.0,
+      "percentile_high": 98.0,
+      "valid_pixels": 64246
+    },
+    "DJI_20251217165517_0137_D.JPG": {
+      "depth_vmin": 4.066470819902689,
+      "depth_vmax": 11.151081810187174,
+      "source": "reference_mesh_depth",
+      "percentile_low": 2.0,
+      "percentile_high": 98.0,
+      "valid_pixels": 59246
+    },
+    "DJI_20251217165550_0153_D.JPG": {
+      "depth_vmin": 3.8645595769919843,
+      "depth_vmax": 10.378331194459054,
+      "source": "reference_mesh_depth",
+      "percentile_low": 2.0,
+      "percentile_high": 98.0,
+      "valid_pixels": 58164
+    },
+    "DJI_20251217165655_0177_D.JPG": {
+      "depth_vmin": 3.794491565207997,
+      "depth_vmax": 12.624705620849543,
+      "source": "reference_mesh_depth",
+      "percentile_low": 2.0,
+      "percentile_high": 98.0,
+      "valid_pixels": 63522
+    },
+    "DJI_20251217165744_0201_D.JPG": {
+      "depth_vmin": 3.8991931116309773,
+      "depth_vmax": 12.13374638303229,
+      "source": "reference_mesh_depth",
+      "percentile_low": 2.0,
+      "percentile_high": 98.0,
+      "valid_pixels": 60816
+    }
+  },
+  "error_colormap": "coolwarm fixed [-0.20, +0.20]",
+  "figure_layout": {
+    "columns": 12,
+    "wspace": 0.04,
+    "hspace": 0.004,
+    "show_mesh_range_text": false,
+    "title_fontsize": 13.0,
+    "label_fontsize": 11.0,
+    "note_fontsize": 8.5,
+    "fig_width": 18.5,
+    "row_height": 1.05,
+    "bottom_margin": 0.17
+  },
+  "legend": {
+    "depth": "Viridis, row-normalized to per-view reference-mesh 2-98 percentile.",
+    "relative_error": "Coolwarm fixed to [-0.20,+0.20]; blue means method depth is closer than mesh, red means farther, black means invalid."
+  },
+  "outputs": {
+    "png": "/root/autodl-tmp/umgs_runs/figure_exports/self_m3m_fig2_nir_compact_20260513_1656/depth_umgs_field_nir_compact.png",
+    "pdf": "/root/autodl-tmp/umgs_runs/figure_exports/self_m3m_fig2_nir_compact_20260513_1656/depth_umgs_field_nir_compact.pdf",
+    "stats_csv": "/root/autodl-tmp/umgs_runs/figure_exports/self_m3m_fig2_nir_compact_20260513_1656/depth_umgs_field_nir_compact_stats.csv"
+  }
+}
