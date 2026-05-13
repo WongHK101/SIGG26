@@ -9,7 +9,7 @@ This scaffold follows the current ACM/SIGGRAPH technical-paper review format:
 - ACM double-column layout
 - `acmart` class with `acmtog` style
 - anonymous review mode
-- explicit submission ID placeholder
+- assigned submission ID: `papers_1817s1`
 
 Current root file:
 
@@ -20,7 +20,7 @@ Current root file:
 The setup is aligned to the current SIGGRAPH technical-paper author instructions and template guidance:
 
 - use `\documentclass[acmtog,anonymous,review]{acmart}`
-- add `\acmSubmissionID{...}` after a paper ID is assigned
+- keep `\acmSubmissionID{papers\_1817s1}` in both `main.tex` and `supplement.tex` so the PDF displays the assigned ID `papers_1817s1`
 - keep the review version anonymous
 - prefer ACM/TAPS-accepted LaTeX packages only
 
@@ -69,4 +69,4 @@ The workspace is already configured to:
 ## Notes
 
 - `acmart.cls` and `ACM-Reference-Format.bst` are vendored locally for a stable build.
-- Generated PDFs are gitignored by default. Remove that rule later if you decide to version the compiled submission.
+- Compiled review PDFs are versioned in `build/main.pdf` and `build/supplement.pdf` for review handoff; auxiliary build files remain ignored.
