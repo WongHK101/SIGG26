@@ -15,7 +15,7 @@ UMGS-I is our conservative default realization, while UMGS-J tests whether the s
 
 \begin{figure*}[t]
     \centering
-    \includegraphics[width=\textwidth]{figures/umgs_method_overview_chatgpt_20260513.png}
+    \includegraphics[width=\textwidth]{figures/final/figure1_umgs_overview.png}
     \caption{Overview of UMGS. Raw UAV multispectral captures are challenging because non-RGB bands are weak geometry drivers and direct per-band reconstruction can drift across supports. UMGS first learns an RGB 3D Gaussian anchor, freezes Gaussian support, and then learns spectral appearance either with independent per-band transfer (UMGS-I) or a joint band-bank branch (UMGS-J). Spectral-index products are rendered from the same locked support, and validated diagnostics compare product readiness and reference-depth consistency.}
     \Description{A three-panel overview of UMGS showing the raw UAV multispectral reconstruction challenge, the RGB-anchored geometry-locking pipeline with UMGS-I and UMGS-J branches, and a summary of evaluation evidence including dataset scope and reference-depth consistency.}
     \label{fig:umgs-overview}
@@ -23,7 +23,7 @@ UMGS-I is our conservative default realization, while UMGS-J tests whether the s
 
 For raw UAV captures, the geometry-lock contract also requires a reliable conditioning stage before Gaussian training. Cross-band FOV and resolution mismatch can make naive baselines unreliable, especially for NIR. UMGS therefore conditions raw multispectral inputs with cross-modal rectification, baseline-aware rectification QA, validity masks, and masked spectral supervision. The QA separates strict pass, pass-with-warning, and fail, and logs per-frame matching/stability diagnostics rather than relying on a single opaque gate.
 
-Our main evaluation covers a 10-scene UAV-focused evaluation suite: 7 raw UAV captures and 3 aligned aerial multispectral scenes. The raw track validates end-to-end applicability (alignment, QA, reconstruction, and products). The aligned track removes rectification confounds and supports fair common-mask comparison with MS-Splatting. Across this suite, UMGS-I and UMGS-J are near-tied and consistently preserve shared support. Scratch-MS and Unfrozen-support are useful upper-bound ablations for single-band fitting, but they do not satisfy the shared-support requirement for stable multispectral index synthesis.
+Our main evaluation covers a 10-scene UAV-focused evaluation suite: 7 raw UAV captures and 3 aligned aerial multispectral scenes. The raw track validates end-to-end applicability (alignment, QA, reconstruction, and products). The aligned track removes rectification confounds and supports fair common-mask comparison with MS-Splatting. Across this suite, UMGS-I and UMGS-J are near-tied and consistently preserve shared support. Band-only and Unfrozen-support are useful upper-bound ablations for single-band fitting, but they do not satisfy the shared-support requirement for stable multispectral index synthesis.
 
 The contributions are:
 \begin{itemize}
@@ -32,4 +32,3 @@ The contributions are:
     \item Two concrete realizations of the same support contract: UMGS-I as the default independent transfer line and UMGS-J as a joint band-bank branch.
     \item A UAV-focused evaluation suite reporting image quality, spectral indices, cost, common-mask comparison, support-contract audits, and validation-gated reference depth.
 \end{itemize}
-

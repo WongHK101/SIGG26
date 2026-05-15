@@ -77,11 +77,11 @@ The retained raw diagnostic is intentionally separate from the full raw protocol
 
 \begin{figure*}[t]
     \centering
-    \includegraphics[width=0.48\textwidth]{figures/depth_umgs_field_rgb.png}\hfill
-    \includegraphics[width=0.48\textwidth]{figures/depth_vineyard01_rgb.png}\\[0.4em]
-    \includegraphics[width=0.48\textwidth]{figures/depth_vineyard03_rgb.png}\hfill
-    \includegraphics[width=0.48\textwidth]{figures/depth_aerial_golf_rgb.png}
-    \caption{RGB-band reference-depth visual grids for the four validated scenes used in the depth diagnostic: UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf. Each grid follows the main-paper layout: input image, mesh reference depth, and method depth/error pairs for Scratch-MS, Unfrozen-support, retained MS-Splatting, UMGS-J, and UMGS-I. Full RGB/G/R/RE/NIR grids are included in the released data bundle.}
+    \includegraphics[width=0.48\textwidth]{figures/final/depth_umgs_field_rgb.png}\hfill
+    \includegraphics[width=0.48\textwidth]{figures/final/depth_vineyard01_rgb.png}\\[0.4em]
+    \includegraphics[width=0.48\textwidth]{figures/final/depth_vineyard03_rgb.png}\hfill
+    \includegraphics[width=0.48\textwidth]{figures/final/depth_aerial_golf_rgb.png}
+    \caption{RGB-band reference-depth visual grids for the four validated scenes used in the depth diagnostic: UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf. Each grid follows the main-paper layout: input image, mesh reference depth, and method depth/error pairs for Band-only, Unfrozen-support, retained MS-Splatting, UMGS-J, and UMGS-I. Full RGB/G/R/RE/NIR grids are included in the released data bundle.}
     \Description{Four depth diagnostic grids arranged in a two-by-two layout, corresponding to UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf. Each grid shows reference depth, method depth, and relative-error maps.}
     \label{fig:supp-depth-grids}
 \end{figure*}
@@ -96,11 +96,11 @@ The retained raw diagnostic is intentionally separate from the full raw protocol
 
 The Unfrozen-support branch is included as a single-band upper-bound ablation. It starts from the same RGB anchor as UMGS, but allows band-specific geometry and opacity updates in Stage 2. This can improve selected per-band render metrics, but it breaks the shared-support contract required by model-level spectral products.
 
-The failure is concrete in our audit logs. On Aerial-Lake, Unfrozen-support improves several band PSNR values, but product construction fails with an xyz mismatch between bands:
+The failure is concrete in our audit logs. In the current representative audits, Unfrozen-support can improve selected single-band fits, but product construction fails because band-specific geometry updates move the shared support. The largest recorded xyz mismatch is:
 \[
-\max |\Delta xyz| = 6.84\times 10^{-2}.
+\max |\Delta xyz| = 6.61\times 10^{-2}.
 \]
-Scratch-MS training diverges further and triggers Gaussian-count mismatch across bands. These variants can still produce independent band images, and one could compute post-hoc 2D ratios after rendering; however, those ratios are not defined over a common 3D Gaussian support and therefore are not used as valid model-level multispectral products in our protocol.
+Band-only training diverges further and triggers Gaussian-count mismatch across bands. These variants can still produce independent band images, and one could compute post-hoc 2D ratios after rendering; however, those ratios are not defined over a common 3D Gaussian support and therefore are not used as valid model-level multispectral products in our protocol.
 
 \section{UMGS-J Initialization Ablation (UMGS-J vs UMGS-JR)}
 
@@ -134,5 +134,3 @@ Table~\ref{tab:umgsj-quality-cost} compares these variants on the two joint-bran
 The supplementary tables support three practical points used by the paper: (1) additional official aligned scenes remain available for reproducibility but are outside the main UAV-focused scope, (2) depth-reference evidence is reported only when the reference source passes validation, and (3) UMGS-JR is an initialization ablation rather than a promoted branch.
 
 \end{document}
-
-

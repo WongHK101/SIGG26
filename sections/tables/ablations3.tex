@@ -1,18 +1,17 @@
-﻿\begin{table*}[!t]
-    \caption{Shared-support contract ablation on three representative scenes (UMGS-Field, Vineyard-02, and Aerial-Lake). Spectral metrics average G/R/RE/NIR; index metrics average NDVI/GNDVI/NDRE. Scratch-MS and Unfrozen-support are single-band upper-bound ablations, not valid product models, because their shared-support audits fail.}
+\begin{table*}[!t]
+    \caption{Shared-support contract ablation on the current four representative scenes (UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf). This table reports product validity rather than image quality; the quantitative reference-depth diagnostic on the same representative scenes is reported in Table~\ref{tab:validated-depth}. Band-only and Unfrozen-support are useful single-band diagnostics, but not valid model-level spectral product models because their shared-support audits fail.}
     \label{tab:ablations3}
     \centering
     \scriptsize
     \setlength{\tabcolsep}{3pt}
-    \begin{tabular}{lcccccc}
+    \begin{tabular}{p{0.13\textwidth}p{0.18\textwidth}p{0.24\textwidth}p{0.10\textwidth}p{0.24\textwidth}}
         \toprule
-        Method & MS PSNR & MS SSIM & MS LPIPS & Idx. RMSE & Shared & Products \\
+        Method & Stage-2 support & Shared audit & Products & Diagnostic role \\
         \midrule
-        UMGS-I & 25.35 & 0.786 & 0.228 & 0.100 & yes & yes \\
-        UMGS-J & 25.33 & 0.786 & 0.228 & 0.100 & yes & yes \\
-        Scratch-MS & 25.88 & 0.780 & 0.289 & 0.116 & no & invalid \\
-        Unfrozen-support & 26.27 & 0.794 & 0.218 & 0.105 & no & invalid \\
+        UMGS-I & frozen RGB support & pass & valid & default product model \\
+        UMGS-J & frozen RGB support & pass & valid & joint branch \\
+        Band-only & independent per band & fail: count/identity mismatch & invalid & single-band upper bound \\
+        Unfrozen-support & optimized per band & fail: xyz/support drift & invalid & geometry-unlocked upper bound \\
         \bottomrule
     \end{tabular}
 \end{table*}
-

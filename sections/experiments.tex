@@ -6,7 +6,7 @@
 We evaluate the main paper on a 10-scene UAV-focused evaluation suite: 7 raw UAV scenes (UMGS-Field, Vineyard-01--Vineyard-06) and 3 aligned aerial multispectral scenes (Aerial-Golf, Aerial-Lake, Aerial-Solar). Raw scenes test rectification, QA, reconstruction, and products. Aligned scenes remove rectification confounds and are used for external common-mask comparison. Four additional non-UAV official aligned scenes are reported only in the supplement and are not part of the main 10-scene evaluation suite.
 
 \paragraph{Methods.}
-We report UMGS-I as the default realization and UMGS-J as a joint band-bank branch of the same geometry-lock contract. MS-Splatting is the external baseline on aligned aerial scenes. Scratch-MS and Unfrozen-support are representative single-band upper-bound ablations; they are not product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
+We report UMGS-I as the default realization and UMGS-J as a joint band-bank branch of the same geometry-lock contract. MS-Splatting is the external baseline on aligned aerial scenes. Band-only and Unfrozen-support are representative single-band upper-bound ablations; they are not product models because they do not preserve the shared Gaussian support required by model-level multispectral fusion.
 
 \paragraph{Metrics.}
 Image quality: PSNR/SSIM/LPIPS. Spectral means average G/R/RE/NIR. Index fidelity: MAE/RMSE/PSNR/SSIM for NDVI, GNDVI, NDRE. Cost uses non-invasive GPU traces and exported Gaussian counts. Aligned external comparison uses a common-mask protocol; $^\dagger$ marks UMGS renders resized to the external adapter resolution for comparison only, not distinct trained variants. We report geometry only as a validation-gated reference-depth diagnostic. Scenes whose reference mesh or camera-frame alignment failed inspection are excluded from depth tables rather than forced into an average.
@@ -29,7 +29,7 @@ Table~\ref{tab:validated-depth} reports relative-depth consistency only for refe
 
 \begin{figure*}[t]
     \centering
-    \includegraphics[width=\textwidth]{figures/depth_umgs_field_nir_compact.png}
+    \includegraphics[width=\textwidth]{figures/final/depth_umgs_field_nir.png}
     \caption{NIR-band reference-depth diagnostic on UMGS-Field, our project-owned UAV capture. Rows are held-out views. Columns show the input image, mesh reference depth, and depth/error pairs for Band-only, Unfrozen-support, MS-Splatting, UMGS-J, and UMGS-I. UMGS-I and UMGS-J preserve broad valid support with low relative error, while the retained external adapter exhibits larger local deviations.}
     \Description{A grid of ten held-out UAV views from UMGS-Field. The grid compares mesh reference depth with method depth and relative-error maps for Band-only, Unfrozen-support, MS-Splatting, UMGS-J, and UMGS-I on the NIR band.}
     \label{fig:depth-umgs-field}
@@ -48,7 +48,7 @@ Raw unaligned data test a different question: whether an external method can be 
 
 \subsection{Shared-Support Contract Ablation}
 
-This ablation tests whether geometry locking is merely conservative or actually necessary. Table~\ref{tab:ablations3} compares the locked UMGS variants with two upper-bound ablations on UMGS-Field, Vineyard-02, and Aerial-Lake. This is a separate support-contract diagnostic subset and is not averaged with the four-scene reference-depth diagnostic. The unfrozen branch improves selected image metrics, but it is not a valid product model: on Aerial-Lake, product construction fails the shared-support audit with an xyz mismatch of $6.84\times10^{-2}$. Scratch-MS diverges more strongly, including Gaussian-count mismatch across bands. These failures occur when multispectral products are assembled, showing that per-band quality gains alone are insufficient if support consistency is lost.
+This ablation tests whether geometry locking is merely conservative or actually necessary. Table~\ref{tab:ablations3} uses the same four representative scenes as the reference-depth diagnostic: UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf. Band-only and Unfrozen-support can be useful single-band diagnostic branches, but they are not valid product models. The audit logs record Gaussian-count/identity mismatch for Band-only and band-specific xyz drift for Unfrozen-support (up to $6.61\times10^{-2}$ in the current representative audits). These failures occur when multispectral products are assembled, showing that per-band fitting alone is insufficient if support consistency is lost.
 
 \input{sections/tables/ablations3}
 

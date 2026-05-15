@@ -3,8 +3,8 @@
     \caption{Additional official aligned non-UAV scenes, reported separately from the UAV-focused main-paper evaluation suite. RGB metrics for UMGS-J use the shared UMGS-I RGB anchor. Spectral metrics average G/R/RE/NIR.}
     \label{tab:supp-nonuav-main}
     \centering
-    \scriptsize
-    \setlength{\tabcolsep}{3pt}
+    \tiny
+    \setlength{\tabcolsep}{2pt}
     \begin{tabular}{lccccccc}
         \toprule
         Method & RGB PSNR & RGB SSIM & MS PSNR & MS SSIM & MS LPIPS & Idx. RMSE & Idx. SSIM \\
@@ -19,11 +19,11 @@
     \caption{Additional non-UAV official aligned scene-level common-mask comparison between UMGS-J$^\dagger$ and MS-Splatting. PSNR/SSIM/LPIPS average G/R/RE/NIR; RMSE and SAM are spectral 4-band metrics.}
     \label{tab:supp-umgsj-mms-scenes}
     \centering
-    \scriptsize
-    \setlength{\tabcolsep}{3pt}
+    \tiny
+    \setlength{\tabcolsep}{2pt}
     \begin{tabular}{lcccccccccc}
         \toprule
-        Scene & UMGS-J PSNR & MMS PSNR & UMGS-J SSIM & MMS SSIM & UMGS-J LPIPS & MMS LPIPS & UMGS-J RMSE & MMS RMSE & UMGS-J SAM & MMS SAM \\
+        Scene & UMGS-J PSNR & MS-Splatting PSNR & UMGS-J SSIM & MS-Splatting SSIM & UMGS-J LPIPS & MS-Splatting LPIPS & UMGS-J RMSE & MS-Splatting RMSE & UMGS-J SAM & MS-Splatting SAM \\
         \midrule
         Aligned-Bud & 24.77 & 25.09 & 0.797 & 0.781 & 0.225 & 0.257 & 0.0630 & 0.0601 & 6.46 & 7.34 \\
         Aligned-Fruit & 24.18 & 23.81 & 0.698 & 0.701 & 0.318 & 0.306 & 0.0642 & 0.0670 & 8.12 & 8.66 \\
