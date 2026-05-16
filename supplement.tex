@@ -102,6 +102,8 @@ The failure is concrete in our audit logs. In the current representative audits,
 \]
 Band-only training diverges further and triggers Gaussian-count mismatch across bands. These variants can still produce independent band images, and one could compute post-hoc 2D ratios after rendering; however, those ratios are not defined over a common 3D Gaussian support and therefore are not used as valid model-level multispectral products in our protocol.
 
+\input{sections/tables/support_audit_quantitative}
+
 \section{UMGS-J Initialization Ablation (UMGS-J vs UMGS-JR)}
 
 The main paper keeps UMGS-JR out of the main tables and reports UMGS-J as the representative joint branch. This section records the initialization ablation that motivated that decision. Both variants use the same geometry-locked joint multispectral training design and export per-band evaluation views from a unified checkpoint. They differ only in appearance-bank initialization.
