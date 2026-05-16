@@ -1,5 +1,5 @@
 ﻿\begin{table}[!t]
-    \caption{Validation-gated reference-depth consistency averaged over four representative scenes (UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf). MS-Splatting is evaluated through its retained-subset adapter where learned Gaussian depth can be exported. Band-only and Unfrozen-support are diagnostic ablations rather than product-ready multispectral models; low error under low valid support should not be interpreted as better geometry.}
+    \caption{Validation-gated reference-depth consistency averaged over four representative scenes (UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf). Unlike PSNR/SSIM/LPIPS, this diagnostic probes whether learned splats maintain stable depth behavior under held-out cameras. MS-Splatting is evaluated through its retained-subset adapter where learned Gaussian depth can be exported. Band-only and Unfrozen-support are diagnostic ablations rather than product-ready multispectral models; low error under low valid support should not be interpreted as better geometry.}
     \label{tab:validated-depth}
     \centering
     \scriptsize
@@ -17,4 +17,3 @@
         \bottomrule
     \end{tabular}
 \end{table}
-
