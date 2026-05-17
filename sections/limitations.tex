@@ -8,3 +8,4 @@ Third, our geometry diagnostics are validation-gated reference-depth checks, not
 
 Fourth, cost reporting is intentionally non-invasive. The reported VRAM/utilization/power/size statistics are traceable AutoDL run records, but a dedicated runtime microbenchmark (e.g., standardized per-view FPS across methods and resolutions) is still future work.
 
+Fifth, the no-valid-mask study is a focused component ablation, not a physical-index validation. It shows that valid-region supervision improves NDVI, GNDVI, and NDRE fidelity on three raw UAV cross-FOV scenes under fixed held-out views and evaluation coverage. It does not prove physical NDVI correctness, and it should not be read as a universal theorem for every possible multispectral capture.

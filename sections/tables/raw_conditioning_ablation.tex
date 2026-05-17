@@ -1,0 +1,17 @@
+\begin{table}[t]
+    \caption{Focused no-valid-mask ablation on three raw UAV scenes. Full denotes the standard UMGS conditioning with valid-region supervision. No-mask disables validity masking during spectral supervision while keeping the same geometry-lock protocol, held-out views, and evaluation coverage. Removing valid-region supervision consistently increases vegetation-index RMSE across all scene-index pairs.}
+    \label{tab:raw-conditioning-ablation}
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{lccc}
+        \toprule
+        Scene & NDVI RMSE & GNDVI RMSE & NDRE RMSE \\
+        & Full / No-mask & Full / No-mask & Full / No-mask \\
+        \midrule
+        UMGS-Field & 0.1098 / 0.1552 & 0.0943 / 0.1298 & 0.0567 / 0.0790 \\
+        Vineyard-03 & 0.0620 / 0.0967 & 0.0595 / 0.0804 & 0.0414 / 0.0531 \\
+        Vineyard-01 & 0.0556 / 0.0918 & 0.0605 / 0.0822 & 0.0431 / 0.0530 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

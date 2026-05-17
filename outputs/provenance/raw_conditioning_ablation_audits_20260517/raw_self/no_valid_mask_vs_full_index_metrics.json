@@ -1,0 +1,43 @@
+﻿{
+    "created_at":  "2026-05-17T05:18:22",
+    "baseline_path":  "/root/autodl-tmp/runs/paper_autodl_full_20260429/e3_raw_self_clean_cost_20260501_230446/raw_self/out/index_metrics_summary.json",
+    "ablation_path":  "/root/autodl-tmp/runs/nightly_20260517_p1/conditioning_ablation/raw_self/no_valid_mask_full_60000/summary/index_metrics.json",
+    "rows":  [
+                 {
+                     "scene":  "UMGS-Field",
+                     "index":  "NDVI",
+                     "full_rmse":  0.1097615507359688,
+                     "no_valid_mask_rmse":  0.15521260350942612,
+                     "rmse_delta":  0.045451052773457318,
+                     "full_ssim":  0.76941500489528358,
+                     "no_valid_mask_ssim":  0.72676175832748413,
+                     "ssim_delta":  -0.042653246567799452,
+                     "coverage":  0.617598107396764,
+                     "view_count":  26
+                 },
+                 {
+                     "scene":  "UMGS-Field",
+                     "index":  "GNDVI",
+                     "full_rmse":  0.094306921443113922,
+                     "no_valid_mask_rmse":  0.12977705781276411,
+                     "rmse_delta":  0.035470136369650185,
+                     "full_ssim":  0.76834934032880342,
+                     "no_valid_mask_ssim":  0.73016045414484465,
+                     "ssim_delta":  -0.03818888618395877,
+                     "coverage":  0.62520014317525607,
+                     "view_count":  26
+                 },
+                 {
+                     "scene":  "UMGS-Field",
+                     "index":  "NDRE",
+                     "full_rmse":  0.056743489435085885,
+                     "no_valid_mask_rmse":  0.079030446278361172,
+                     "rmse_delta":  0.022286956843275287,
+                     "full_ssim":  0.83828242008502662,
+                     "no_valid_mask_ssim":  0.81404841404694772,
+                     "ssim_delta":  -0.024234006038078904,
+                     "coverage":  0.62532420853535631,
+                     "view_count":  26
+                 }
+             ]
+}

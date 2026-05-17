@@ -1,0 +1,43 @@
+﻿{
+    "created_at":  "2026-05-17T14:49:31",
+    "baseline_path":  "/root/autodl-tmp/runs/paper_autodl_full_20260429/e3_raw7_gpu_colmap_20260429_180200/raw003/out/index_metrics_summary.json",
+    "ablation_path":  "/root/autodl-tmp/runs/nightly_20260517_p1/conditioning_ablation/raw003/no_valid_mask_full_60000/summary/index_metrics.json",
+    "rows":  [
+                 {
+                     "scene":  "Vineyard-03",
+                     "index":  "NDVI",
+                     "full_rmse":  0.061951385980302635,
+                     "no_valid_mask_rmse":  0.0966722836548632,
+                     "rmse_delta":  0.034720897674560568,
+                     "full_ssim":  0.89048851620067249,
+                     "no_valid_mask_ssim":  0.85628574002872815,
+                     "ssim_delta":  -0.034202776171944338,
+                     "coverage":  0.622964510436712,
+                     "view_count":  11
+                 },
+                 {
+                     "scene":  "Vineyard-03",
+                     "index":  "GNDVI",
+                     "full_rmse":  0.059544313699007034,
+                     "no_valid_mask_rmse":  0.080358395522291015,
+                     "rmse_delta":  0.020814081823283981,
+                     "full_ssim":  0.85742052576758643,
+                     "no_valid_mask_ssim":  0.83140682632272889,
+                     "ssim_delta":  -0.026013699444857541,
+                     "coverage":  0.62537457600467228,
+                     "view_count":  11
+                 },
+                 {
+                     "scene":  "Vineyard-03",
+                     "index":  "NDRE",
+                     "full_rmse":  0.041386989707296547,
+                     "no_valid_mask_rmse":  0.053104772825132714,
+                     "rmse_delta":  0.011717783117836167,
+                     "full_ssim":  0.91382248835130175,
+                     "no_valid_mask_ssim":  0.897947983308272,
+                     "ssim_delta":  -0.015874505043029785,
+                     "coverage":  0.62573598600285041,
+                     "view_count":  11
+                 }
+             ]
+}

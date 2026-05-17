@@ -1,0 +1,34 @@
+{
+  "G": {
+    "path": "/root/autodl-tmp/runs/nightly_20260517_p1/conditioning_ablation/raw003/no_valid_mask_full_60000/models/out/Model_G/training_protocol_audit.json",
+    "use_validity_mask": false,
+    "masked_loss_active_expected": false,
+    "masked_loss_observed": false,
+    "masked_loss_observed_steps": 0,
+    "masked_loss_protocol_ok": true
+  },
+  "R": {
+    "path": "/root/autodl-tmp/runs/nightly_20260517_p1/conditioning_ablation/raw003/no_valid_mask_full_60000/models/out/Model_R/training_protocol_audit.json",
+    "use_validity_mask": false,
+    "masked_loss_active_expected": false,
+    "masked_loss_observed": false,
+    "masked_loss_observed_steps": 0,
+    "masked_loss_protocol_ok": true
+  },
+  "RE": {
+    "path": "/root/autodl-tmp/runs/nightly_20260517_p1/conditioning_ablation/raw003/no_valid_mask_full_60000/models/out/Model_RE/training_protocol_audit.json",
+    "use_validity_mask": false,
+    "masked_loss_active_expected": false,
+    "masked_loss_observed": false,
+    "masked_loss_observed_steps": 0,
+    "masked_loss_protocol_ok": true
+  },
+  "NIR": {
+    "path": "/root/autodl-tmp/runs/nightly_20260517_p1/conditioning_ablation/raw003/no_valid_mask_full_60000/models/out/Model_NIR/training_protocol_audit.json",
+    "use_validity_mask": false,
+    "masked_loss_active_expected": false,
+    "masked_loss_observed": false,
+    "masked_loss_observed_steps": 0,
+    "masked_loss_protocol_ok": true
+  }
+}

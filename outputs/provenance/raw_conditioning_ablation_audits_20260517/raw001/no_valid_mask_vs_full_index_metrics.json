@@ -1,0 +1,44 @@
+{
+  "scene": "Vineyard-01",
+  "rows": [
+    {
+      "scene": "Vineyard-01",
+      "index": "NDVI",
+      "full_rmse": 0.05560568110509352,
+      "no_valid_mask_rmse": 0.09178633852438493,
+      "rmse_delta": 0.03618065741929141,
+      "rmse_relative_delta": 0.6506647648270104,
+      "full_ssim": 0.9033809683539651,
+      "no_valid_mask_ssim": 0.8685986778952859,
+      "ssim_delta": -0.0347822904586792,
+      "coverage": 0.6242865125032102,
+      "view_count": 11
+    },
+    {
+      "scene": "Vineyard-01",
+      "index": "GNDVI",
+      "full_rmse": 0.060493878004225815,
+      "no_valid_mask_rmse": 0.08222433992407539,
+      "rmse_delta": 0.021730461919849578,
+      "rmse_relative_delta": 0.3592175379851097,
+      "full_ssim": 0.8564558191732927,
+      "no_valid_mask_ssim": 0.8272056958892129,
+      "ssim_delta": -0.029250123284079832,
+      "coverage": 0.626766289082563,
+      "view_count": 11
+    },
+    {
+      "scene": "Vineyard-01",
+      "index": "NDRE",
+      "full_rmse": 0.043075801973993126,
+      "no_valid_mask_rmse": 0.05303611606359482,
+      "rmse_delta": 0.009960314089601692,
+      "rmse_relative_delta": 0.2312275949177963,
+      "full_ssim": 0.9152225364338268,
+      "no_valid_mask_ssim": 0.89569322087548,
+      "ssim_delta": -0.019529315558346805,
+      "coverage": 0.6271354467610426,
+      "view_count": 11
+    }
+  ]
+}

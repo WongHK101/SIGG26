@@ -2,6 +2,26 @@
 
 This repository is a clean LaTeX writing scaffold for an ACM SIGGRAPH Asia 2026 technical paper submission.
 
+## Current UMGS handoff and evidence
+
+For the current project state, read the local handoff first:
+
+- `E:\paper\SIGS\CURRENT_HANDOFF_20260517.md`
+
+Current manuscript/evidence commit:
+
+- `aad1c661f77a1d76b322afd7cd01d33717366edb`
+
+Current active data bundle:
+
+- `E:\paper\SIGS\data\d_20260511`
+
+Current data index:
+
+- `E:\paper\SIGS\data\README_CURRENT_DATA_20260517.md`
+
+Do not source current tables or figures from sibling `d_20260511_*_removed_*`, `legacy`, or `deprecated` directories. They are retained only for audit/history.
+
 ## Current template choice
 
 This scaffold follows the current ACM/SIGGRAPH technical-paper review format:

@@ -1,0 +1,61 @@
+scene_internal,scene_published,method,index,required_bands,coverage_mode,within_available_coverage,total_common_valid_pixels,total_reference_valid_pixels,available_view_count,missing,note
+self_m3m,UMGS-Field,UMGS-I,NDVI,R+NIR,reference_valid_probe_views,0.9970678296077925,629422,631273,10,,
+self_m3m,UMGS-Field,UMGS-I,GNDVI,G+NIR,reference_valid_probe_views,0.9970678296077925,629422,631273,10,,
+self_m3m,UMGS-Field,UMGS-I,NDRE,RE+NIR,reference_valid_probe_views,0.9970678296077925,629422,631273,10,,
+self_m3m,UMGS-Field,UMGS-J,NDVI,R+NIR,reference_valid_probe_views,0.9970678296077925,629422,631273,10,,
+self_m3m,UMGS-Field,UMGS-J,GNDVI,G+NIR,reference_valid_probe_views,0.9970678296077925,629422,631273,10,,
+self_m3m,UMGS-Field,UMGS-J,NDRE,RE+NIR,reference_valid_probe_views,0.9970678296077925,629422,631273,10,,
+self_m3m,UMGS-Field,Band-only,NDVI,R+NIR,reference_valid_probe_views,0.7108049924517602,448712,631273,10,,
+self_m3m,UMGS-Field,Band-only,GNDVI,G+NIR,reference_valid_probe_views,0.7203048443383449,454709,631273,10,,
+self_m3m,UMGS-Field,Band-only,NDRE,RE+NIR,reference_valid_probe_views,0.7353078620501748,464180,631273,10,,
+self_m3m,UMGS-Field,Unfrozen-support,NDVI,R+NIR,reference_valid_probe_views,0.9965656696864906,629105,631273,10,,
+self_m3m,UMGS-Field,Unfrozen-support,GNDVI,G+NIR,reference_valid_probe_views,0.9965118102627548,629071,631273,10,,
+self_m3m,UMGS-Field,Unfrozen-support,NDRE,RE+NIR,reference_valid_probe_views,0.9967399207632831,629215,631273,10,,
+self_m3m,UMGS-Field,MS-Splatting retained,NDVI,R+NIR,reference_valid_probe_views,0.9761798778024722,616236,631273,10,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred
+self_m3m,UMGS-Field,MS-Splatting retained,GNDVI,G+NIR,reference_valid_probe_views,0.9761798778024722,616236,631273,10,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred
+self_m3m,UMGS-Field,MS-Splatting retained,NDRE,RE+NIR,reference_valid_probe_views,0.9761798778024722,616236,631273,10,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred
+raw001,Vineyard-01,UMGS-I,NDVI,R+NIR,reference_valid_probe_views,0.917035553039785,13924465,15184215,11,,
+raw001,Vineyard-01,UMGS-I,GNDVI,G+NIR,reference_valid_probe_views,0.917035553039785,13924465,15184215,11,,
+raw001,Vineyard-01,UMGS-I,NDRE,RE+NIR,reference_valid_probe_views,0.917035553039785,13924465,15184215,11,,
+raw001,Vineyard-01,UMGS-J,NDVI,R+NIR,reference_valid_probe_views,0.917035553039785,13924465,15184215,11,,
+raw001,Vineyard-01,UMGS-J,GNDVI,G+NIR,reference_valid_probe_views,0.917035553039785,13924465,15184215,11,,
+raw001,Vineyard-01,UMGS-J,NDRE,RE+NIR,reference_valid_probe_views,0.917035553039785,13924465,15184215,11,,
+raw001,Vineyard-01,Band-only,NDVI,R+NIR,reference_valid_probe_views,0.00952232301768646,144589,15184215,11,,
+raw001,Vineyard-01,Band-only,GNDVI,G+NIR,reference_valid_probe_views,0.010552076613772922,160225,15184215,11,,
+raw001,Vineyard-01,Band-only,NDRE,RE+NIR,reference_valid_probe_views,0.01356751073400897,206012,15184215,11,,
+raw001,Vineyard-01,Unfrozen-support,NDVI,R+NIR,reference_valid_probe_views,0.8923298306827189,13549328,15184215,11,,
+raw001,Vineyard-01,Unfrozen-support,GNDVI,G+NIR,reference_valid_probe_views,0.8934394698705201,13566177,15184215,11,,
+raw001,Vineyard-01,Unfrozen-support,NDRE,RE+NIR,reference_valid_probe_views,0.8969722175298492,13619819,15184215,11,,
+raw001,Vineyard-01,MS-Splatting retained,NDVI,R+NIR,reference_valid_probe_views,0.6440936195911346,9780056,15184215,11,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred
+raw001,Vineyard-01,MS-Splatting retained,GNDVI,G+NIR,reference_valid_probe_views,0.6440936195911346,9780056,15184215,11,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred
+raw001,Vineyard-01,MS-Splatting retained,NDRE,RE+NIR,reference_valid_probe_views,0.6440936195911346,9780056,15184215,11,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred
+raw003,Vineyard-03,UMGS-I,NDVI,R+NIR,reference_valid_probe_views,0.908983155273184,13480312,14830101,11,,
+raw003,Vineyard-03,UMGS-I,GNDVI,G+NIR,reference_valid_probe_views,0.908983155273184,13480312,14830101,11,,
+raw003,Vineyard-03,UMGS-I,NDRE,RE+NIR,reference_valid_probe_views,0.908983155273184,13480312,14830101,11,,
+raw003,Vineyard-03,UMGS-J,NDVI,R+NIR,reference_valid_probe_views,0.908983155273184,13480312,14830101,11,,
+raw003,Vineyard-03,UMGS-J,GNDVI,G+NIR,reference_valid_probe_views,0.908983155273184,13480312,14830101,11,,
+raw003,Vineyard-03,UMGS-J,NDRE,RE+NIR,reference_valid_probe_views,0.908983155273184,13480312,14830101,11,,
+raw003,Vineyard-03,Band-only,NDVI,R+NIR,reference_valid_probe_views,0.0118309376315104,175454,14830101,11,,
+raw003,Vineyard-03,Band-only,GNDVI,G+NIR,reference_valid_probe_views,0.012411918165628137,184070,14830101,11,,
+raw003,Vineyard-03,Band-only,NDRE,RE+NIR,reference_valid_probe_views,0.014596731337163516,216471,14830101,11,,
+raw003,Vineyard-03,Unfrozen-support,NDVI,R+NIR,reference_valid_probe_views,0.882520624775246,13087870,14830101,11,,
+raw003,Vineyard-03,Unfrozen-support,GNDVI,G+NIR,reference_valid_probe_views,0.883902611317347,13108365,14830101,11,,
+raw003,Vineyard-03,Unfrozen-support,NDRE,RE+NIR,reference_valid_probe_views,0.8876088571480396,13163329,14830101,11,,
+raw003,Vineyard-03,MS-Splatting retained,NDVI,R+NIR,reference_valid_probe_views,0.7331302733541734,10872396,14830101,11,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred
+raw003,Vineyard-03,MS-Splatting retained,GNDVI,G+NIR,reference_valid_probe_views,0.7331302733541734,10872396,14830101,11,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred
+raw003,Vineyard-03,MS-Splatting retained,NDRE,RE+NIR,reference_valid_probe_views,0.7331302733541734,10872396,14830101,11,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred
+ms_golf,Aerial-Golf,UMGS-I,NDVI,R+NIR,reference_valid_probe_views,0.9990877375588886,660391,660994,9,,
+ms_golf,Aerial-Golf,UMGS-I,GNDVI,G+NIR,reference_valid_probe_views,0.9987715470942248,660182,660994,9,,
+ms_golf,Aerial-Golf,UMGS-I,NDRE,RE+NIR,reference_valid_probe_views,0.9989243472709284,660283,660994,9,,
+ms_golf,Aerial-Golf,UMGS-J,NDVI,R+NIR,reference_valid_probe_views,0.9990877375588886,660391,660994,9,,
+ms_golf,Aerial-Golf,UMGS-J,GNDVI,G+NIR,reference_valid_probe_views,0.9987715470942248,660182,660994,9,,
+ms_golf,Aerial-Golf,UMGS-J,NDRE,RE+NIR,reference_valid_probe_views,0.9989243472709284,660283,660994,9,,
+ms_golf,Aerial-Golf,Band-only,NDVI,R+NIR,reference_valid_probe_views,0.9248434932843566,611316,660994,9,,
+ms_golf,Aerial-Golf,Band-only,GNDVI,G+NIR,reference_valid_probe_views,0.9399888652544501,621327,660994,9,,
+ms_golf,Aerial-Golf,Band-only,NDRE,RE+NIR,reference_valid_probe_views,0.9499677758043189,627923,660994,9,,
+ms_golf,Aerial-Golf,Unfrozen-support,NDVI,R+NIR,reference_valid_probe_views,0.9991376623690986,660424,660994,9,,
+ms_golf,Aerial-Golf,Unfrozen-support,GNDVI,G+NIR,reference_valid_probe_views,0.9990589929711918,660372,660994,9,,
+ms_golf,Aerial-Golf,Unfrozen-support,NDRE,RE+NIR,reference_valid_probe_views,0.9992042287827121,660468,660994,9,,
+ms_golf,Aerial-Golf,MS-Splatting retained,NDVI,R+NIR,reference_valid_probe_views,0.936972196419332,619333,660994,9,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred
+ms_golf,Aerial-Golf,MS-Splatting retained,GNDVI,G+NIR,reference_valid_probe_views,0.924073440908692,610807,660994,9,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred
+ms_golf,Aerial-Golf,MS-Splatting retained,NDRE,RE+NIR,reference_valid_probe_views,0.927885880961098,613327,660994,9,,coverage is within retained available probe bundle; full-protocol missing-area penalty is not inferred

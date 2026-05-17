@@ -92,6 +92,22 @@ The retained raw diagnostic is intentionally separate from the full raw protocol
 
 \input{sections/generated_supplement_tables}
 
+\section{Raw-Conditioning Focused Ablation}
+
+Table~\ref{tab:supp-raw-conditioning-ablation-full} reports the complete RMSE and SSIM results for the three raw-scene no-valid-mask ablations summarized in the main paper. The ablations keep the geometry-lock protocol fixed and disable only the validity mask used during spectral supervision. Training-protocol audits confirm that G/R/RE/NIR all ran with \texttt{use\_validity\_mask=false} and \texttt{masked\_loss\_observed=false}. Support audits confirm zero support drift: for each scene, R/RE/NIR have max and mean support delta 0.0 relative to G. The aggregate result is 9/9 scene-index rows with higher RMSE and 9/9 rows with lower SSIM after removing valid-region supervision; the mean relative RMSE increase is 40.2\%, and the mean SSIM delta is $-0.0294$.
+
+The local summary entrypoint is \texttt{outputs/nightly\_20260517\_p1/conditioning\_ablation}. The corresponding AutoDL run roots are \texttt{/root/autodl-tmp/runs/nightly\_20260517\_p1/conditioning\_ablation/raw\_self}, \texttt{/root/autodl-tmp/runs/nightly\_20260517\_p1/conditioning\_ablation/raw003}, and \texttt{/root/autodl-tmp/runs/nightly\_20260517\_p1/conditioning\_ablation/raw001}. Each scene directory contains the run manifest, command log, status marker, index metrics, training-protocol audit, and support audit for the smoke and full runs.
+
+\input{sections/tables/raw_conditioning_ablation_supp}
+
+\section{Product-Coverage and Support-Audit Provenance}
+
+The direct UMGS-I support audit supplements the main-paper shared-support product-readiness evidence. Across four representative scenes and 16 per-band rows, UMGS-I passes all direct checks: Gaussian count, order/support hash, xyz, scale, rotation, and opacity are identical across spectral bands, with all reported deltas equal to 0. Appearance fields are intentionally excluded from the support comparison.
+
+\input{sections/tables/product_coverage_supp}
+
+Table~\ref{tab:supp-product-coverage} reports product-level common-support coverage as a supplementary diagnostic. The denominator is the reference-valid probe region and the numerator is the required-band model-valid intersection for NDVI, GNDVI, or NDRE. The retained MS-Splatting row is reported only within the retained available probe bundle. Coverage is not itself product validity: Unfrozen-support has high coverage, but it fails the support audit and is therefore not a valid model-level spectral product branch.
+
 \section{Why Unfrozen-Support Is Not a Product Model}
 
 The Unfrozen-support branch is included as a single-band upper-bound ablation. It starts from the same RGB anchor as UMGS, but allows band-specific geometry and opacity updates in Stage 2. This can improve selected per-band render metrics, but it breaks the shared-support contract required by model-level spectral products.

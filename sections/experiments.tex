@@ -52,6 +52,12 @@ This ablation tests whether geometry locking is merely conservative or actually 
 
 \input{sections/tables/ablations3}
 
+\subsection{Raw-Conditioning Focused Ablation}
+
+To isolate the role of valid-region supervision in raw cross-FOV captures, we run focused no-valid-mask ablations on three raw UAV scenes: UMGS-Field, Vineyard-03, and Vineyard-01. In each case, we keep the geometry-lock protocol unchanged and disable validity masking during spectral supervision only. Training audits confirm that validity masking was disabled and no masked-loss steps were observed for all spectral bands, while support audits show zero support drift across bands. Under the same held-out views and evaluation coverage, removing valid-region supervision consistently degrades vegetation-index fidelity: all 9 scene-index rows show higher RMSE and lower SSIM. Averaged over the three scenes and three indices, RMSE increases by about 40.2\% and SSIM decreases by about 0.0294. These focused ablations support valid-region supervision as an important component for raw UAV multispectral product synthesis.
+
+\input{sections/tables/raw_conditioning_ablation}
+
 \subsection{Cost}
 
 Finally, Table~\ref{tab:cost} reports trace-based cost indicators from AutoDL runs. UMGS-J records higher peak and average VRAM because it maintains a joint multispectral training state, while both UMGS variants keep the same exported Gaussian count by construction. These are non-invasive run traces, not a standardized FPS microbenchmark.
