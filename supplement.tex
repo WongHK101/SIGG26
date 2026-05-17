@@ -4,6 +4,7 @@
 
 \settopmatter{printfolios=true}
 \renewcommand\shortauthors{Anonymous Submission}
+\usepackage{placeins}
 
 \begin{document}
 
@@ -69,6 +70,9 @@ The main paper uses publication-facing scene names. Internal directory names are
 
 Table~\ref{tab:supp-nonuav-main} reports the four additional official aligned scenes that are intentionally kept out of the main UAV-focused tables. Table~\ref{tab:supp-umgsj-mms-scenes} provides their scene-wise common-mask comparison between UMGS-J$^\dagger$ and MS-Splatting. We also include the full seven-scene official aligned average for reproducibility.
 
+\input{sections/generated_supplement_tables}
+\FloatBarrier
+
 \section{Depth-Reference Status and Visualization}
 
 We keep the relative-depth evaluator and validation scripts in the released code, and report quantitative depth only for validated references. The main diagnostic table uses four validated scenes: UMGS-Field, Vineyard-01, Vineyard-03, and Aerial-Golf. Other attempted references are retained as audit artifacts only. For these representative scenes, we provide 10-held-out visual grids over RGB/G/R/RE/NIR where the relevant depth adapters are available. These grids show that UMGS-I and UMGS-J produce smoother relative-error maps, while the retained MS-Splatting adapter has lower support and larger local deviations even after coordinate-frame correction.
@@ -90,23 +94,25 @@ The retained raw diagnostic is intentionally separate from the full raw protocol
 
 \input{sections/tables/retained_self}
 
-\input{sections/generated_supplement_tables}
+\FloatBarrier
 
 \section{Raw-Conditioning Focused Ablation}
 
-Table~\ref{tab:supp-raw-conditioning-ablation-full} reports the complete RMSE and SSIM results for the three raw-scene no-valid-mask ablations summarized in the main paper. The ablations keep the geometry-lock protocol fixed and disable only the validity mask used during spectral supervision. Training-protocol audits confirm that G/R/RE/NIR all ran with \texttt{use\_validity\_mask=false} and \texttt{masked\_loss\_observed=false}. Support audits confirm zero support drift: for each scene, R/RE/NIR have max and mean support delta 0.0 relative to G. The aggregate result is 9/9 scene-index rows with higher RMSE and 9/9 rows with lower SSIM after removing valid-region supervision; the mean relative RMSE increase is 40.2\%, and the mean SSIM delta is $-0.0294$.
+Table~\ref{tab:supp-raw-conditioning-ablation-full} reports the complete RMSE and SSIM results for the three raw-scene no-valid-mask ablations summarized in the main paper. The ablations keep the geometry-lock protocol fixed and disable only the validity mask used during spectral supervision. Training-protocol audits confirm disabled validity masking and no masked-loss steps for G/R/RE/NIR. Support audits for the ablation outputs show zero support drift across bands, confirming that the degradation is caused by removing valid-region supervision rather than by breaking the geometry-lock contract. The aggregate result is 9/9 scene-index rows with higher RMSE and 9/9 rows with lower SSIM; the mean relative RMSE increase is 40.2\%, and the mean SSIM delta is $-0.0294$.
 
-The local summary entrypoint is \texttt{outputs/nightly\_20260517\_p1/conditioning\_ablation}. The corresponding AutoDL run roots are \texttt{/root/autodl-tmp/runs/nightly\_20260517\_p1/conditioning\_ablation/raw\_self}, \texttt{/root/autodl-tmp/runs/nightly\_20260517\_p1/conditioning\_ablation/raw003}, and \texttt{/root/autodl-tmp/runs/nightly\_20260517\_p1/conditioning\_ablation/raw001}. Each scene directory contains the run manifest, command log, status marker, index metrics, training-protocol audit, and support audit for the smoke and full runs.
+The released provenance manifests record the local summaries, AutoDL run roots, command logs, status markers, index metrics, training-protocol audits, and support audits for the smoke and full runs.
 
 \input{sections/tables/raw_conditioning_ablation_supp}
+\FloatBarrier
 
 \section{Product-Coverage and Support-Audit Provenance}
 
-The direct UMGS-I support audit supplements the main-paper shared-support product-readiness evidence. Across four representative scenes and 16 per-band rows, UMGS-I passes all direct checks: Gaussian count, order/support hash, xyz, scale, rotation, and opacity are identical across spectral bands, with all reported deltas equal to 0. Appearance fields are intentionally excluded from the support comparison.
+The direct UMGS-I support audit adds shared-support product-readiness evidence for the main paper. Across four representative scenes and 16 per-band rows, UMGS-I passes all direct checks: Gaussian count, order/support hash, xyz, scale, rotation, and opacity are identical across spectral bands, with all reported deltas equal to 0. Appearance fields are intentionally excluded from the support comparison.
 
 \input{sections/tables/product_coverage_supp}
 
 Table~\ref{tab:supp-product-coverage} reports product-level common-support coverage as a supplementary diagnostic. The denominator is the reference-valid probe region and the numerator is the required-band model-valid intersection for NDVI, GNDVI, or NDRE. The retained MS-Splatting row is reported only within the retained available probe bundle. Coverage is not itself product validity: Unfrozen-support has high coverage, but it fails the support audit and is therefore not a valid model-level spectral product branch.
+\FloatBarrier
 
 \section{Why Unfrozen-Support Is Not a Product Model}
 
@@ -119,6 +125,7 @@ The failure is concrete in our audit logs. In the current representative audits,
 Band-only training diverges further and triggers Gaussian-count mismatch across bands. These variants can still produce independent band images, and one could compute post-hoc 2D ratios after rendering; however, those ratios are not defined over a common 3D Gaussian support and therefore are not used as valid model-level multispectral products in our protocol.
 
 \input{sections/tables/support_audit_quantitative}
+\FloatBarrier
 
 \section{UMGS-J Initialization Ablation (UMGS-J vs UMGS-JR)}
 
@@ -128,12 +135,13 @@ UMGS-J initializes each spectral bank from the reset-appearance state. UMGS-JR i
 
 Table~\ref{tab:umgsj-quality-cost} compares these variants on the two joint-branch pilot scenes used during method screening. UMGS-JR does not improve the branch: it degrades image/index quality on both pilot scenes.
 
-\begin{table*}[t]
+\begin{table}[H]
     \caption{UMGS-J and UMGS-JR quality/cost comparison from pilot runs. Band metrics are G/R/RE/NIR means. Index metrics are NDVI/GNDVI/NDRE means.}
     \label{tab:umgsj-quality-cost}
     \centering
-    \scriptsize
-    \setlength{\tabcolsep}{3pt}
+    \tiny
+    \setlength{\tabcolsep}{2pt}
+    \resizebox{\columnwidth}{!}{%
     \begin{tabular}{@{}llcccccccc@{}}
         \toprule
         Scene & Variant & Band SSIM $\uparrow$ & Band PSNR $\uparrow$ & Band LPIPS $\downarrow$ & Index MAE $\downarrow$ & Index RMSE $\downarrow$ & Index PSNR $\uparrow$ & Index SSIM $\uparrow$ & Time (s) $\downarrow$ \\
@@ -145,7 +153,8 @@ Table~\ref{tab:umgsj-quality-cost} compares these variants on the two joint-bran
         Vineyard-01 & UMGS-JR  & 0.8590 & 27.847 & 0.1266 & 0.0375 & 0.0574 & 31.326 & 0.8800 & 6730 \\
         \bottomrule
     \end{tabular}
-\end{table*}
+    }
+\end{table}
 
 \section{Takeaway}
 
